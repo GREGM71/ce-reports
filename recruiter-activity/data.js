@@ -1,5 +1,5 @@
 // Recruiter Activity Board data. Replaced each weekday by the 4:30 PM refresh.
-window.META={day:"Wednesday Oct 14",date:"Oct 14 2026",asof:"4:54 PM",sysSent:1868,sysReplies:62};
+window.META={day:"Wednesday Oct 14",date:"Oct 14 2026",asof:"4:54 PM",sysSent:1868,sysReplies:62,startingToday:18};
 window.RAW=[
 ["Hannah Oteri","Charleston",70,15,8,15,8,0,1,564,36,"8:10","4:28",[0,7,21,16,19,20,8,2,12,12],[0,161,3,6,0,226,3,154,37,10]],
 ["Stephen Nelson","New Kensington",45,25,7,14,5,3,4,49,8,"8:12","4:39",[0,11,10,13,19,3,10,13,16,8],[1,4,6,1,2,10,13,9,7,4]],
@@ -20,15 +20,19 @@ window.RAW=[
 ["Robert Petrisko","In-house",0,0,1,0,0,0,0,36,5,"12:11","12:11",[0,0,0,0,0,1,0,0,0,0],[22,8,0,1,2,0,0,8,0,0]]
 ];
 window.STARTS=[
-["Delmont","Namsco Plastics","Donna Nagg",2],
-["Delmont","Biscotti Brothers Bakery","Donna Nagg",1],
-["Delmont","Biscotti Brothers Bakery","Donna Hecht",1],
-["Delmont","Dormont Manufacturing Company","Kaytee Jack",1],
-["Delmont","Pittsburgh Technologies Group","Brian Smith",1],
-["Delmont","Sun Star II","Brian Smith",1],
-["Fox Chapel","Old World Industries","Shauna Whipple",6],
-["Fox Chapel","Old World Industries","Sharon Houseman",2],
-["Fox Chapel","Old World Industries","Derek Smith",1],
-["Fox Chapel","American Textile Company","Sharon Houseman",1],
-["New Kensington","Leed\'s","Sam Skeba",1]
+["Charleston","Key Logistics","Ross Madler",3,"10/15"],
+["Delmont","Penn Compression Moulding, Inc.","Donna Nagg",2,"10/19"],
+["Delmont","Namsco Plastics","Alison Fisher",1,"10/20"],
+["Delmont","Penn Compression Moulding, Inc.","Donna Hecht",1,"10/19"],
+["Delmont","Biscotti Brothers Bakery","Donna Hecht",1,"10/15"],
+["Delmont","Carclo Technical Plastics-Latrobe","Kaytee Jack",1,"10/15"],
+["Delmont","Technimark, Inc","Brian Smith",1,"10/19"],
+["Delmont","Namsco Plastics","Donna Nagg",1,"10/22"],
+["Delmont","Namsco Plastics","Brian Smith",1,"10/21"],
+["Fox Chapel","Old World Industries","Shauna Whipple",4,"10/14"],
+["Fox Chapel","Sampco","Derek Smith",2,"10/19"],
+["McMurray","Hds Marketing","Shauna Whipple",1,"10/13"],
+["New Kensington","Leed's","Sam Skeba",1,"10/14"],
+["New Kensington","Leed's","Andy Draskovic",1,"10/12"],
+["Wilkinsburg","Valassis","Shauna Whipple",1,"10/13"],
 ];

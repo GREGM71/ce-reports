@@ -101,11 +101,11 @@ footer{color:var(--muted);font-size:12px}
 
   <section class="panel" aria-labelledby="h-starts">
     <div class="ph">
-      <h2 id="h-starts">Starts today</h2>
+      <h2 id="h-starts">Starts booked today</h2>
       <span class="note" id="starts-sum"></span>
     </div>
     <div class="scroll"><table class="starts" id="starts"></table></div>
-    <p class="note" style="margin-top:10px">People whose assignment start date is today in BOLD, by placement branch, client and the recruiter credited with the hire.</p>
+    <p class="note" style="margin-top:10px">Placements entered in BOLD today, by placement branch, client and the recruiter credited with the hire. "Start date" is the day the person is due to begin work.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-calls">
@@ -159,7 +159,7 @@ const sum=k=>D.reduce((a,p)=>a+p[k],0);
 function kpis(){
   const calls=sum("calls"),conn=sum("cib")+sum("co");
   const st=STARTS.reduce((a,r)=>a+r[3],0);
-  const k=[[st,"starts today",""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("cib"),"calls that booked an interview",""],[sum("ob"),"onboards completed",""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
+  const k=[[st,"starts booked today",META.startingToday!=null?`${META.startingToday} began work today`:""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("cib"),"calls that booked an interview",""],[sum("ob"),"onboards completed",""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
   $("kpis").innerHTML=k.map(([v,l,s])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${l}${s?` · ${s}`:""}</div></div>`).join("");
 }
 function legend(el,S){$(el).innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s[2]})"></i>${s[1]}</span>`).join("");}
@@ -199,9 +199,9 @@ function starts(){
   const tot=STARTS.reduce((a,r)=>a+r[3],0);
   const by={};STARTS.forEach(r=>{(by[r[0]]=by[r[0]]||[]).push(r)});
   const br=Object.keys(by).sort((a,b)=>by[b].reduce((x,r)=>x+r[3],0)-by[a].reduce((x,r)=>x+r[3],0));
-  $("starts-sum").textContent=tot?tot+" starts across "+br.length+" branch"+(br.length>1?"es":""):"No starts dated today";
-  let h="<thead><tr><th>Client</th><th>Recruiter</th><th style=\"text-align:right\">Starts</th></tr></thead><tbody>";
-  br.forEach(b=>{const n=by[b].reduce((x,r)=>x+r[3],0);h+=`<tr class="br"><td colspan="2">${b}</td><td class="n">${n}</td></tr>`;by[b].sort((x,y)=>y[3]-x[3]).forEach(r=>{h+=`<tr><td>${r[1]}</td><td>${r[2]}</td><td class="n">${r[3]}</td></tr>`})});
+  $("starts-sum").textContent=tot?tot+" starts booked across "+br.length+" branch"+(br.length>1?"es":""):"No starts booked today";
+  let h="<thead><tr><th>Client</th><th>Recruiter</th><th>Start date</th><th style=\"text-align:right\">Starts</th></tr></thead><tbody>";
+  br.forEach(b=>{const n=by[b].reduce((x,r)=>x+r[3],0);h+=`<tr class="br"><td colspan="3">${b}</td><td class="n">${n}</td></tr>`;by[b].sort((x,y)=>y[3]-x[3]).forEach(r=>{h+=`<tr><td>${r[1]}</td><td>${r[2]}</td><td>${r[4]||""}</td><td class="n">${r[3]}</td></tr>`})});
   $("starts").innerHTML=h+"</tbody>";
 }
 kpis();legend("leg1",S1);starts();legend("leg2",S2);draw1();draw2();heat();
