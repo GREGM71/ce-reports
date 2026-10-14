@@ -147,7 +147,7 @@ footer{color:var(--muted);font-size:12px}
   <footer>Source: Avionté DataLink (Snowflake), APPACTIVITY joined to users and offices, <span id="srcdate"></span>. DataLink runs about 30–60 minutes behind BOLD.</footer>
 </div></main>
 
-<script src="data.js"></script>
+<script>document.write('<script src="data.js?t='+Date.now()+'"><\/script>')</script>
 <script>
 const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[];
 const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14]}));
