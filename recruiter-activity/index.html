@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Recruiter Activity Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: brand header band, KPI strip, then three stacked panels (calls by person, Sense texts, hour-by-hour grid) */
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --ink:#14212E; --muted:#5B6B7B; --rule:#D9E1EA;
+  --navy:#00457C; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#BFD3E6;
+  --c-vm:#7A93AD; --c-nov:#C9D3DD; --c-cib:#00457C; --c-co:#3D7FBF; --c-il:#E0A800; --c-ob:#1F9D5B; --c-oth:#A58BC2;
+  --c-so:#3D7FBF; --c-si:#E0A800;
+  --heat0:#EEF2F6; --heat-hi:#00457C;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1620; --surface:#16212D; --ink:#E6EDF4; --muted:#93A4B5; --rule:#263546;
+  --navy:#0A3D66; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#A9C2DA;
+  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ob:#3CC07A; --c-oth:#B79FD4;
+  --c-so:#5B9BDB; --c-si:#F2C230; --heat0:#1C2A38; --heat-hi:#6FA8E0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1620; --surface:#16212D; --ink:#E6EDF4; --muted:#93A4B5; --rule:#263546;
+  --navy:#0A3D66; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#A9C2DA;
+  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ob:#3CC07A; --c-oth:#B79FD4;
+  --c-so:#5B9BDB; --c-si:#F2C230; --heat0:#1C2A38; --heat-hi:#6FA8E0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:var(--navy);color:var(--band-ink)}
+header .wrap{padding-block:22px 20px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+.eyebrow{font-family:var(--f-display);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);font-size:13px}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.05;margin:4px 0 0;text-wrap:balance}
+.asof{color:var(--band-sub);font-size:14px}
+main .wrap{padding-block:20px 40px;display:grid;gap:20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
+.kpi .v{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .k{color:var(--muted);font-size:13px;margin-top:4px}
+.kpi .k b{color:var(--ink);font-weight:600}
+section.panel{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 18px 16px;min-width:0}
+.ph{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+h2{font-family:var(--f-display);font-weight:700;font-size:24px;margin:0;letter-spacing:.01em}
+.note{color:var(--muted);font-size:13px;max-width:70ch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin:0 0 12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.seg button{font:600 13px var(--f-body);border:0;background:transparent;color:var(--muted);padding:6px 10px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--yellow);outline-offset:-2px}
+.rows{display:grid;gap:6px}
+.row{display:grid;grid-template-columns:minmax(120px,190px) 1fr 54px;gap:10px;align-items:center}
+.who{min-width:0}
+.who .n{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who .o{color:var(--muted);font-size:12px}
+.track{height:26px;background:var(--heat0);border-radius:6px;display:flex;overflow:hidden;min-width:0}
+.track i{display:block;height:100%;position:relative}
+.track i span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 11px var(--f-mono);color:#fff;white-space:nowrap;overflow:hidden}
+.track i.light span{color:#14212E}
+.tot{font:600 14px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:12px;font-family:var(--f-mono)}
+.scroll{overflow-x:auto}
+table.heat{border-collapse:separate;border-spacing:3px;width:100%;min-width:760px;font-variant-numeric:tabular-nums}
+table.heat th{font:600 12px var(--f-body);color:var(--muted);text-align:center;padding:2px 4px}
+table.heat th.l, table.heat td.l{text-align:left}
+table.heat td{text-align:center;font:500 12px var(--f-mono);border-radius:4px;height:28px;padding:0 4px}
+table.heat td.l{font:600 13px var(--f-body);white-space:nowrap;padding-right:8px}
+table.heat td.t{font:600 12px var(--f-mono);color:var(--muted);white-space:nowrap}
+.flag{display:inline-block;font:600 11px var(--f-body);text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:999px;background:var(--yellow);color:#14212E;margin-left:6px;vertical-align:1px}
+table.starts{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeric:tabular-nums}
+table.starts th{font:600 12px var(--f-body);color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);text-transform:uppercase;letter-spacing:.05em}
+table.starts td{padding:7px 8px;border-bottom:1px solid var(--rule);font-size:14px}
+table.starts td.n{text-align:right;font:600 14px var(--f-mono)}
+table.starts tr.br td{background:var(--heat0);font-weight:700}
+footer{color:var(--muted);font-size:12px}
+@media (max-width:560px){.row{grid-template-columns:110px 1fr 44px;gap:8px}.track i span{display:none}}
+@media (prefers-reduced-motion:no-preference){.track i{transition:width .35s ease}}
+</style>
+</head>
+<body>
+<nav style="background:#002E54;padding:6px max(16px,env(safe-area-inset-left,0px));font:600 13px 'Source Sans 3',Arial,sans-serif"><a href="../" style="color:#FFDF6B;text-decoration:none">&larr; All reports</a></nav>
+
+
+<header><div class="wrap">
+  <div>
+    <div class="eyebrow">Commercial Employees · Avionté DataLink</div>
+    <h1 id="ttl">Recruiter activity</h1>
+  </div>
+  <div class="asof" id="asof">All branches</div>
+</div></header>
+
+<main><div class="wrap">
+  <div class="kpis" id="kpis"></div>
+
+  <section class="panel" aria-labelledby="h-starts">
+    <div class="ph">
+      <h2 id="h-starts">Starts today</h2>
+      <span class="note" id="starts-sum"></span>
+    </div>
+    <div class="scroll"><table class="starts" id="starts"></table></div>
+    <p class="note" style="margin-top:10px">People whose assignment start date is today in BOLD, by placement branch, client and the recruiter credited with the hire.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-calls">
+    <div class="ph">
+      <h2 id="h-calls">Calls and recruiting work by person</h2>
+      <div class="seg" role="group" aria-label="Sort people">
+        <button type="button" id="s-total" aria-pressed="true">Sort by total</button>
+        <button type="button" id="s-calls" aria-pressed="false">By calls</button>
+        <button type="button" id="s-int" aria-pressed="false">By interviews</button>
+      </div>
+    </div>
+    <div class="legend" id="leg1"></div>
+    <div class="rows" id="rows1"></div>
+    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Connected, interview booked" and "Interview logged" are often two entries for the same booking.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-sense">
+    <div class="ph">
+      <h2 id="h-sense">Sense texts by person</h2>
+      <span class="note">Texts sent under each person's name, and candidate replies back</span>
+    </div>
+    <div class="legend" id="leg2"></div>
+    <div class="rows" id="rows2"></div>
+    <p class="note" style="margin-top:12px">Sense posts both one-off texts and bulk sends under the recruiter's name, so large spikes are campaigns, not hand-typed texts. <span id="sysnote"></span></p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-hour">
+    <div class="ph">
+      <h2 id="h-hour">Hour by hour</h2>
+      <div class="seg" role="group" aria-label="Activity type">
+        <button type="button" id="h-man" aria-pressed="true">Manual activity</button>
+        <button type="button" id="h-sen" aria-pressed="false">Sense texts</button>
+      </div>
+    </div>
+    <div class="scroll"><table class="heat" id="heat"></table></div>
+    <p class="note" style="margin-top:10px">Times are when the entry was saved in BOLD (Eastern). A late-day pile-up usually means activity was entered in a batch rather than as calls happened.</p>
+  </section>
+
+  <footer>Source: Avionté DataLink (Snowflake), APPACTIVITY joined to users and offices, <span id="srcdate"></span>. DataLink runs about 30–60 minutes behind BOLD.</footer>
+</div></main>
+
+<script src="data.js"></script>
+<script>
+const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[];
+const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14]}));
+D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;p.tot=p.calls+p.il+p.ob+p.oth;p.ints=p.cib+p.il;});
+const S1=[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
+const S2=[["so","Texts sent","--c-so"],["si","Replies received","--c-si",1]];
+const $=id=>document.getElementById(id);
+const sum=k=>D.reduce((a,p)=>a+p[k],0);
+function kpis(){
+  const calls=sum("calls"),conn=sum("cib")+sum("co");
+  const st=STARTS.reduce((a,r)=>a+r[3],0);
+  const k=[[st,"starts today",""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("cib"),"calls that booked an interview",""],[sum("ob"),"onboards completed",""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
+  $("kpis").innerHTML=k.map(([v,l,s])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${l}${s?` · ${s}`:""}</div></div>`).join("");
+}
+function legend(el,S){$(el).innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s[2]})"></i>${s[1]}</span>`).join("");}
+function bars(el,list,S,totKey,subFn){
+  const max=Math.max(...list.map(p=>S.reduce((a,s)=>a+p[s[0]],0)))||1;
+  $(el).innerHTML=list.map(p=>{
+    const t=S.reduce((a,s)=>a+p[s[0]],0);
+    const segs=S.map(s=>{const v=p[s[0]];if(!v)return"";const w=v/max*100;return `<i class="${s[3]?"light":""}" style="width:${w}%;background:var(${s[2]})" title="${s[1]}: ${v}"><span>${w>3.2?v:""}</span></i>`}).join("");
+    return `<div class="row"><div class="who"><div class="n">${p.n}</div><div class="o">${p.o}</div></div><div class="track" role="img" aria-label="${p.n}: ${S.map(s=>s[1]+' '+p[s[0]]).join(', ')}">${segs}</div><div class="tot">${t.toLocaleString()}${subFn?`<div class="sub">${subFn(p)}</div>`:""}</div></div>`}).join("");
+}
+let sortKey="tot";
+function draw1(){const l=[...D].sort((a,b)=>b[sortKey]-a[sortKey]||b.tot-a.tot);bars("rows1",l,S1);}
+function draw2(){const l=[...D].filter(p=>p.so+p.si>2).sort((a,b)=>b.so-a.so);bars("rows2",l,S2,null,p=>p.so?Math.round(p.si/p.so*100)+"% reply":"");}
+const HRS=["Before 8","8 AM","9","10","11","12 PM","1","2","3","4 PM+"];
+let heatKey="h";
+function heat(){
+  const l=[...D].sort((a,b)=>b.tot-a.tot);
+  const max=Math.max(...l.flatMap(p=>p[heatKey]))||1;
+  const css=getComputedStyle(document.documentElement);
+  const c0=css.getPropertyValue("--heat0").trim(),c1=css.getPropertyValue("--heat-hi").trim();
+  const mix=(a,b,t)=>{const h=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));const A=h(a),B=h(b);return "rgb("+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(",")+")"};
+  let html=`<thead><tr><th class="l">Person</th><th>First</th><th>Last</th>${HRS.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>`;
+  l.forEach(p=>{
+    const arr=p[heatKey];const tot=arr.reduce((a,b)=>a+b,0);
+    const late=heatKey==="h"&&tot>=20&&arr[9]/tot>=.3, early=heatKey==="h"&&tot>=20&&(arr[0]+arr[1])/tot>=.45;
+    html+=`<tr><td class="l">${p.n}${late?'<span class="flag">late batch</span>':""}${early?'<span class="flag">front-loaded</span>':""}</td><td class="t">${p.f}</td><td class="t">${p.l}</td>`+arr.map(v=>{const t=Math.sqrt(v/max);return `<td style="background:${v?mix(c0,c1,t):c0};color:${t>.55?"#fff":"inherit"}">${v||""}</td>`}).join("")+"</tr>";
+  });
+  $("heat").innerHTML=html+"</tbody>";
+}
+function press(group,id){group.forEach(g=>$(g).setAttribute("aria-pressed",g===id?"true":"false"));}
+[["s-total","tot"],["s-calls","calls"],["s-int","ints"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{sortKey=k;press(["s-total","s-calls","s-int"],id);draw1();}));
+$("h-man").addEventListener("click",()=>{heatKey="h";press(["h-man","h-sen"],"h-man");heat();});
+$("h-sen").addEventListener("click",()=>{heatKey="sh";press(["h-man","h-sen"],"h-sen");heat();});
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",heat);new MutationObserver(heat).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});}catch(e){}
+$("ttl").textContent="Recruiter activity, "+META.day;$("asof").textContent="All branches · entries through about "+META.asof+" ET";$("srcdate").textContent=META.date;$("sysnote").textContent="Another "+META.sysSent.toLocaleString()+" automated texts and touchpoints went out under the Sense system login, with "+META.sysReplies+" replies; they are not shown here.";
+function starts(){
+  const tot=STARTS.reduce((a,r)=>a+r[3],0);
+  const by={};STARTS.forEach(r=>{(by[r[0]]=by[r[0]]||[]).push(r)});
+  const br=Object.keys(by).sort((a,b)=>by[b].reduce((x,r)=>x+r[3],0)-by[a].reduce((x,r)=>x+r[3],0));
+  $("starts-sum").textContent=tot?tot+" starts across "+br.length+" branch"+(br.length>1?"es":""):"No starts dated today";
+  let h="<thead><tr><th>Client</th><th>Recruiter</th><th style=\"text-align:right\">Starts</th></tr></thead><tbody>";
+  br.forEach(b=>{const n=by[b].reduce((x,r)=>x+r[3],0);h+=`<tr class="br"><td colspan="2">${b}</td><td class="n">${n}</td></tr>`;by[b].sort((x,y)=>y[3]-x[3]).forEach(r=>{h+=`<tr><td>${r[1]}</td><td>${r[2]}</td><td class="n">${r[3]}</td></tr>`})});
+  $("starts").innerHTML=h+"</tbody>";
+}
+kpis();legend("leg1",S1);starts();legend("leg2",S2);draw1();draw2();heat();
+</script>
+
+</body>
+</html>
