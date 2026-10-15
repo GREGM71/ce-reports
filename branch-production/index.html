@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Branch Production Board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#F4F6F9;--surface:#fff;--ink:#14212E;--muted:#5B6B7B;--rule:#D9E1EA;--navy:#00457C;--yellow:#FFDF6B;--bar:#00457C;--barm:#C5D0DC;--ok:#1E7B45;--warn:#9A6400;--bad:#B3261E}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1620;--surface:#16212D;--ink:#E6EDF4;--muted:#93A4B5;--rule:#263546;--navy:#0A3D66;--bar:#6FB3E8;--barm:#33475C;--ok:#5FCB8C;--warn:#E8B04B;--bad:#F2877F;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Source Sans 3",Arial,sans-serif}
+header{background:var(--navy);color:#fff}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header .wrap{padding-block:24px 20px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:8px 24px}
+.eyebrow{font:600 13px "Barlow Condensed",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow)}
+.eyebrow a{color:inherit;text-decoration:none}
+h1{font:700 38px/1.05 "Barlow Condensed",Arial,sans-serif;margin:6px 0 0}
+.asof{font-size:14px;opacity:.85}
+main .wrap{padding-block:24px 48px;display:grid;gap:28px}
+.lead{margin:0;font-size:18px;max-width:75ch}
+h2{font:700 24px/1.1 "Barlow Condensed",Arial,sans-serif;margin:0}
+.note{color:var(--muted);font-size:14px;margin:4px 0 0;max-width:80ch}
+section{display:grid;gap:12px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;min-width:0}
+.branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
+.bname{font-weight:600}
+.big{font:700 40px/1.05 "Barlow Condensed",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.delta{font-size:13px;font-variant-numeric:tabular-nums}
+.up{color:var(--ok)}.down{color:var(--bad)}.flat{color:var(--muted)}
+.spark{display:block;width:100%;height:44px;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+th{text-align:right;font-weight:600;color:var(--muted);font-size:13px;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th.l,td.l{text-align:left}
+.pill{display:inline-block;font-size:13px;padding:0 8px;border-radius:999px;border:1px solid currentColor}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}
+.m{color:var(--muted)}
+footer{color:var(--muted);font-size:13px}
+@media (max-width:640px){.hn{display:none}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div><div class="eyebrow"><a href="../">Commercial Employees · Team reports</a></div><h1>Branch Production Board</h1></div>
+  <div class="asof" id="asof"></div>
+</div></header>
+<main><div class="wrap">
+  <p class="lead" id="lead">Loading…</p>
+
+  <section aria-labelledby="h-starts">
+    <div><h2 id="h-starts">Starts this week</h2>
+    <p class="note">New hires with a start date this week (Mon–Sun), by placement office, with the last six weeks behind each.</p></div>
+    <div class="branches" id="branches"></div>
+  </section>
+
+  <section aria-labelledby="h-int">
+    <div><h2 id="h-int">Interviews scheduled this week</h2>
+    <p class="note">"Interview Scheduled" entries each recruiter logged in BOLD, by the day they were logged (Eastern time). Target is 12 a day; 8 is the minimum. The average counts completed days only, so today doesn't drag it down.</p></div>
+    <div class="chips" id="chips" role="group" aria-label="Filter by office"></div>
+    <div class="panel"><div class="scroll"><table id="rec"><thead><tr id="rec-head"></tr></thead><tbody></tbody></table></div></div>
+  </section>
+
+  <section aria-labelledby="h-jobs">
+    <div><h2 id="h-jobs">Open jobs by office</h2>
+    <p class="note">Jobs in BOLD with status Working, AD, Sense AI, Hot, Warm or Partially Filled, and the candidates in their pipelines.</p></div>
+    <div class="panel"><div class="scroll"><table id="jobs"><thead><tr>
+      <th class="l">Office</th><th>Open jobs</th><th class="hn">Working</th><th class="hn">AD</th><th class="hn">Sense AI</th><th>In pipeline</th>
+    </tr></thead><tbody></tbody></table></div></div>
+  </section>
+
+  <footer>Source: Avionté DataLink (Snowflake) — DIMHIRED, APPACTIVITY, DIMRPTREQ and related tables. DataLink runs about 30–60 minutes behind BOLD. Internal use only. Please don't forward outside Commercial Employees.</footer>
+</div></main>
+
+<script>document.write('<script src="data.js?t='+Date.now()+'"><\/script>')</script>
+<script>
+(function(){
+  var WS=window.WEEKLY_STARTS||[], IW=window.INTERVIEWS_WEEK||[], OJ=window.OPEN_JOBS||[];
+  var fmt=function(n){return Number(n).toLocaleString('en-US')};
+  var DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function d(s){var p=String(s).slice(0,10).split('-');return new Date(Date.UTC(+p[0],p[1]-1,+p[2]))}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+  var uniq=function(a){return a.filter(function(x,i){return a.indexOf(x)===i})};
+
+  if(window.BPB_ASOF){var a=new Date(window.BPB_ASOF);
+    document.getElementById('asof').textContent='Updated '+a.toLocaleString('en-US',{timeZone:'America/New_York',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' ET';}
+
+  // Starts by office
+  var weeks=uniq(WS.map(function(r){return String(r.week_of).slice(0,10)})).sort();
+  var cur=weeks[weeks.length-1], prev=weeks[weeks.length-2];
+  var get=function(o,w){var r=WS.filter(function(x){return x.office===o&&String(x.week_of).slice(0,10)===w})[0];return r?Number(r.starts):0};
+  var branches=uniq(WS.map(function(r){return r.office})).map(function(o){return{office:o,now:get(o,cur),last:get(o,prev)}}).sort(function(a,b){return b.now-a.now});
+  var maxY=Math.max.apply(null,WS.map(function(r){return Number(r.starts)}).concat([1]));
+  var bw=document.getElementById('branches');
+  branches.forEach(function(b){
+    var c=el('div','panel');c.appendChild(el('div','bname',b.office));c.appendChild(el('div','big',fmt(b.now)));
+    var ch=b.now-b.last;c.appendChild(el('div','delta '+(ch>0?'up':ch<0?'down':'flat'),(ch>0?'+':ch<0?'−':'±')+Math.abs(ch)+' vs last week ('+b.last+')'));
+    var W=200,H=44,n=weeks.length,step=W/n,bwid=step*0.7,ns='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('class','spark');svg.setAttribute('role','img');svg.setAttribute('aria-label','Starts per week, last '+n+' weeks');
+    weeks.forEach(function(w,i){var v=get(b.office,w),h=Math.max(0,(H-4)*v/maxY);var r=document.createElementNS(ns,'rect');
+      r.setAttribute('x',i*step+(step-bwid)/2);r.setAttribute('width',bwid);r.setAttribute('y',H-2-h);r.setAttribute('height',h);r.setAttribute('rx',2);
+      r.setAttribute('fill',i===n-1?'var(--bar)':'var(--barm)');var t=document.createElementNS(ns,'title');t.textContent='Week of '+MN[d(w).getUTCMonth()]+' '+d(w).getUTCDate()+': '+v;r.appendChild(t);svg.appendChild(r)});
+    c.appendChild(svg);
+    if(weeks.length)c.appendChild(el('div','note','Week of '+MN[d(weeks[0]).getUTCMonth()]+' '+d(weeks[0]).getUTCDate()+' to '+MN[d(cur).getUTCMonth()]+' '+d(cur).getUTCDate()));
+    bw.appendChild(c);
+  });
+
+  // Interviews per recruiter
+  var days=uniq(IW.map(function(r){return String(r.day).slice(0,10)})).sort(), latest=days[days.length-1];
+  var done=days.filter(function(x){return x<latest});
+  var people={};IW.forEach(function(r){(people[r.recruiter]=people[r.recruiter]||{recruiter:r.recruiter,office:r.office,by:{},total:0});var p=people[r.recruiter],k=String(r.day).slice(0,10);p.by[k]=(p.by[k]||0)+Number(r.interviews);p.total+=Number(r.interviews)});
+  var recs=Object.keys(people).map(function(k){var p=people[k],s=0;done.forEach(function(x){s+=p.by[x]||0});
+    p.avg=done.length?Math.round(s/done.length*10)/10:null;
+    p.status=p.avg===null?'No completed days':p.avg>=12?'On target':p.avg>=8?'Below target':'Under minimum';return p})
+    .sort(function(a,b){return((b.avg==null?-1:b.avg)-(a.avg==null?-1:a.avg))||b.total-a.total});
+
+  var totalStarts=branches.reduce(function(s,b){return s+b.now},0), lead=branches[0], counted=recs.filter(function(r){return r.avg!==null});
+  document.getElementById('lead').textContent=lead?(fmt(totalStarts)+' starts so far this week; '+lead.office+' leads with '+fmt(lead.now)+'. '+
+    counted.filter(function(r){return r.avg>=12}).length+' of '+counted.length+' recruiters are averaging 12 interviews a day, and '+
+    counted.filter(function(r){return r.avg<8}).length+' are under the minimum of 8.'):'No data yet.';
+
+  var office='All', chips=document.getElementById('chips');
+  chips.addEventListener('click',function(e){var b=e.target.closest('button[data-office]');if(!b)return;office=b.dataset.office;drawRec()});
+  var head=document.getElementById('rec-head'),cols=[{f:'recruiter',l:'Recruiter',c:'l'},{f:'office',l:'Office',c:'l hn'}]
+    .concat(days.map(function(x){var dt=d(x);return{day:x,l:x===latest?DN[dt.getUTCDay()]+' (so far)':DN[dt.getUTCDay()]+' '+dt.getUTCDate()}}))
+    .concat([{f:'total',l:'Week'},{f:'avg',l:'Avg / day'},{f:'status',l:'vs 12'}]);
+  cols.forEach(function(c){head.appendChild(el('th',c.c||'',c.l))});
+  function drawRec(){
+    var offs=['All'].concat(uniq(recs.map(function(r){return r.office})).sort());
+    chips.replaceChildren.apply(chips,offs.map(function(o){var b=el('button','chip',o==='All'?'All offices':o);b.type='button';b.dataset.office=o;b.setAttribute('aria-pressed',String(o===office));return b}));
+    var body=document.querySelector('#rec tbody');
+    body.replaceChildren.apply(body,recs.filter(function(r){return office==='All'||r.office===office}).map(function(r){var tr=el('tr');
+      cols.forEach(function(c){var td=el('td',c.c||'');
+        if(c.day){var v=r.by[c.day]||0;td.textContent=v?fmt(v):'·';if(!v)td.className='m'}
+        else if(c.f==='avg')td.textContent=r.avg==null?'—':r.avg.toFixed(1);
+        else if(c.f==='status')td.appendChild(el('span',r.status==='On target'?'pill ok':r.status==='Below target'?'pill warn':r.status==='Under minimum'?'pill bad':'m',r.status));
+        else if(c.f==='total')td.textContent=fmt(r.total);
+        else td.textContent=r[c.f];
+        tr.appendChild(td)});return tr}));
+  }
+  drawRec();
+
+  // Open jobs
+  var jb=document.querySelector('#jobs tbody');
+  OJ.slice().sort(function(a,b){return b.open_jobs-a.open_jobs}).forEach(function(r){var tr=el('tr');
+    [['office','l'],['open_jobs',''],['working_jobs','hn'],['ad_jobs','hn'],['sense_ai_jobs','hn'],['pipeline','']].forEach(function(f){tr.appendChild(el('td',f[1],f[0]==='office'?r.office:fmt(r[f[0]])))});jb.appendChild(tr)});
+})();
+</script>
+</body>
+</html>
