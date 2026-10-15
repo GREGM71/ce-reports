@@ -79,6 +79,12 @@ table.starts th{font:600 12px var(--f-body);color:var(--muted);text-align:left;p
 table.starts td{padding:7px 8px;border-bottom:1px solid var(--rule);font-size:14px}
 table.starts td.n{text-align:right;font:600 14px var(--f-mono)}
 table.starts tr.br td{background:var(--heat0);font-weight:700}
+table.starts td.bar{width:34%;min-width:120px}
+.sr{display:flex;align-items:center;gap:8px}
+.sr .tk{flex:1;height:14px;background:var(--heat0);border-radius:4px;overflow:hidden}
+.sr .tk i{display:block;height:100%;background:var(--c-ob)}
+.sr b{font:600 13px var(--f-mono);min-width:38px;text-align:right}
+tr.low td{color:var(--muted)}
 footer{color:var(--muted);font-size:12px}
 @media (max-width:560px){.row{grid-template-columns:110px 1fr 44px;gap:8px}.track i span{display:none}}
 @media (prefers-reduced-motion:no-preference){.track i{transition:width .35s ease}}
@@ -106,6 +112,18 @@ footer{color:var(--muted);font-size:12px}
     </div>
     <div class="scroll"><table class="starts" id="starts"></table></div>
     <p class="note" style="margin-top:10px">Placements entered in BOLD today, by placement branch, client and the recruiter credited with the hire. "Start date" is the day the person is due to begin work.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-show">
+    <div class="ph">
+      <h2 id="h-show">Onboards and interview show rate</h2>
+      <div class="seg" role="group" aria-label="Sort onboards table">
+        <button type="button" id="o-rate" aria-pressed="true">By show rate</button>
+        <button type="button" id="o-ob" aria-pressed="false">By onboards today</button>
+      </div>
+    </div>
+    <div class="scroll"><table class="starts" id="show"></table></div>
+    <p class="note" style="margin-top:10px">Show rate = of the candidates a recruiter logged "Interview Scheduled" for in the last 7 days, how many have since been marked "Onboarding Complete". Recent bookings haven't happened yet, so the rate climbs through the week. People with fewer than 10 interviews are greyed out.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-calls">
@@ -149,7 +167,7 @@ footer{color:var(--muted);font-size:12px}
 
 <script>document.write('<script src="data.js?t='+Date.now()+'"><\/script>')</script>
 <script>
-const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[];
+const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[], SHOW=window.SHOW||[];
 const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14]}));
 D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;p.tot=p.calls+p.il+p.ob+p.oth;p.ints=p.cib+p.il;});
 const S1=[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
@@ -159,7 +177,7 @@ const sum=k=>D.reduce((a,p)=>a+p[k],0);
 function kpis(){
   const calls=sum("calls"),conn=sum("cib")+sum("co");
   const st=STARTS.reduce((a,r)=>a+r[3],0);
-  const k=[[st,"starts booked today",META.startingToday!=null?`${META.startingToday} began work today`:""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("cib"),"calls that booked an interview",""],[sum("ob"),"onboards completed",""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
+  const k=[[st,"starts booked today",META.startingToday!=null?`${META.startingToday} began work today`:""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("cib"),"calls that booked an interview",""],[SHOW.length?SHOW.reduce((a,r)=>a+r[2],0):sum("ob"),"onboards completed",SHOW.length?`<b>${Math.round(SHOW.reduce((a,r)=>a+r[4],0)/Math.max(1,SHOW.reduce((a,r)=>a+r[3],0))*100)}%</b> 7-day show rate`:""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
   $("kpis").innerHTML=k.map(([v,l,s])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${l}${s?` · ${s}`:""}</div></div>`).join("");
 }
 function legend(el,S){$(el).innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s[2]})"></i>${s[1]}</span>`).join("");}
@@ -204,7 +222,19 @@ function starts(){
   br.forEach(b=>{const n=by[b].reduce((x,r)=>x+r[3],0);h+=`<tr class="br"><td colspan="3">${b}</td><td class="n">${n}</td></tr>`;by[b].sort((x,y)=>y[3]-x[3]).forEach(r=>{h+=`<tr><td>${r[1]}</td><td>${r[2]}</td><td>${r[4]||""}</td><td class="n">${r[3]}</td></tr>`})});
   $("starts").innerHTML=h+"</tbody>";
 }
-kpis();legend("leg1",S1);starts();legend("leg2",S2);draw1();draw2();heat();
+let showKey="rate";
+function show(){
+  const sec=$("h-show").closest("section");if(!SHOW.length){sec.hidden=true;return;}
+  const L=SHOW.map(r=>({n:r[0],o:r[1],ob:r[2],s:r[3],w:r[4],rate:r[3]?r[4]/r[3]:-1}));
+  L.sort(showKey==="rate"?(a,b)=>((b.s>=10)-(a.s>=10))||b.rate-a.rate||b.w-a.w:(a,b)=>b.ob-a.ob||b.rate-a.rate);
+  const S=L.reduce((a,p)=>a+p.s,0),W=L.reduce((a,p)=>a+p.w,0),O=L.reduce((a,p)=>a+p.ob,0);
+  let h=`<thead><tr><th>Recruiter</th><th style="text-align:right">Onboards today</th><th style="text-align:right">Interviews (7 days)</th><th style="text-align:right">Showed &amp; onboarded</th><th>Show rate</th></tr></thead><tbody>`;
+  L.forEach(p=>{const pct=p.s?Math.round(p.rate*100):null;h+=`<tr class="${p.s&&p.s<10?"low":""}"><td><b>${p.n}</b><div class="sub">${p.o}</div></td><td class="n">${p.ob}</td><td class="n">${p.s||"–"}</td><td class="n">${p.s?p.w:"–"}</td><td class="bar">${pct==null?'<span class="sub">no interviews</span>':`<div class="sr"><span class="tk"><i style="width:${pct}%"></i></span><b>${pct}%</b></div>`}</td></tr>`});
+  h+=`<tr class="br"><td>Team</td><td class="n">${O}</td><td class="n">${S}</td><td class="n">${W}</td><td class="bar"><div class="sr"><span class="tk"><i style="width:${S?W/S*100:0}%"></i></span><b>${S?Math.round(W/S*100):0}%</b></div></td></tr>`;
+  $("show").innerHTML=h+"</tbody>";
+}
+[["o-rate","rate"],["o-ob","ob"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{showKey=k;press(["o-rate","o-ob"],id);show();}));
+kpis();legend("leg1",S1);starts();show();legend("leg2",S2);draw1();draw2();heat();
 </script>
 
 </body>

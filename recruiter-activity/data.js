@@ -36,3 +36,19 @@ window.STARTS=[
 ["New Kensington","Leed's","Andy Draskovic",1,"10/12"],
 ["Wilkinsburg","Valassis","Shauna Whipple",1,"10/13"],
 ];
+window.SHOW=[
+["Sharon Houseman","Delmont",5,88,20],
+["Derek Smith","Fox Chapel",3,44,12],
+["Stephen Nelson","New Kensington",3,0,0],
+["Brooke Woody","Charleston",2,35,6],
+["Andy Draskovic","New Kensington",1,104,33],
+["Donna Hecht","Delmont",1,44,10],
+["Kaytee Jack","Delmont",1,43,12],
+["Brian Smith","Delmont",1,32,3],
+["Donna Nagg","Delmont",1,28,7],
+["Alison Fisher","McMurray",1,25,6],
+["Ross Madler","Charleston",1,16,2],
+["Taylor Rice","COEM: Inhouse",1,0,0],
+["Sam Skeba","Fox Chapel",0,4,2],
+["Hannah Oteri","Charleston",0,3,1],
+];
