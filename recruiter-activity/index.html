@@ -114,18 +114,6 @@ footer{color:var(--muted);font-size:12px}
     <p class="note" style="margin-top:10px">Placements entered in BOLD today, by placement branch, client and the recruiter credited with the hire. "Start date" is the day the person is due to begin work.</p>
   </section>
 
-  <section class="panel" aria-labelledby="h-show">
-    <div class="ph">
-      <h2 id="h-show">Onboards and interview show rate</h2>
-      <div class="seg" role="group" aria-label="Sort onboards table">
-        <button type="button" id="o-rate" aria-pressed="true">By show rate</button>
-        <button type="button" id="o-ob" aria-pressed="false">By onboards today</button>
-      </div>
-    </div>
-    <div class="scroll"><table class="starts" id="show"></table></div>
-    <p class="note" style="margin-top:10px">Show rate = of the candidates a recruiter logged "Interview Scheduled" for in the last 7 days, how many have since been marked "Onboarding Complete". Recent bookings haven't happened yet, so the rate climbs through the week. People with fewer than 10 interviews are greyed out.</p>
-  </section>
-
   <section class="panel" aria-labelledby="h-calls">
     <div class="ph">
       <h2 id="h-calls">Calls and recruiting work by person</h2>
@@ -160,6 +148,18 @@ footer{color:var(--muted);font-size:12px}
     </div>
     <div class="scroll"><table class="heat" id="heat"></table></div>
     <p class="note" style="margin-top:10px">Times are when the entry was saved in BOLD (Eastern). A late-day pile-up usually means activity was entered in a batch rather than as calls happened.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-show">
+    <div class="ph">
+      <h2 id="h-show">Onboards and interview show rate</h2>
+      <div class="seg" role="group" aria-label="Sort onboards table">
+        <button type="button" id="o-rate" aria-pressed="true">By show rate</button>
+        <button type="button" id="o-ob" aria-pressed="false">By onboards today</button>
+      </div>
+    </div>
+    <div class="scroll"><table class="starts" id="show"></table></div>
+    <p class="note" style="margin-top:10px">Show rate = of the candidates a recruiter logged "Interview Scheduled" for in the last 7 days, how many have since been marked "Onboarding Complete". Recent bookings haven't happened yet, so the rate climbs through the week. People with fewer than 10 interviews are greyed out.</p>
   </section>
 
   <footer>Source: Avionté DataLink (Snowflake), APPACTIVITY joined to users and offices, <span id="srcdate"></span>. DataLink runs about 30–60 minutes behind BOLD.</footer>
