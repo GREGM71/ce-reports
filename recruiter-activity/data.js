@@ -24,10 +24,10 @@ window.STARTS=[
 ["Delmont","Biscotti Brothers Bakery","Alison Fisher",1,"10/19"],
 ["Delmont","Biscotti Brothers Bakery","Donna Nagg",1,"10/19"],
 ["Delmont","Dormont Manufacturing Company","Donna Nagg",1,"10/19"],
-["Delmont","Namsco Plastics","Donna Nagg",2,"10/26, 10/20"],
+["Delmont","Namsco Plastics","Donna Nagg",2,"10/20, 10/26"],
 ["Fox Chapel","Old World Industries","Shauna Whipple",1,"10/16"],
 ["Fox Chapel","Sampco","Sharon Houseman",1,"10/19"],
-["New Kensington","Leed's","Andy Draskovic",7,"10/16, 10/19, 10/12"],
+["New Kensington","Leed's","Andy Draskovic",7,"10/19, 10/16, 10/12"],
 ];
 window.SHOW=[
 ["Sharon Houseman","Delmont",5,80,20],
