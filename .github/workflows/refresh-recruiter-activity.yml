@@ -1,0 +1,38 @@
+name: Refresh Recruiter Activity Board
+
+on:
+  schedule:
+    # Weekdays 4:35 PM Eastern. Two times so it works in both daylight and standard time
+    # (20:35 UTC = 4:35 PM EDT, 21:35 UTC = 4:35 PM EST). The extra run just refreshes again.
+    - cron: "35 20 * * 1-5"
+    - cron: "35 21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-recruiter-activity
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Pull today's numbers from DataLink
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: node scripts/refresh-recruiter-activity.mjs
+      - name: Publish
+        run: |
+          if git diff --quiet -- recruiter-activity/data.js; then echo "No change."; exit 0; fi
+          git config user.name "ce-reports-bot"
+          git config user.email "ce-reports-bot@users.noreply.github.com"
+          git add recruiter-activity/data.js
+          git commit -m "Refresh recruiter activity $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
+          git push
