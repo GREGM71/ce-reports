@@ -2,12 +2,19 @@ name: Refresh Recruiter Activity Board
 
 on:
   schedule:
-    # Weekdays, Eastern time: 11:40 AM (for the 12:00 email) and 3:55 PM (for the 4:15 email).
-    # Each is listed twice so it works in both daylight time (UTC-4) and standard time (UTC-5);
-    # the extra runs just refresh the website again (12:40 / 4:55 PM in summer, 10:40 AM / 2:55 PM in winter).
+    # Weekdays, Eastern time: 11:40 AM (midday email) and 3:55 PM (end-of-day email).
+    # Each is listed twice so it works in both daylight time (UTC-4) and standard time (UTC-5).
+    # Extra runs just refresh the website; the email step sends each email only once a day.
     - cron: "40 15,16 * * 1-5"
     - cron: "55 19,20 * * 1-5"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      email:
+        description: "Email to send: auto (by time of day), midday, eod, or none"
+        default: "auto"
+      test:
+        description: "Send only to Greg (true/false)"
+        default: "false"
 
 permissions:
   contents: write
@@ -36,4 +43,18 @@ jobs:
           git config user.email "ce-reports-bot@users.noreply.github.com"
           git add recruiter-activity/data.js
           git commit -m "Refresh recruiter activity $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
+          git push
+      - name: Send team email
+        if: ${{ github.event_name == 'schedule' || inputs.email != 'none' }}
+        env:
+          M365_TENANT_ID: ${{ secrets.M365_TENANT_ID }}
+          M365_CLIENT_ID: ${{ secrets.M365_CLIENT_ID }}
+          M365_CLIENT_SECRET: ${{ secrets.M365_CLIENT_SECRET }}
+        run: |
+          node scripts/send-recruiter-email.mjs "${{ inputs.email || 'auto' }}" "${{ inputs.test == 'true' && 'test' || '' }}"
+          if git diff --quiet -- recruiter-activity/email-log.json 2>/dev/null && ! git ls-files --others --exclude-standard | grep -q email-log; then exit 0; fi
+          git config user.name "ce-reports-bot"
+          git config user.email "ce-reports-bot@users.noreply.github.com"
+          git add recruiter-activity/email-log.json
+          git commit -m "Log recruiter email $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
           git push
