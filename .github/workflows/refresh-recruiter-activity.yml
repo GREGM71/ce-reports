@@ -2,11 +2,11 @@ name: Refresh Recruiter Activity Board
 
 on:
   schedule:
-    # Weekdays 3:30 PM Eastern, ahead of the 3:45 PM email. Two times so it works in both
-    # daylight and standard time (19:30 UTC = 3:30 PM EDT, 20:30 UTC = 3:30 PM EST).
-    # The extra run (4:30 PM EDT in summer) just refreshes again.
-    - cron: "30 19 * * 1-5"
-    - cron: "30 20 * * 1-5"
+    # Weekdays, Eastern time: 11:40 AM (for the 12:00 email) and 3:55 PM (for the 4:15 email).
+    # Each is listed twice so it works in both daylight time (UTC-4) and standard time (UTC-5);
+    # the extra runs just refresh the website again (12:40 / 4:55 PM in summer, 10:40 AM / 2:55 PM in winter).
+    - cron: "40 15,16 * * 1-5"
+    - cron: "55 19,20 * * 1-5"
   workflow_dispatch: {}
 
 permissions:
