@@ -11,8 +11,13 @@ const CFG = {
   role: "PROD_READERROLE_COE", warehouse: "PROD_WH_COE",
   database: "PROD_ANALYTICS_COE", schema: "DATALINK",
 };
-const pem = (process.env.SNOWFLAKE_PRIVATE_KEY || "").trim();
-if (!pem.includes("PRIVATE KEY")) { console.error("SNOWFLAKE_PRIVATE_KEY secret is missing."); process.exit(1); }
+let pem = (process.env.SNOWFLAKE_PRIVATE_KEY || "").trim();
+if (!pem) { console.error("SNOWFLAKE_PRIVATE_KEY secret is missing."); process.exit(1); }
+// Accept the key with or without the -----BEGIN/END PRIVATE KEY----- lines.
+if (!pem.includes("PRIVATE KEY")) {
+  const b64 = pem.replace(/[^A-Za-z0-9+/=]/g, "");
+  pem = "-----BEGIN PRIVATE KEY-----\n" + b64.match(/.{1,64}/g).join("\n") + "\n-----END PRIVATE KEY-----\n";
+}
 const key = crypto.createPrivateKey(pem);
 const fp = "SHA256:" + crypto.createHash("sha256").update(crypto.createPublicKey(key).export({ type: "spki", format: "der" })).digest("base64");
 const b64 = (b) => Buffer.from(b).toString("base64").replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
