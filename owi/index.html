@@ -131,6 +131,24 @@ input[type=range]:focus-visible{outline:2px solid var(--robot);outline-offset:2p
 .savepill{display:inline-flex;align-items:baseline;gap:10px;background:var(--ok);color:#fff;border-radius:999px;padding:8px 18px;font:700 20px var(--f-display);letter-spacing:.02em}
 @media (prefers-color-scheme:dark){.savepill{color:#03140C}}
 
+/* Robot temps explainer (dark band) */
+section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--deep);color:#fff}
+.dark .kicker{color:var(--gold)}
+.dark .lead{color:#C4D6E8}
+.howgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.howgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.howgrid{grid-template-columns:1fr}}
+.howcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.howcard .n{font:800 15px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--robot)}
+.howcard h3{font-size:24px;color:#fff}
+.howcard p{color:#C4D6E8;font-size:15.5px}
+.howcard q{display:block;margin-top:4px;color:#fff;font-style:italic;font-size:14.5px;quotes:"\201C" "\201D"}
+.trad{margin-top:28px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);overflow:hidden}
+.trad > div{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.12);font-size:15.5px;color:#DCE8F4}
+.trad .h{font:700 17px var(--f-display);letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.06);color:#fff}
+.trad .h.us{background:var(--robot);color:#022}
+.trad .us{background:rgba(18,181,166,.10);color:#fff;font-weight:600}
+@media (max-width:640px){.trad{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);font-size:14px}.trad > div{padding:10px}}
 /* Options */
 .scope{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
 .chip{font:600 15px var(--f-body);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
@@ -324,6 +342,31 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <div class="hbar"><div class="name">Robot temp<small>All-in, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
         <div class="legend"><span><i style="background:var(--temp)"></i>Bill rate</span><span><i style="background:var(--temp-ink)"></i>Overtime premium</span><span><i style="background:var(--hidden)"></i>Turnover cost per hour</span><span><i style="background:var(--robot)"></i>Robot rate</span><span><i style="background:var(--robot-ink)"></i>Operator oversight</span></div>
         <div><span class="savepill num" id="h-save"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band dark" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">What a robot temp is</div>
+        <h2>Not a six-month automation project. A worker you can move.</h2>
+        <p class="lead">Traditional automation is bolted to one line, behind a cage, built by engineers for one product. Robot temps are collaborative arms on a rolling base that your own people run, and that move to wherever the work is this week.</p>
+      </div>
+      <div class="howgrid">
+        <div class="howcard"><div class="n">They're ours</div><h3>We own the robots</h3><p>Madler Robotics owns, insures and maintains every robot. You pay for the hours it works, on the same invoice as your staffing. No capital request, no asset on your books.</p></div>
+        <div class="howcard"><div class="n">You run them</div><h3>Your supervisors are in control</h3><p>Start, stop, pause and switch jobs from a tablet. One lead can watch several robots from a single screen, the way a lead watches a crew today.</p><q>Any factory worker becomes a robot operator in a day.</q><p style="font-size:13px">Standard Bots</p></div>
+        <div class="howcard"><div class="n">They move</div><h3>Line to line, job to job</h3><p>Each robot sits on a mobile base. Roll it to another line, load a different routine, and it's working. New bottle, new case or new pallet pattern? We build and test the routine for you.</p></div>
+        <div class="howcard"><div class="n">We engineer it</div><h3>We handle how product reaches it</h3><p>The real work is getting product to the robot the same way every time: infeed, guides, pick stations, pallet positions. We survey each station, design that piece and prove it in the pilot.</p></div>
+      </div>
+      <div class="trad" role="table" aria-label="Traditional automation compared with robot temps">
+        <div class="h" role="columnheader">&nbsp;</div><div class="h" role="columnheader">Traditional automation</div><div class="h us" role="columnheader">Robot temps</div>
+        <div role="cell">Upfront cost</div><div role="cell">Often six figures per cell</div><div role="cell" class="us">Hourly, no capital</div>
+        <div role="cell">Time to running</div><div role="cell">Months of engineering</div><div role="cell" class="us">Weeks, piloted first</div>
+        <div role="cell">Change a product or line</div><div role="cell">Re-engineer the cell</div><div role="cell" class="us">Load a new routine</div>
+        <div role="cell">Who runs it</div><div role="cell">Controls engineers</div><div role="cell" class="us">Your floor leads</div>
+        <div role="cell">Safety</div><div role="cell">Fenced off</div><div role="cell" class="us">Works beside people</div>
+        <div role="cell">If it isn't working</div><div role="cell">You own it anyway</div><div role="cell" class="us">It goes back on our truck</div>
       </div>
     </div>
   </section>
