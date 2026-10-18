@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Old World Industries · Madler Robotics</title>
+<meta name="description" content="What robots on the line would mean for Old World Industries New Kensington: cost per hour, turnover, retraining and how Madler Robotics runs it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: full-bleed navy hero with a live savings counter and animated arm, then alternating light bands:
+   the revolving door (their data) → hidden cost calculator → cost per hour → three ways to pay → why us → rollout → pilot. */
+:root{
+  --bg:#F3F6FA; --surface:#FFFFFF; --ink:#0F1B2A; --muted:#566578; --rule:#D8E0EA;
+  --navy:#00457C; --deep:#04213D; --night:#020F1F;
+  --robot:#12B5A6; --robot-ink:#0B7F75; --temp:#E8962E; --temp-ink:#B26A12; --hidden:#D9534F;
+  --gold:#FFDF6B; --ok:#15885A;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#97A8BB; --rule:#20344A;
+  --robot:#2FD3C3; --robot-ink:#58E0D3; --temp:#F2A94A; --temp-ink:#F4B868; --hidden:#F07470; --ok:#43C98C;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.02;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,4.6vw,54px);font-weight:700;letter-spacing:.005em}
+h3{font-size:24px;font-weight:700}
+p{margin:0}
+.kicker{font:600 14px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--robot-ink)}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--muted);max-width:62ch}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+section.band{padding-block:clamp(56px,8vw,104px)}
+section.band.alt{background:var(--surface);border-block:1px solid var(--rule)}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:820px}
+
+/* Hero */
+.hero{background:radial-gradient(1200px 600px at 85% -10%,#0B5FA5 0%,transparent 60%),radial-gradient(900px 500px at -10% 110%,#0A6E78 0%,transparent 55%),var(--night);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{padding-block:28px clamp(56px,8vw,96px);position:relative;z-index:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:clamp(36px,6vw,72px)}
+.brand{display:flex;align-items:center;gap:12px;font:700 22px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.brand .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--robot),#0B5FA5);display:grid;place-items:center}
+.brand small{display:block;font:500 12px var(--f-body);letter-spacing:.04em;text-transform:none;color:#A9C2DA}
+.for{font:600 13px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(46px,7.2vw,92px);font-weight:800;letter-spacing:-.005em}
+.hero h1 em{font-style:normal;color:var(--robot)}
+.hero .lead{color:#C4D6E8;margin-top:18px}
+.counter{margin-top:34px;padding:22px 24px;border-radius:var(--r);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);max-width:560px}
+.counter .k{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:#9FC0DD}
+.counter .v{font:800 clamp(52px,7vw,84px)/1 var(--f-display);color:#fff;margin-top:6px}
+.counter .v span{color:var(--robot)}
+.counter .s{color:#B8CCE0;font-size:15px;margin-top:6px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font:600 16px var(--f-body);text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--robot);color:#022;}
+.btn.ghost{border-color:rgba(255,255,255,.35);color:#fff}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.armbox{position:relative;aspect-ratio:1/1;max-width:440px;width:100%;justify-self:center}
+.armbox svg{width:100%;height:100%;display:block}
+@media (prefers-reduced-motion:no-preference){
+  .a-shoulder{animation:shoulder 6s ease-in-out infinite;transform-origin:150px 300px}
+  .a-elbow{animation:elbow 6s ease-in-out infinite;transform-origin:150px 190px}
+  .a-wrist{animation:wrist 6s ease-in-out infinite;transform-origin:150px 100px}
+  .a-box{animation:box 6s ease-in-out infinite}
+  .rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}
+}
+@keyframes shoulder{0%,100%{transform:rotate(-28deg)}45%,55%{transform:rotate(26deg)}}
+@keyframes elbow{0%,100%{transform:rotate(38deg)}45%,55%{transform:rotate(-30deg)}}
+@keyframes wrist{0%,100%{transform:rotate(-12deg)}45%,55%{transform:rotate(6deg)}}
+@keyframes box{0%,8%{opacity:0}12%,42%{opacity:1}50%,100%{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:20px}
+.alt .stat{background:var(--bg)}
+.stat .v{font:800 clamp(44px,5vw,64px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .v.t{color:var(--temp-ink)}.stat .v.h{color:var(--hidden)}.stat .v.r{color:var(--robot-ink)}
+.stat .k{font-weight:600;margin-top:8px}
+.stat .s{color:var(--muted);font-size:14.5px;margin-top:2px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:clamp(18px,2.4vw,28px);min-width:0}
+.alt .card{background:var(--bg)}
+.chart{width:100%;display:block}
+.chart text{font:12px var(--f-body);fill:var(--muted)}
+.chart .lb{fill:var(--ink);font-weight:600;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:var(--muted);margin:10px 0 4px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:20px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.quote{font:600 clamp(22px,2.4vw,30px)/1.25 var(--f-display);color:var(--ink);border-left:4px solid var(--hidden);padding-left:18px;margin-top:28px;max-width:60ch}
+
+/* Calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}}
+.slider{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.slider:last-child{border-bottom:0}
+.slider .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.slider label{font-weight:600}
+.slider output{font:700 22px var(--f-display);font-variant-numeric:tabular-nums;color:var(--navy)}
+@media (prefers-color-scheme:dark){.slider output{color:var(--robot-ink)}}
+.slider small{color:var(--muted);font-size:13.5px}
+input[type=range]{width:100%;accent-color:var(--robot);height:28px}
+input[type=range]:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
+.result{display:grid;gap:14px;align-content:start}
+.big{font:800 clamp(56px,7vw,88px)/1 var(--f-display);color:var(--hidden);font-variant-numeric:tabular-nums}
+.rows{display:grid;gap:8px;font-variant-numeric:tabular-nums}
+.rows div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--rule)}
+.rows div b{font-weight:700}
+.callout{background:linear-gradient(135deg,rgba(18,181,166,.12),rgba(0,69,124,.10));border:1px solid var(--rule);border-radius:12px;padding:14px 16px;font-size:15.5px}
+
+/* Hourly */
+.hourwrap{display:grid;gap:18px}
+.hbar{display:grid;grid-template-columns:170px minmax(0,1fr) 92px;gap:14px;align-items:center}
+@media (max-width:620px){.hbar{grid-template-columns:110px minmax(0,1fr) 72px}}
+.hbar .name{font-weight:600;line-height:1.2}
+.hbar .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.track{display:flex;height:42px;border-radius:10px;overflow:hidden;background:var(--rule)}
+.track span{display:block;height:100%;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.hbar .amt{font:800 28px var(--f-display);text-align:right;font-variant-numeric:tabular-nums}
+.savepill{display:inline-flex;align-items:baseline;gap:10px;background:var(--ok);color:#fff;border-radius:999px;padding:8px 18px;font:700 20px var(--f-display);letter-spacing:.02em}
+@media (prefers-color-scheme:dark){.savepill{color:#03140C}}
+
+/* Options */
+.scope{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{font:600 15px var(--f-body);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:920px){.opts{grid-template-columns:1fr}}
+.opt{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:22px}
+.opt.star{border:2px solid var(--robot);box-shadow:0 18px 40px -24px rgba(18,181,166,.55)}
+.badge{position:absolute;top:-12px;left:18px;background:var(--robot);color:#022;font:700 12px var(--f-display);letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.opt .tag{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.opt .price{font:800 48px/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--robot-ink)}
+.opt .price small{font:500 15px var(--f-body);color:var(--muted)}
+.opt ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
+.opt li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:8px;font-variant-numeric:tabular-nums}
+.opt li span:first-child{color:var(--muted)}
+.opt li b{font-weight:700;text-align:right}
+.opt .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:6px}
+.opt .foot .k{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.opt .foot .v{font:800 34px var(--f-display);color:var(--ok);font-variant-numeric:tabular-nums}
+.jobs{margin-top:22px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;min-width:620px}
+th{font:600 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding:10px;border-bottom:1px solid var(--rule)}
+td{text-align:right;padding:12px 10px;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+tfoot td{font-weight:700;border-bottom:0}
+td input{width:64px;font:600 16px var(--f-body);text-align:center;padding:6px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+
+/* Why us */
+.vs{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.vs > div{padding:14px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px;font-size:15.5px}
+.vs .h{font:700 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:var(--bg)}
+.vs .h.us{background:var(--navy);color:#fff}
+.vs .us-col{background:rgba(18,181,166,.07)}
+.yes{color:var(--ok);font-weight:700}.no{color:var(--muted)}
+.ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800}
+.ico.y{background:var(--ok);color:#fff}.ico.n{background:var(--rule);color:var(--muted)}
+@media (max-width:700px){.vs{grid-template-columns:minmax(0,1.2fr) 70px 70px}.vs .txt{display:none}}
+.promise{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+@media (max-width:900px){.promise{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.promise{grid-template-columns:1fr}}
+.promise .card h3{font-size:22px;margin:10px 0 6px}
+.promise .card p{color:var(--muted);font-size:15.5px}
+.pi{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--robot),var(--navy));display:grid;place-items:center}
+.pi svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Rollout */
+.roll{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:start}
+@media (max-width:900px){.roll{grid-template-columns:1fr}}
+
+/* Pilot */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:56px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font:700 20px var(--f-display)}
+.step h3{font-size:22px;margin-bottom:6px}
+.step p{color:var(--muted);font-size:15.5px}
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+@media (max-width:760px){.vids{grid-template-columns:1fr}}
+.vids a{display:grid;gap:2px;padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--rule);text-decoration:none}
+.vids a:hover,.vids a:focus-visible{border-color:var(--robot);outline:none}
+.vids b{font:700 19px var(--f-display)}
+.vids span{color:var(--muted);font-size:14px}
+.final{background:radial-gradient(800px 400px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--night);color:#fff}
+.final .wrap{padding-block:clamp(56px,8vw,96px);display:grid;gap:18px;justify-items:start}
+.final h2{font-size:clamp(38px,5vw,62px)}
+.final p{color:#C4D6E8;max-width:60ch;font-size:19px}
+.contact{font:600 18px var(--f-body);color:#fff}
+.contact .addr{font-family:var(--f-mono);font-size:16px;background:rgba(255,255,255,.08);padding:4px 10px;border-radius:8px;user-select:all}
+footer{padding-block:28px;color:var(--muted);font-size:13.5px}
+footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.35);padding:8px 12px;font-size:13.5px;display:none;z-index:5;white-space:nowrap}
+.rel{position:relative}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14"/><path d="M9 20v-4l3-6 5-3"/><circle cx="12" cy="10" r="1.6"/><path d="M17 7l2-1.5M17 7l1.5 2"/></svg></span><span>Madler Robotics<small>with Commercial Employees</small></span></div>
+      <div class="for">Prepared for Old World Industries · New Kensington</div>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1 class="rise">The line that <em>shows up</em> every shift.</h1>
+        <p class="lead rise d1">Standard Bots robot arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. Billed by the hour like a temp, with no capital and no turnover.</p>
+        <div class="counter rise d2" aria-live="polite">
+          <div class="k" id="cnt-k">What New Kensington gets back each year</div>
+          <div class="v num" id="cnt-v">$<span>0</span></div>
+          <div class="s" id="cnt-s">Calculating…</div>
+        </div>
+        <div class="cta-row rise d3">
+          <a class="btn primary" href="#hidden">See your real cost of a temp hour</a>
+          <a class="btn ghost" href="#pilot">The 90-day pilot</a>
+        </div>
+      </div>
+      <div class="armbox" aria-hidden="true">
+        <svg viewBox="0 0 300 340">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#E9F1F8"/><stop offset="1" stop-color="#B7C9DA"/></linearGradient>
+            <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#12B5A6"/><stop offset="1" stop-color="#0B5FA5"/></linearGradient>
+          </defs>
+          <ellipse cx="150" cy="322" rx="120" ry="10" fill="rgba(0,0,0,.35)"/>
+          <rect x="30" y="250" width="70" height="40" rx="6" fill="#163B5E" stroke="#2A5A86"/>
+          <rect x="200" y="250" width="70" height="40" rx="6" fill="#163B5E" stroke="#2A5A86"/>
+          <rect x="110" y="300" width="80" height="22" rx="6" fill="url(#g2)"/>
+          <g class="a-shoulder">
+            <rect x="136" y="186" width="28" height="118" rx="14" fill="url(#g1)"/>
+            <circle cx="150" cy="300" r="20" fill="#E9F1F8" stroke="#12B5A6" stroke-width="4"/>
+            <g class="a-elbow">
+              <rect x="138" y="96" width="24" height="100" rx="12" fill="url(#g1)"/>
+              <circle cx="150" cy="190" r="15" fill="#E9F1F8" stroke="#12B5A6" stroke-width="4"/>
+              <g class="a-wrist">
+                <circle cx="150" cy="100" r="11" fill="#E9F1F8" stroke="#12B5A6" stroke-width="3"/>
+                <rect x="140" y="56" width="20" height="40" rx="6" fill="#DCE7F1"/>
+                <rect x="132" y="44" width="8" height="18" rx="3" fill="#12B5A6"/>
+                <rect x="160" y="44" width="8" height="18" rx="3" fill="#12B5A6"/>
+                <rect class="a-box" x="136" y="20" width="28" height="28" rx="4" fill="#E8962E"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="band" id="door">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">The revolving door, in your own numbers</div>
+        <h2>229 people to keep about 23 jobs filled.</h2>
+        <p class="lead">From Commercial Employees' billing to OWI New Kensington, January to mid-October 2026. Every start is an orientation, a training shift, a supervisor pulled off the floor and a line running short until the next person shows.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="v t num">229</div><div class="k">People through the door</div><div class="s">To cover about 23 full-time jobs</div></div>
+        <div class="stat"><div class="v h num">69%</div><div class="k">Gone inside a month</div><div class="s">157 worked fewer than 160 hours</div></div>
+        <div class="stat"><div class="v h num">78</div><div class="k">Left in the first week</div><div class="s">Worked fewer than 40 hours</div></div>
+        <div class="stat"><div class="v t num">80 hrs</div><div class="k">Typical stay</div><div class="s">Median hours per worker, about two weeks</div></div>
+      </div>
+      <div class="card rel" style="margin-top:20px">
+        <h3>People it took each month vs. jobs actually filled</h3>
+        <div class="legend"><span><i style="background:var(--temp)"></i>Different people on the line</span><span><i style="background:var(--navy)"></i>Full-time jobs those hours filled</span></div>
+        <svg class="chart" id="doorChart" role="img" aria-label="Workers per month versus full-time positions filled"></svg>
+      </div>
+      <p class="quote">A robot learns the job once. It doesn't call off, quit on day three, need orientation, or get hurt lifting the 400th case of the shift.</p>
+    </div>
+  </section>
+
+  <section class="band alt" id="hidden">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">The cost nobody invoices you for</div>
+        <h2>What each new start really costs OWI.</h2>
+        <p class="lead">The bill rate is only part of a temp hour. Move the sliders to match what your floor actually spends on every new face.</p>
+      </div>
+      <div class="calc">
+        <div class="card">
+          <div class="slider"><div class="top"><label for="s-starts">New starts per year</label><output id="o-starts" class="num"></output></div><input type="range" id="s-starts" min="50" max="500" step="5" value="290"><small>Your 2026 pace is about 290 a year (229 in 9½ months).</small></div>
+          <div class="slider"><div class="top"><label for="s-orient">Paid orientation and safety training</label><output id="o-orient" class="num"></output></div><input type="range" id="s-orient" min="0" max="24" step="1" value="8"><small>Hours per start at the bill rate before they produce.</small></div>
+          <div class="slider"><div class="top"><label for="s-sup">Trainer and supervisor time</label><output id="o-sup" class="num"></output></div><input type="range" id="s-sup" min="0" max="16" step="1" value="4"><small>Hours a lead spends with each new start, at <span id="o-suprate"></span>/hr.</small></div>
+          <div class="slider"><div class="top"><label for="s-ramp">Lost output in week one</label><output id="o-ramp" class="num"></output></div><input type="range" id="s-ramp" min="0" max="80" step="5" value="40"><small>How far below a trained worker a new start runs in the first 40 hours.</small></div>
+          <div class="slider"><div class="top"><label for="s-hr">HR and admin per start</label><output id="o-hr" class="num"></output></div><input type="range" id="s-hr" min="0" max="6" step="0.5" value="1.5"><small>Badging, paperwork, PPE, scheduling, write-ups and the exit.</small></div>
+        </div>
+        <div class="result">
+          <div class="card">
+            <div class="kicker" style="color:var(--hidden)">Hidden turnover cost a year</div>
+            <div class="big" id="hid-total">$0</div>
+            <div class="rows" id="hid-rows"></div>
+          </div>
+          <div class="callout" id="hid-hour"></div>
+          <div class="callout">On top of that: <b>32% of workplace injuries happen in a worker's first year</b> (OSHA), and the average workers' comp claim now runs <b>$47,316</b> (National Safety Council, 2022–23). A temp hurt on your floor still goes on your OSHA log when your supervisors direct the work. Robots take the heavy, repetitive lifts out of human hands.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="hour">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Cost per hour</div>
+        <h2>A temp hour vs. a robot hour.</h2>
+        <p class="lead">Both run the same station on both shifts. The robot still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
+      </div>
+      <div class="card hourwrap">
+        <div class="hbar"><div class="name">Temp worker<small id="h-temp-sub"></small></div><div class="track"><span id="b-bill" style="background:var(--temp)"></span><span id="b-ot" style="background:var(--temp-ink)"></span><span id="b-hid" style="background:var(--hidden)"></span></div><div class="amt num" id="h-temp" style="color:var(--temp-ink)"></div></div>
+        <div class="hbar"><div class="name">Robot temp<small>All-in, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
+        <div class="legend"><span><i style="background:var(--temp)"></i>Bill rate</span><span><i style="background:var(--temp-ink)"></i>Overtime premium</span><span><i style="background:var(--hidden)"></i>Turnover cost per hour</span><span><i style="background:var(--robot)"></i>Robot rate</span><span><i style="background:var(--robot-ink)"></i>Operator oversight</span></div>
+        <div><span class="savepill num" id="h-save"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="pay">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Three ways to put robots on the line</div>
+        <h2>Pay by the hour, lease to own, or buy.</h2>
+        <p class="lead">Lease to own and pay-by-the-hour aren't available when you buy direct. Through Madler Robotics you choose how the robots hit your budget, and you can start without a capital request.</p>
+      </div>
+      <div class="scope" role="group" aria-label="Scope">
+        <button class="chip" data-scope="pilot" aria-pressed="true">Pilot · 4 robots</button>
+        <button class="chip" data-scope="plant" aria-pressed="false">New Kensington · 15 robots</button>
+      </div>
+      <div class="opts" id="opts"></div>
+      <div class="card jobs">
+        <h3 style="margin-bottom:6px">The four jobs</h3>
+        <p class="lead" style="font-size:16px;margin-bottom:10px">One robot covers one station on both shifts. Change the counts to match your line.</p>
+        <div class="scroll"><table>
+          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temps replaced</th><th>Robot rate</th><th>Saved a year</th></tr></thead>
+          <tbody id="jobBody"></tbody><tfoot id="jobFoot"></tfoot>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Why an integrator</div>
+        <h2>A robot is only as good as the team behind it.</h2>
+        <p class="lead">You could buy a robot arm direct. What you'd be missing is everything after the crate shows up: the install, the routines, the training, and who answers the phone when a product changes on second shift.</p>
+      </div>
+      <div class="vs" role="table" aria-label="Buying direct compared with Madler Robotics">
+        <div class="h" role="columnheader">&nbsp;</div><div class="h" role="columnheader">Buy direct</div><div class="h us" role="columnheader">Madler Robotics</div>
+        <div role="cell">Pay by the hour, like a temp, with no capital</div><div role="cell"><span class="ico n">–</span><span class="no txt">No</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">Yes</span></div>
+        <div role="cell">Lease to own, $1 buyout</div><div role="cell"><span class="ico n">–</span><span class="no txt">No</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">Yes</span></div>
+        <div role="cell">On your floor already, every day, for both shifts</div><div role="cell"><span class="ico n">–</span><span class="no txt">Remote support</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">Local team</span></div>
+        <div role="cell">New routines when products, bottles or pallet patterns change</div><div role="cell"><span class="ico n">–</span><span class="no txt">You program it</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">We build them</span></div>
+        <div role="cell">Training your leads and operators on site</div><div role="cell"><span class="ico n">–</span><span class="no txt">Self-serve</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">Included</span></div>
+        <div role="cell">Robot down? A swap and people to cover the gap</div><div role="cell"><span class="ico n">–</span><span class="no txt">Wait for parts</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">Same team staffs it</span></div>
+        <div role="cell">One invoice for robots and the people who run them</div><div role="cell"><span class="ico n">–</span><span class="no txt">Two vendors</span></div><div role="cell" class="us-col"><span class="ico y">✓</span><span class="yes txt">One</span></div>
+      </div>
+      <div class="promise">
+        <div class="card"><div class="pi"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>On site</h3><p>Installs, adjustments and service by a local team that's already at New Kensington every day.</p></div>
+        <div class="card"><div class="pi"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l3 3-3 3"/></svg></div><h3>New routines</h3><p>New jug, new case, new pallet pattern: we build and test the routine so your line doesn't wait.</p></div>
+        <div class="card"><div class="pi"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 11l2 2 3-4"/></svg></div><h3>Training</h3><p>Your leads learn to start, stop, clear faults and run changeovers, on your floor, on your shifts.</p></div>
+        <div class="card"><div class="pi"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 21v-5h5"/></svg></div><h3>Always covered</h3><p>If a robot is down, we swap it, and we can put people on the station until it's back, because we already staff your line.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="rollout">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Beyond New Kensington</div>
+        <h2>Prove it on one line. Roll it to every plant.</h2>
+        <p class="lead">Once the routines are proven here, each OWI site gets the same cells, the same training and the same support, without starting from scratch.</p>
+      </div>
+      <div class="roll">
+        <div class="card">
+          <div class="slider"><div class="top"><label for="s-sites">OWI sites with robots</label><output id="o-sites" class="num"></output></div><input type="range" id="s-sites" min="1" max="8" step="1" value="5"></div>
+          <div class="slider"><div class="top"><label for="s-per">Robots per site</label><output id="o-per" class="num"></output></div><input type="range" id="s-per" min="4" max="30" step="1" value="15"></div>
+          <div class="rows" id="roll-rows" style="margin-top:10px"></div>
+        </div>
+        <div class="card rel">
+          <h3>Savings as the rollout grows</h3>
+          <div class="legend"><span><i style="background:var(--robot)"></i>Saved each year, robot temps</span><span><i style="background:var(--navy)"></i>Running total over 3 years</span></div>
+          <svg class="chart" id="rollChart" role="img" aria-label="Savings by number of sites"></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pilot">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Start small</div>
+        <h2>The 90-day pilot.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Walk the line</h3><p>Together we pick four stations with the most turnover: case packing, palletizing, line loading and pick and place.</p></div>
+        <div class="step"><h3>We install</h3><p>Our engineers set up each cell with Standard Bots. No capital from OWI; the robots bill hourly like the temps they replace.</p></div>
+        <div class="step"><h3>Run 90 days</h3><p>We track uptime, units per hour and shifts covered, and report to you every week.</p></div>
+        <div class="step"><h3>Keep what works</h3><p>Stations that hit their numbers move to a 36-month term or a lease to own. Anything that doesn't goes back on our truck.</p></div>
+      </div>
+      <div class="vids">
+        <a href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><b>Bottle packing ↗</b><span>0:28 · A Core robot packing bottles into cases</span></a>
+        <a href="https://www.youtube.com/shorts/MQpwh8MkhdY" target="_blank" rel="noopener"><b>Palletizing ↗</b><span>1:00 · Core and Thor building pallets</span></a>
+        <a href="https://www.youtube.com/watch?v=WxWVB78T764" target="_blank" rel="noopener"><b>Conveyor tending ↗</b><span>1:12 · Loading and unloading a moving line</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Let's walk your line.</h2>
+    <p>Pick a day and we'll bring a robot. In an hour we'll know which four stations to start with, and you'll see it run.</p>
+    <div class="contact">Greg Madler · Madler Robotics &amp; Commercial Employees · <span class="addr">gregm@commercialemployees.com</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>How these numbers are built</div>
+    <ol>
+      <li>Workforce, hours, overtime and bill rate: Commercial Employees billing to OWI New Kensington, Jan 1 – Oct 13, 2026. Blended rate $22.80 straight time, 1.6% of hours overtime at 1.5×.</li>
+      <li>Robot temp rates ($15/hr packing and line loading, $16 palletizing, $13 pick and place) include the robot, tooling, install, support, software, insurance and a swap if it goes down. Oversight is 1 hour per robot per shift at the temp rate. Two 8-hour shifts, 5 days, 50 weeks.</li>
+      <li>Lease to own: robot plus install at 5% over 36 months, $1 buyout, plus a 10% yearly support plan. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus install estimates, spread over 5 years. Final pricing follows a site survey.</li>
+      <li>Turnover cost: your inputs above. Injury figures: OSHA (share of injuries in a worker's first year) and National Safety Council Injury Facts (average workers' comp claim, 2022–23 claims).</li>
+    </ol>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const D = {
+    months: [["Jan",25,2775.5],["Feb",46,4014.9],["Mar",40,3392.4],["Apr",37,3060.6],["May",66,4056.5],["Jun",47,4815.2],["Jul",28,3164.0],["Aug",35,3515.4],["Sep",68,5731.9],["Oct*",56,2444.5]],
+    bill: 22.80, otShare: 0.016, supRate: 32, adminRate: 30,
+    hrsPerShift: 8, shifts: 2, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5,
+    lease: 5, term: 36, support: 0.10,
+    jobs: [
+      { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, rate: 15, pilot: 1, plant: 5 },
+      { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, rate: 16, pilot: 1, plant: 4 },
+      { id: "tend", name: "Line loading and unloading", robot: "Core", list: 39500, install: 12000, rate: 15, pilot: 1, plant: 3 },
+      { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, rate: 13, pilot: 1, plant: 3 }
+    ]
+  };
+  const $ = id => document.getElementById(id);
+  const usd = v => (v < 0 ? "-$" : "$") + Math.round(Math.abs(v)).toLocaleString("en-US");
+  const usd2 = v => "$" + v.toFixed(2);
+  const kM = v => v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "k";
+  const robotHrsYr = D.hrsPerShift * D.shifts * D.days * D.weeks;
+  const tempRate = D.bill * (1 + 0.5 * D.otShare);
+  const otPrem = tempRate - D.bill;
+  const pmt = (P, r, n) => { const i = r / 1200; return i === 0 ? P / n : P * i / (1 - Math.pow(1 + i, -n)); };
+  const state = { scope: "pilot", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.pilot])) };
+
+  function hidden() {
+    const starts = +$("s-starts").value, orient = +$("s-orient").value, sup = +$("s-sup").value, ramp = +$("s-ramp").value / 100, hr = +$("s-hr").value;
+    $("o-starts").textContent = starts; $("o-orient").textContent = orient + " hrs"; $("o-sup").textContent = sup + " hrs";
+    $("o-ramp").textContent = Math.round(ramp * 100) + "%"; $("o-hr").textContent = hr + " hrs"; $("o-suprate").textContent = "$" + D.supRate;
+    const parts = [
+      ["Paid orientation and training", starts * orient * tempRate],
+      ["Trainer and supervisor time", starts * sup * D.supRate],
+      ["Lost output in week one", starts * 40 * ramp * tempRate],
+      ["HR and admin", starts * hr * D.adminRate]
+    ];
+    const total = parts.reduce((t, p) => t + p[1], 0);
+    return { starts, parts, total, perStart: starts ? total / starts : 0, perHour: total / D.annualTempHours };
+  }
+
+  function robotHr(j) { return j.rate + tempRate * D.oversight / D.hrsPerShift; }
+
+  function totals() {
+    const H = hidden();
+    const trueTemp = tempRate + H.perHour;
+    let n = 0, staffedYr = 0, temps = 0, lease = 0, leaseAfter = 0, capex = 0, buyYr = 0;
+    const rows = D.jobs.map(j => {
+      const c = state.counts[j.id] || 0;
+      const staffed = trueTemp * robotHrsYr * c, robot = robotHr(j) * robotHrsYr * c;
+      const over = tempRate * D.oversight * D.shifts * D.days * D.weeks * c;
+      const sup = j.list * D.support * c;
+      const lp = pmt(j.list + j.install, D.lease, D.term) * 12 * c;
+      n += c; staffedYr += staffed; temps += robot; lease += lp + sup + over; leaseAfter += sup + over; capex += (j.list + j.install) * c; buyYr += sup + over;
+      return { j, c, staffed, robot, save: staffed - robot };
+    });
+    const hrs = n * robotHrsYr;
+    return { H, trueTemp, n, rows, staffedYr, hrs,
+      temps: { yr: temps, hr: hrs ? temps / hrs : 0, save3: (staffedYr - temps) * 3 },
+      lease: { yr: lease, hr: hrs ? lease / hrs : 0, after: hrs ? leaseAfter / hrs : 0, save3: (staffedYr - lease) * 3 },
+      buy: { yr: buyYr, capex, hr: hrs ? (buyYr + capex / 5) / hrs : 0, save3: (staffedYr - buyYr) * 3 - capex, payback: staffedYr > buyYr ? capex / ((staffedYr - buyYr) / 12) : null } };
+  }
+
+  let shown = 0, animFrom = 0, animStart = 0, animTo = 0, raf = 0;
+  function animateCounter(to) {
+    animFrom = shown; animTo = to; animStart = performance.now(); cancelAnimationFrame(raf);
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const step = t => { const p = reduce ? 1 : Math.min(1, (t - animStart) / 900); const e = 1 - Math.pow(1 - p, 3);
+      shown = animFrom + (animTo - animFrom) * e; $("cnt-v").innerHTML = '$<span>' + Math.round(shown).toLocaleString("en-US") + '</span>';
+      if (p < 1) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step);
+  }
+
+  function render() {
+    const T = totals(), H = T.H;
+    // Counter (full plant, robot temps)
+    const plantCounts = Object.fromEntries(D.jobs.map(j => [j.id, j.plant]));
+    let plantSave = 0, plantN = 0;
+    D.jobs.forEach(j => { const c = plantCounts[j.id]; plantN += c; plantSave += (T.trueTemp - robotHr(j)) * robotHrsYr * c; });
+    animateCounter(plantSave);
+    $("cnt-s").textContent = `${plantN} robots on robot-temp rates, replacing ${plantN * D.shifts} temp positions across two shifts. Turnover costs included.`;
+
+    // Hidden cost
+    $("hid-total").textContent = usd(H.total);
+    $("hid-rows").replaceChildren(...H.parts.map(([n, v]) => { const d = document.createElement("div"); const a = document.createElement("span"); a.textContent = n; const b = document.createElement("b"); b.textContent = usd(v); d.append(a, b); return d; }),
+      (() => { const d = document.createElement("div"); const a = document.createElement("span"); a.textContent = "Per new start"; const b = document.createElement("b"); b.textContent = usd(H.perStart); d.append(a, b); return d; })());
+    $("hid-hour").innerHTML = `That's <b>${usd2(H.perHour)}</b> on top of every temp hour you buy, so a temp hour really costs about <b>${usd2(T.trueTemp)}</b>, not ${usd2(D.bill)}.`;
+
+    // Hourly bars
+    const rob = D.jobs.reduce((t, j) => t + robotHr(j) * j.plant, 0) / D.jobs.reduce((t, j) => t + j.plant, 0);
+    const robRate = D.jobs.reduce((t, j) => t + j.rate * j.plant, 0) / D.jobs.reduce((t, j) => t + j.plant, 0);
+    const max = Math.max(T.trueTemp, rob) * 1.02;
+    $("b-bill").style.width = (D.bill / max * 100) + "%"; $("b-ot").style.width = (otPrem / max * 100) + "%"; $("b-hid").style.width = (H.perHour / max * 100) + "%";
+    $("b-rob").style.width = (robRate / max * 100) + "%"; $("b-ovr").style.width = ((rob - robRate) / max * 100) + "%";
+    $("h-temp").textContent = usd2(T.trueTemp); $("h-rob").textContent = usd2(rob);
+    $("h-temp-sub").textContent = `${usd2(D.bill)} bill + overtime + turnover`;
+    $("h-save").textContent = `${usd2(T.trueTemp - rob)} saved every hour · ${Math.round((1 - rob / T.trueTemp) * 100)}% less`;
+
+    // Options
+    const card = (star, tag, title, o, items, foot) => `<div class="opt${star ? " star" : ""}">${star ? '<span class="badge">Easiest start</span>' : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${usd2(o.hr)}<small> per robot hour</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">Saved over 3 years</span><span class="v num">${kM(foot)}</span></div></div>`;
+    $("opts").innerHTML =
+      card(true, "No capital", "Robot temps", T.temps, [["Capital from OWI", "None"], ["Yearly cost", usd(T.temps.yr)], ["Saved a year", usd(T.staffedYr - T.temps.yr)], ["Service, insurance, swaps", "Included"]], T.temps.save3) +
+      card(false, "Own it in 3 years", "Lease to own", T.lease, [["Capital from OWI", "None"], ["Yearly cost", usd(T.lease.yr)], ["After month 36", usd2(T.lease.after) + "/hr"], ["Buyout", "$1"]], T.lease.save3) +
+      card(false, "Capital purchase", "Buy outright", T.buy, [["Capital from OWI", usd(T.buy.capex)], ["Yearly running cost", usd(T.buy.yr)], ["Payback", T.buy.payback ? Math.ceil(T.buy.payback) + " months" : "–"], ["Support plan", "10% a year"]], T.buy.save3);
+
+    // Jobs table
+    $("jobBody").replaceChildren(...T.rows.map(r => {
+      const tr = document.createElement("tr");
+      const td = (t, cls) => { const c = document.createElement("td"); c.textContent = t; if (cls) c.style.color = cls; return c; };
+      const cc = document.createElement("td"); const inp = document.createElement("input"); inp.type = "number"; inp.min = 0; inp.max = 50; inp.value = r.c; inp.id = "c-" + r.j.id; inp.setAttribute("aria-label", r.j.name + " robots");
+      inp.addEventListener("input", () => { const v = parseInt(inp.value, 10); state.counts[r.j.id] = isFinite(v) && v > 0 ? v : 0; const id = inp.id; render(); const el = $(id); if (el) { el.focus(); } });
+      cc.appendChild(inp);
+      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * D.shifts)), td(usd2(r.j.rate) + "/hr"), td(usd(r.save), "var(--ok)"));
+      return tr;
+    }));
+    const tf = document.createElement("tr");
+    ["All stations", "", String(T.n), String(T.n * D.shifts), "", usd(T.staffedYr - T.temps.yr)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 5) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
+    $("jobFoot").replaceChildren(tf);
+
+    // Rollout
+    const sites = +$("s-sites").value, per = +$("s-per").value;
+    $("o-sites").textContent = sites; $("o-per").textContent = per;
+    const perRobotSave = D.jobs.reduce((t, j) => t + (T.trueTemp - robotHr(j)) * robotHrsYr * j.plant, 0) / D.jobs.reduce((t, j) => t + j.plant, 0);
+    const yr = perRobotSave * per * sites;
+    $("roll-rows").innerHTML = "";
+    [["Robots across OWI", String(per * sites)], ["Temp positions replaced", String(per * sites * D.shifts)], ["New starts avoided, at New Kensington's turnover", "~" + Math.round(H.starts / (D.annualTempHours / 2000) * per * sites * D.shifts).toLocaleString("en-US") + " a year"], ["Saved a year", usd(yr)], ["Saved over 3 years", usd(yr * 3)]].forEach(([a, b]) => { const d = document.createElement("div"); const x = document.createElement("span"); x.textContent = a; const y = document.createElement("b"); y.textContent = b; d.append(x, y); $("roll-rows").appendChild(d); });
+    drawRoll(perRobotSave, per, sites);
+    drawDoor();
+  }
+
+  function tipper(svg) {
+    const box = svg.parentElement; let t = box.querySelector(".tip");
+    if (!t) { t = document.createElement("div"); t.className = "tip"; box.appendChild(t); }
+    return { show(ev, html) { t.innerHTML = html; t.style.display = "block"; const b = box.getBoundingClientRect(); const x = ev.clientX - b.left, y = ev.clientY - b.top; t.style.left = Math.max(4, Math.min(b.width - t.offsetWidth - 4, x + 12)) + "px"; t.style.top = Math.max(4, y - t.offsetHeight - 12) + "px"; }, hide() { t.style.display = "none"; } };
+  }
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+
+  function drawDoor() {
+    const svg = $("doorChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
+    const m = { l: 34, r: 10, t: 16, b: 28 }; const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const rows = D.months.map(([mo, w, h]) => ({ mo, w, fte: h / (mo === "Oct*" ? 173.3 * 13 / 31 : 173.3) }));
+    const max = Math.ceil(Math.max(...rows.map(r => r.w)) / 10) * 10;
+    const y = v => m.t + ih - v / max * ih; const bw = iw / rows.length;
+    for (let v = 0; v <= max; v += 10) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = v; }
+    const tip = tipper(svg);
+    rows.forEach((r, i) => {
+      const x = m.l + i * bw, w = bw * 0.36;
+      el("rect", { x: x + bw * 0.12, y: y(r.w), width: w, height: y(0) - y(r.w), rx: 4, fill: "var(--temp)" }, svg);
+      el("rect", { x: x + bw * 0.52, y: y(r.fte), width: w, height: y(0) - y(r.fte), rx: 4, fill: "var(--navy)" }, svg);
+      el("text", { x: x + bw / 2, y: H - 8, "text-anchor": "middle" }, svg).textContent = r.mo;
+      el("rect", { x, y: m.t, width: bw, height: ih, fill: "transparent" }, svg).addEventListener("mousemove", ev => tip.show(ev, `<b>${r.mo === "Oct*" ? "Oct (partial)" : r.mo} 2026</b><br>${r.w} different people<br>${r.fte.toFixed(0)} full-time jobs filled`));
+    });
+    svg.addEventListener("mouseleave", () => tip.hide());
+  }
+
+  function drawRoll(perRobotSave, per, sites) {
+    const svg = $("rollChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
+    const n = 8, data = Array.from({ length: n }, (_, i) => ({ s: i + 1, yr: perRobotSave * per * (i + 1) }));
+    const maxV = data[n - 1].yr * 3;
+    const step = [1e5, 2.5e5, 5e5, 1e6, 2e6, 2.5e6, 5e6, 1e7].find(s => maxV / s <= 5) || 1e7;
+    const top = Math.ceil(maxV / step) * step;
+    const lw = 52, m = { l: lw, r: 12, t: 16, b: 30 }; const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const y = v => m.t + ih - v / top * ih; const bw = iw / n;
+    for (let v = 0; v <= top + 1; v += step) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = kM(v); }
+    const tip = tipper(svg);
+    let path = "";
+    data.forEach((d, i) => {
+      const x = m.l + i * bw, on = d.s <= sites;
+      el("rect", { x: x + bw * 0.2, y: y(d.yr), width: bw * 0.6, height: y(0) - y(d.yr), rx: 5, fill: "var(--robot)", "fill-opacity": on ? 1 : 0.25 }, svg);
+      el("text", { x: x + bw / 2, y: H - 10, "text-anchor": "middle", class: d.s === sites ? "lb" : "" }, svg).textContent = d.s + (d.s === 1 ? " site" : "");
+      path += (i ? "L" : "M") + (x + bw / 2) + " " + y(d.yr * 3);
+      el("rect", { x, y: m.t, width: bw, height: ih, fill: "transparent" }, svg).addEventListener("mousemove", ev => tip.show(ev, `<b>${d.s} site${d.s > 1 ? "s" : ""} · ${d.s * per} robots</b><br>${usd(d.yr)} a year<br>${usd(d.yr * 3)} over 3 years`));
+    });
+    el("path", { d: path, fill: "none", stroke: "var(--navy)", "stroke-width": 2.5, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    const sel = data[sites - 1];
+    el("circle", { cx: m.l + (sites - 1) * bw + bw / 2, cy: y(sel.yr * 3), r: 5, fill: "var(--navy)" }, svg);
+    const lbl = el("text", { x: Math.min(m.l + (sites - 1) * bw + bw / 2, W - 120), y: y(sel.yr * 3) - 10, class: "lb", "text-anchor": "middle" }, svg); lbl.textContent = kM(sel.yr * 3) + " in 3 yrs";
+    svg.addEventListener("mouseleave", () => tip.hide());
+  }
+
+  document.querySelectorAll("input[type=range]").forEach(i => i.addEventListener("input", render));
+  document.querySelectorAll("[data-scope]").forEach(b => b.addEventListener("click", () => {
+    state.scope = b.dataset.scope;
+    document.querySelectorAll("[data-scope]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    D.jobs.forEach(j => state.counts[j.id] = state.scope === "pilot" ? j.pilot : j.plant);
+    render();
+  }));
+  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 120); });
+  render();
+})();
+</script>
+</body>
+</html>
