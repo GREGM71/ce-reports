@@ -294,7 +294,6 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       <div class="calc">
         <div class="card">
           <div class="slider"><div class="top"><label for="s-starts">New starts per year</label><output id="o-starts" class="num"></output></div><input type="range" id="s-starts" min="50" max="500" step="5" value="290"><small>Your 2026 pace is about 290 a year (229 in 9½ months).</small></div>
-          <div class="slider"><div class="top"><label for="s-orient">Paid orientation and safety training</label><output id="o-orient" class="num"></output></div><input type="range" id="s-orient" min="0" max="24" step="1" value="8"><small>Hours per start at the bill rate before they produce.</small></div>
           <div class="slider"><div class="top"><label for="s-sup">Trainer and supervisor time</label><output id="o-sup" class="num"></output></div><input type="range" id="s-sup" min="0" max="16" step="1" value="4"><small>Hours a lead spends with each new start, at <span id="o-suprate"></span>/hr.</small></div>
           <div class="slider"><div class="top"><label for="s-ramp">Lost output in week one</label><output id="o-ramp" class="num"></output></div><input type="range" id="s-ramp" min="0" max="80" step="5" value="40"><small>How far below a trained worker a new start runs in the first 40 hours.</small></div>
           <div class="slider"><div class="top"><label for="s-hr">HR and admin per start</label><output id="o-hr" class="num"></output></div><input type="range" id="s-hr" min="0" max="6" step="0.5" value="1.5"><small>Badging, paperwork, PPE, scheduling, write-ups and the exit.</small></div>
@@ -306,6 +305,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
             <div class="rows" id="hid-rows"></div>
           </div>
           <div class="callout" id="hid-hour"></div>
+          <div class="callout">Not counted here: Commercial Employees sends a person on site to onboard and orient every new start, at no separate charge. With robots on the line, that churn of first days stops for both of us.</div>
           <div class="callout">On top of that: <b>32% of workplace injuries happen in a worker's first year</b> (OSHA), and the average workers' comp claim now runs <b>$47,316</b> (National Safety Council, 2022–23). A temp hurt on your floor still goes on your OSHA log when your supervisors direct the work. Robots take the heavy, repetitive lifts out of human hands.</div>
         </div>
       </div>
@@ -465,11 +465,10 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const state = { scope: "pilot", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.pilot])) };
 
   function hidden() {
-    const starts = +$("s-starts").value, orient = +$("s-orient").value, sup = +$("s-sup").value, ramp = +$("s-ramp").value / 100, hr = +$("s-hr").value;
-    $("o-starts").textContent = starts; $("o-orient").textContent = orient + " hrs"; $("o-sup").textContent = sup + " hrs";
+    const starts = +$("s-starts").value, sup = +$("s-sup").value, ramp = +$("s-ramp").value / 100, hr = +$("s-hr").value;
+    $("o-starts").textContent = starts; $("o-sup").textContent = sup + " hrs";
     $("o-ramp").textContent = Math.round(ramp * 100) + "%"; $("o-hr").textContent = hr + " hrs"; $("o-suprate").textContent = "$" + D.supRate;
     const parts = [
-      ["Paid orientation and training", starts * orient * tempRate],
       ["Trainer and supervisor time", starts * sup * D.supRate],
       ["Lost output in week one", starts * 40 * ramp * tempRate],
       ["HR and admin", starts * hr * D.adminRate]
