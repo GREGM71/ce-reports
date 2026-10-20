@@ -15,6 +15,9 @@ on:
       test:
         description: "Send only to Greg (true/false)"
         default: "false"
+      date:
+        description: "Re-run a past day (YYYY-MM-DD). Saves recruiter-activity/days/<date>.js only; sends no email."
+        default: ""
 
 permissions:
   contents: write
@@ -35,17 +38,18 @@ jobs:
       - name: Pull today's numbers from DataLink
         env:
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          REPORT_DATE: ${{ inputs.date }}
         run: node scripts/refresh-recruiter-activity.mjs
       - name: Publish
         run: |
-          if git diff --quiet -- recruiter-activity/data.js; then echo "No change."; exit 0; fi
+          git add -A recruiter-activity/data.js recruiter-activity/days
+          if git diff --cached --quiet; then echo "No change."; exit 0; fi
           git config user.name "ce-reports-bot"
           git config user.email "ce-reports-bot@users.noreply.github.com"
-          git add recruiter-activity/data.js
-          git commit -m "Refresh recruiter activity $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
+          git commit -m "Refresh recruiter activity ${{ inputs.date }} $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
           git push
       - name: Send team email
-        if: ${{ github.event_name == 'schedule' || inputs.email != 'none' }}
+        if: ${{ github.event_name == 'schedule' || (inputs.email != 'none' && inputs.date == '') }}
         env:
           M365_TENANT_ID: ${{ secrets.M365_TENANT_ID }}
           M365_CLIENT_ID: ${{ secrets.M365_CLIENT_ID }}
