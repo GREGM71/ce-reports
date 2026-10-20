@@ -19,10 +19,12 @@ const sum = (rows, f) => rows.reduce((t, r) => t + f(r), 0);
 
 // RAW: [person, office, vm, nov, cib, co, il, ob, oth, so, si, first, last, hrs, shrs]
 const calls = (r) => r[2] + r[3] + r[4] + r[5];
+// People booked for an interview, each counted once (r[15]); older data files only have r[4].
+const booked = (r) => (r[15] != null ? r[15] : r[4]);
 const totCalls = sum(RAW, calls);
-// "Interviews booked" = calls logged as "Call Completed - Interview Scheduled" (cib), same as the board.
-// Not r[6] (il): that also counts Interview Confirmed / at Client entries for interviews booked on earlier days.
-const totInterviews = sum(RAW, (r) => r[4]);
+// "Interviews booked" = people booked that day, each counted once. Not r[6] (il): that double-counts
+// bookings logged two ways and adds confirmation calls on interviews booked earlier.
+const totInterviews = sum(RAW, booked);
 const totOnboards = SHOW.length ? sum(SHOW, (r) => r[2]) : sum(RAW, (r) => r[7]);
 const totStarts = sum(STARTS, (r) => r[3]);
 
@@ -30,14 +32,14 @@ const bullets = [];
 if (!RAW.length) {
   bullets.push("No recruiter activity recorded yet today.");
 } else {
-  const byIl = [...RAW].sort((a, b) => b[4] - a[4] || b[7] - a[7]);
+  const byIl = [...RAW].sort((a, b) => booked(b) - booked(a) || b[7] - a[7]);
   const top = byIl[0];
-  if (top[4] > 0) {
+  if (booked(top) > 0) {
     const ob = SHOW.find((s) => s[0] === top[0]);
     const obN = ob ? ob[2] : top[7];
-    bullets.push(`<b>${esc(top[0])}</b> led the desk with ${n(top[4])} interviews booked${obN ? ` and ${n(obN)} onboard${obN === 1 ? "" : "s"}` : ""}.`);
-    const next = byIl.slice(1, 3).filter((r) => r[4] > 0);
-    if (next.length) bullets.push(`Next on interviews: ${next.map((r) => `${esc(r[0])} (${n(r[4])})`).join(" and ")}.`);
+    bullets.push(`<b>${esc(top[0])}</b> led the desk with ${n(booked(top))} interviews booked${obN ? ` and ${n(obN)} onboard${obN === 1 ? "" : "s"}` : ""}.`);
+    const next = byIl.slice(1, 3).filter((r) => booked(r) > 0);
+    if (next.length) bullets.push(`Next on interviews: ${next.map((r) => `${esc(r[0])} (${n(booked(r))})`).join(" and ")}.`);
   }
   const byCalls = [...RAW].sort((a, b) => calls(b) - calls(a));
   if (calls(byCalls[0]) > 0) bullets.push(`<b>${esc(byCalls[0][0])}</b> made the most calls (${n(calls(byCalls[0]))}).`);
