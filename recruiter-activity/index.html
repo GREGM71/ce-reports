@@ -125,7 +125,7 @@ footer{color:var(--muted);font-size:12px}
     </div>
     <div class="legend" id="leg1"></div>
     <div class="rows" id="rows1"></div>
-    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Connected, interview booked" and "Interview logged" are often two entries for the same booking, and "Interview logged" also includes confirmation calls on interviews booked earlier. The "interviews booked" total at the top counts each person once.</p>
+    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Interview booked" counts each person once, whether it was logged as "Call Completed – Interview Scheduled", "Interview Scheduled" or both. "Interview confirmed" is a confirmation call on an interview booked on an earlier day.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-sense">
@@ -168,9 +168,9 @@ footer{color:var(--muted);font-size:12px}
 <script>(function(){var d=(new URLSearchParams(location.search).get("d")||"").trim();var f=/^\d{4}-\d{2}-\d{2}$/.test(d)?"days/"+d+".js":"data.js";document.write('<script src="'+f+'?t='+Date.now()+'"><\/script>')})()</script>
 <script>
 const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[], SHOW=window.SHOW||[];
-const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14],ib:r[15]}));
-D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;p.tot=p.calls+p.il+p.ob+p.oth;p.ints=(p.ib!=null?p.ib:p.cib);if(p.ib==null)p.ib=p.cib;});
-const S1=[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged / confirmed","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
+const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14],ib:r[15],ic:r[16]}));
+const NEW=D.length&&D[0].ic!=null;D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;if(p.ib==null)p.ib=p.cib;p.ints=p.ib;p.tot=NEW?p.vm+p.nov+p.ib+p.co+p.ic+p.ob+p.oth:p.calls+p.il+p.ob+p.oth;});
+const S1=NEW?[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["ib","Interview booked (each person once)","--c-cib"],["co","Connected, other outcome","--c-co"],["ic","Interview confirmed / at client","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]]:[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged / confirmed","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
 const S2=[["so","Texts sent","--c-so"],["si","Replies received","--c-si",1]];
 const $=id=>document.getElementById(id);
 const sum=k=>D.reduce((a,p)=>a+p[k],0);
