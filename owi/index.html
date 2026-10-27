@@ -4,27 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Old World Industries · Madler Robotics</title>
-<meta name="description" content="What robots on the line would mean for Old World Industries New Kensington: cost per hour, turnover, retraining and how Madler Robotics runs it.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<title>Madler Robotics for OWI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
+
 /* Layout: full-bleed navy hero with a live savings counter and animated arm, then alternating light bands:
    the revolving door (their data) → hidden cost calculator → cost per hour → what a robot temp is → today vs. with robots + three ways to pay → why us → rollout → how we start. */
 :root{
   --bg:#F3F6FA; --surface:#FFFFFF; --ink:#0F1B2A; --muted:#566578; --rule:#D8E0EA;
   --navy:#00457C; --deep:#04213D; --night:#020F1F;
   --robot:#12B5A6; --robot-ink:#0B7F75; --temp:#E8962E; --temp-ink:#B26A12; --hidden:#D9534F;
-  --gold:#FFDF6B; --ok:#15885A;
+  --gold:#FFDF6B; --ok:#15885A; --outc:var(--navy); --pilltxt:#fff;
   --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   --r:14px;
 }
-@media (prefers-color-scheme:dark){:root{
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#97A8BB; --rule:#20344A;
   --robot:#2FD3C3; --robot-ink:#58E0D3; --temp:#F2A94A; --temp-ink:#F4B868; --hidden:#F07470; --ok:#43C98C;
-  color-scheme:dark}}
+  color-scheme:dark;--outc:var(--robot-ink);--pilltxt:#03140C}}
+:root[data-theme="dark"]{
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#97A8BB; --rule:#20344A;
+  --robot:#2FD3C3; --robot-ink:#58E0D3; --temp:#F2A94A; --temp-ink:#F4B868; --hidden:#F07470; --ok:#43C98C;
+  color-scheme:dark;--outc:var(--robot-ink);--pilltxt:#03140C}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
@@ -107,8 +111,8 @@ section.band.alt{background:var(--surface);border-block:1px solid var(--rule)}
 .slider:last-child{border-bottom:0}
 .slider .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
 .slider label{font-weight:600}
-.slider output{font:700 22px var(--f-display);font-variant-numeric:tabular-nums;color:var(--navy)}
-@media (prefers-color-scheme:dark){.slider output{color:var(--robot-ink)}}
+.slider output{font:700 22px var(--f-display);font-variant-numeric:tabular-nums;color:var(--outc)}
+
 .slider small{color:var(--muted);font-size:13.5px}
 input[type=range]{width:100%;accent-color:var(--robot);height:28px}
 input[type=range]:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
@@ -128,8 +132,8 @@ input[type=range]:focus-visible{outline:2px solid var(--robot);outline-offset:2p
 .track{display:flex;height:42px;border-radius:10px;overflow:hidden;background:var(--rule)}
 .track span{display:block;height:100%;transition:width .6s cubic-bezier(.2,.7,.2,1)}
 .hbar .amt{font:800 28px var(--f-display);text-align:right;font-variant-numeric:tabular-nums}
-.savepill{display:inline-flex;align-items:baseline;gap:10px;background:var(--ok);color:#fff;border-radius:999px;padding:8px 18px;font:700 20px var(--f-display);letter-spacing:.02em}
-@media (prefers-color-scheme:dark){.savepill{color:#03140C}}
+.savepill{display:inline-flex;align-items:baseline;gap:10px;background:var(--ok);color:var(--pilltxt);border-radius:999px;padding:8px 18px;font:700 20px var(--f-display);letter-spacing:.02em}
+
 
 /* Robot temps explainer (dark band) */
 section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--deep);color:#fff}
@@ -154,7 +158,7 @@ section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,t
 .chip{font:600 15px var(--f-body);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
 .chip:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
-.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 @media (max-width:920px){.opts{grid-template-columns:1fr}}
 .opt{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:22px}
 .opt.star{border:2px solid var(--robot);box-shadow:0 18px 40px -24px rgba(18,181,166,.55)}
@@ -249,61 +253,185 @@ footer{padding-block:28px;color:var(--muted);font-size:13.5px}
 footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
 .tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.35);padding:8px 12px;font-size:13.5px;display:none;z-index:5;white-space:nowrap}
 .rel{position:relative}
+
+/* ---- site chrome ---- */
+:root{--navh:62px}
+.sitenav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(2,15,31,.95);backdrop-filter:blur(8px);color:#fff;border-bottom:1px solid rgba(255,255,255,.10)}
+.sitenav .wrap{display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap;padding-block:10px}
+.sitenav .brand{font-size:19px}
+.sitenav .brand .mark{width:32px;height:32px;border-radius:9px}
+.navlinks{display:flex;gap:4px;margin-left:auto}
+.navlinks a{padding:8px 15px;border-radius:999px;font:600 15px var(--f-body);text-decoration:none;color:#C4D6E8}
+.navlinks a:hover{color:#fff}
+.navlinks a[aria-current="page"]{background:rgba(255,255,255,.14);color:#fff}
+.navlinks a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.partner{display:flex;align-items:center;gap:10px;padding-left:20px;border-left:1px solid rgba(255,255,255,.22)}
+.partner small{font:600 11px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:#9FC0DD;white-space:nowrap}
+.sblogo{display:block;height:17px;width:auto;max-width:100%}
+@media (max-width:860px){.partner{display:none}.navlinks{margin-left:0;width:100%}.navlinks a{flex:1;text-align:center}}
+.hero .wrap{padding-block:clamp(40px,6vw,72px) clamp(56px,8vw,96px)}
+.hero.small .wrap{padding-block:clamp(36px,5vw,56px) clamp(40px,5vw,60px)}
+.hero.small h1{font-size:clamp(40px,6vw,72px);max-width:22ch}
+.hero .for{margin-bottom:16px}
+.btn.primary:hover{filter:brightness(1.06)}
+.linkrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn.solid{background:var(--navy);color:#fff}
+.btn.line{border-color:var(--rule);color:var(--ink);background:var(--surface)}
+.btn.line:hover,.btn.solid:hover{filter:brightness(1.08)}
+/* proposal header, CE + OWI marks */
+.celogo{display:block;width:34px;height:34px}
+.partner .cename{font:700 13px/1.05 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.partner.ce{border-left:0;padding-left:0}
+.prop-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-bottom:clamp(26px,4vw,44px);margin-bottom:clamp(22px,3.5vw,40px);border-bottom:1px solid rgba(255,255,255,.14)}
+.prop-head .ph-k{font:600 13px var(--f-display);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.prop-head .owilogo{display:block;width:clamp(190px,26vw,270px);height:auto;margin:4px 0 2px}
+.prop-head .ph-t{font:700 clamp(22px,3vw,34px)/1.1 var(--f-display);letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.prop-head .ph-s{color:#B8CCE0;font-size:15px;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:center}
+.prop-head .ph-by{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;align-items:center;margin-top:10px;color:#9FC0DD;font:600 11.5px var(--f-display);letter-spacing:.16em;text-transform:uppercase}
+.prop-head .ph-by .celogo{width:40px;height:40px}
+.prop-head .ph-by .sblogo{height:16px}
+.prop-head .ph-by i{display:inline-flex;align-items:center;gap:9px;font-style:normal}
+.prop-head .ph-by .sep{width:1px;height:26px;background:rgba(255,255,255,.22)}
+.for-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px 22px;margin-bottom:18px}
+.for-row .owilogo{display:block;width:150px;height:auto}
+.for-row .for{margin:0}
+.final .brands{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:10px}
+.final .brands .celogo{width:46px;height:46px}
+.final .brands .sblogo{margin:0}
+footer{background:#020F1F;color:#B8CCE0;padding-block:34px}footer a{color:#fff}footer ol{color:#B8CCE0}
+footer .fbrand{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:#fff;font:700 14px var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+footer .fbrand .celogo{width:40px;height:40px}
+@media (max-width:560px){.prop-head .ph-by .sep,.prop-head .ph-s span[aria-hidden]{display:none}.prop-head .ph-s{flex-direction:column;gap:2px}}
+/* robot scene */
+.scene{position:relative;width:100%;max-width:600px;justify-self:center}
+.scene svg{width:100%;height:auto;display:block;overflow:visible}
+.scene .cap{margin-top:8px;text-align:center;font:600 11.5px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:#9FC0DD}
+@media (max-width:880px){.hero-grid{gap:30px}}
+.hero:not(.small) h1{font-size:clamp(40px,5.4vw,70px)}
+.hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+/* spend comparison */
+.spend{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end;margin:6px 0 2px}
+.spend .arrow{font:800 28px var(--f-display);color:var(--muted);padding-bottom:6px}
+.spend .k{font:600 12.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.spend .v{font:800 clamp(34px,3.6vw,46px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.spend .v.t{color:var(--temp-ink)}.spend .v.r{color:var(--robot-ink)}
+.spend small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+@media (max-width:420px){.spend{grid-template-columns:1fr}.spend .arrow{display:none}}
+.svcard .hl{margin-top:6px}
+/* video cards */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.vpicks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.vpicks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.vpicks{grid-template-columns:1fr}}
+.vcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;text-decoration:none;min-width:0}
+.vcard:hover,.vcard:focus-visible{border-color:var(--robot);box-shadow:0 14px 30px -20px rgba(0,40,80,.55);outline:none}
+.vcard .th{position:relative;aspect-ratio:16/9;max-width:100%;background:#000;overflow:hidden}
+.vcard .th img{width:100%;height:100%;object-fit:cover;display:block}
+.vcard .play{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(2,15,31,.84);border:2px solid rgba(255,255,255,.92);display:grid;place-items:center}
+.vcard .play::after{content:"";border-left:14px solid var(--gold);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.vcard .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.8);color:#fff;font:700 12px var(--f-body);padding:2px 7px;border-radius:4px;font-variant-numeric:tabular-nums}
+.vcard .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.vcard .t{font:700 21px/1.12 var(--f-display)}
+.vcard .b{font-size:14.5px;color:var(--muted);line-height:1.4}
+.vcard .meta{margin-top:auto;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.vcard .no{font:700 12px var(--f-body);background:var(--bg);border:1px solid var(--rule);padding:0 6px;border-radius:5px;color:var(--ink);font-variant-numeric:tabular-nums}
+.vfilters{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--navh));z-index:15;background:var(--bg);border-bottom:1px solid var(--rule);padding-block:12px}
+@media (max-width:860px){.vfilters{position:static}}
+.vfilters .wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vfilters .chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip .n{opacity:.6;margin-left:5px;font-variant-numeric:tabular-nums}
+#q{flex:1 1 200px;min-width:0;font:inherit;font-size:15px;padding:8px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink)}
+.vgroup{padding-top:30px}
+.vgroup h3{font-size:30px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+.vgroup h3 .count{font:600 14px var(--f-body);color:var(--muted)}
+.vgroup p.d{color:var(--muted);max-width:70ch;margin-bottom:12px}
+.learn{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 14px}
+.learn a{font-size:14px;font-weight:600;color:var(--robot-ink);text-decoration:none;border-bottom:1px solid currentColor}
+.vstats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:22px;font:700 15px var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:#C4D6E8}
+.vstats b{font-size:32px;color:#fff;margin-right:6px;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);padding:24px 0}
+.finalrow{display:flex;flex-wrap:wrap;gap:10px}
+.finalrow span{font:600 16px var(--f-body);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:6px 12px;border-radius:8px;user-select:all}
+.final .sblogo{height:19px;margin-top:8px;opacity:.9}
+.lead a,.note a{color:inherit}
+
 </style>
 </head>
 <body>
-
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h14"/><path d="M9 20v-4l3-6 5-3"/><circle cx="12" cy="10" r="1.6"/><path d="M17 7l2-1.5M17 7l1.5 2"/></svg></span><span>Madler Robotics</span></div>
+  <div class="navlinks"><a href="index.html" aria-current="page">Overview</a><a href="videos.html">Videos</a><a href="pricing.html">Pricing</a></div>
+  <div class="partner"><small>With</small><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><span class="cename">Commercial<br>Employees</span></div>
+  <div class="partner"><small>Partner</small><img class="sblogo" src="standard-bots-logo.svg" alt="Standard Bots" width="150" height="17"></div>
+</div></nav>
 <header class="hero">
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14"/><path d="M9 20v-4l3-6 5-3"/><circle cx="12" cy="10" r="1.6"/><path d="M17 7l2-1.5M17 7l1.5 2"/></svg></span><span>Madler Robotics<small>with Commercial Employees</small></span></div>
-      <div class="for">Prepared for Old World Industries · New Kensington</div>
+    <div class="prop-head rise">
+      <div class="ph-k">A customized proposal prepared for</div>
+      <img class="owilogo" src="owi-logo-white.png" alt="Old World Industries" width="250" height="90">
+      <div class="ph-t">Robotic automation: proposal &amp; information</div>
+      <div class="ph-s"><span>New Kensington plant</span><span aria-hidden="true">·</span><span>Packing, palletizing and line loading</span></div>
+      <div class="ph-by"><i>Prepared by Madler Robotics</i><span class="sep" aria-hidden="true"></span><i><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320">Commercial Employees</i><span class="sep" aria-hidden="true"></span><i><img class="sblogo" src="standard-bots-logo.svg" alt="Standard Bots" width="150" height="17"></i></div>
     </div>
     <div class="hero-grid">
       <div>
         <h1 class="rise">The line that <em>shows up</em> every shift.</h1>
         <p class="lead rise d1">Six-axis, AI-enabled Standard Bots arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. <b style="color:#fff">Billed by the hour like one full-time worker, while it covers both shifts. Yours for $1 after 36 months.</b></p>
         <div class="counter rise d2" aria-live="polite">
-          <div class="k" id="cnt-k">Saved each year, every temp position on robots</div>
+          <div class="k" id="cnt-k">Saved every year across every temp position</div>
           <div class="v num" id="cnt-v">$<span>0</span></div>
           <div class="s" id="cnt-s">Calculating…</div>
         </div>
         <div class="cta-row rise d3">
-          <a class="btn primary" href="#compare">Today vs. with robots</a>
-          <a class="btn ghost" href="#start">How Phase 1 works</a>
+          <a class="btn primary" href="#savings">Total annual spend</a>
+          <a class="btn ghost" href="videos.html">Watch the robots work</a>
+          <a class="btn ghost" href="pricing.html">How it is priced</a>
         </div>
       </div>
-      <div class="armbox" aria-hidden="true">
-        <svg viewBox="0 0 300 340">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#E9F1F8"/><stop offset="1" stop-color="#B7C9DA"/></linearGradient>
-            <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#12B5A6"/><stop offset="1" stop-color="#0B5FA5"/></linearGradient>
-          </defs>
-          <ellipse cx="150" cy="322" rx="120" ry="10" fill="rgba(0,0,0,.35)"/>
-          <rect x="30" y="250" width="70" height="40" rx="6" fill="#163B5E" stroke="#2A5A86"/>
-          <rect x="200" y="250" width="70" height="40" rx="6" fill="#163B5E" stroke="#2A5A86"/>
-          <rect x="110" y="300" width="80" height="22" rx="6" fill="url(#g2)"/>
-          <g class="a-shoulder">
-            <rect x="136" y="186" width="28" height="118" rx="14" fill="url(#g1)"/>
-            <circle cx="150" cy="300" r="20" fill="#E9F1F8" stroke="#12B5A6" stroke-width="4"/>
-            <g class="a-elbow">
-              <rect x="138" y="96" width="24" height="100" rx="12" fill="url(#g1)"/>
-              <circle cx="150" cy="190" r="15" fill="#E9F1F8" stroke="#12B5A6" stroke-width="4"/>
-              <g class="a-wrist">
-                <circle cx="150" cy="100" r="11" fill="#E9F1F8" stroke="#12B5A6" stroke-width="3"/>
-                <rect x="140" y="56" width="20" height="40" rx="6" fill="#DCE7F1"/>
-                <rect x="132" y="44" width="8" height="18" rx="3" fill="#12B5A6"/>
-                <rect x="160" y="44" width="8" height="18" rx="3" fill="#12B5A6"/>
-                <rect class="a-box" x="136" y="20" width="28" height="28" rx="4" fill="#E8962E"/>
-              </g>
-            </g>
-          </g>
-        </svg>
-      </div>
+      <div class="scene" aria-hidden="true">
+  <svg id="scn" viewBox="0 0 600 380" role="presentation">
+    <defs>
+      <linearGradient id="lk" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F3F8FC"/><stop offset="1" stop-color="#B7C9DA"/></linearGradient>
+      <linearGradient id="bs" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#12B5A6"/><stop offset="1" stop-color="#0B5FA5"/></linearGradient>
+    </defs>
+    <ellipse cx="300" cy="360" rx="270" ry="12" fill="rgba(0,0,0,.35)"/>
+    <!-- conveyor (pick side) -->
+    <rect x="14" y="296" width="196" height="16" rx="5" fill="#163B5E" stroke="#2A5A86"/>
+    <rect x="30" y="312" width="10" height="44" fill="#163B5E"/><rect x="184" y="312" width="10" height="44" fill="#163B5E"/>
+    <g stroke="#2A5A86" stroke-width="2" opacity=".8"><path d="M42 296v16M72 296v16M102 296v16M132 296v16M162 296v16M192 296v16"/></g>
+    <g id="queue"></g>
+    <!-- crate (place side) -->
+    <g id="placed"></g>
+    <rect x="372" y="282" width="196" height="72" rx="6" fill="#163B5E" stroke="#2A5A86" stroke-width="2"/>
+    <rect x="372" y="282" width="196" height="14" rx="6" fill="#1E4D7B"/>
+    <g stroke="#2A5A86" stroke-width="2" opacity=".6"><path d="M437 296v58M503 296v58"/></g>
+    <!-- base + arm -->
+    <rect x="248" y="316" width="104" height="38" rx="8" fill="url(#bs)"/>
+    <rect x="270" y="288" width="60" height="34" rx="6" fill="#DCE7F1"/>
+    <line id="l1" x1="300" y1="286" x2="300" y2="170" stroke="#E3ECF5" stroke-width="28" stroke-linecap="round"/>
+    <line id="l1s" x1="300" y1="286" x2="300" y2="170" stroke="#9DB4C9" stroke-width="8" stroke-linecap="round" opacity=".55"/>
+    <line id="l2" x1="300" y1="170" x2="300" y2="90" stroke="#E3ECF5" stroke-width="24" stroke-linecap="round"/>
+    <line id="l2s" x1="300" y1="170" x2="300" y2="90" stroke="#9DB4C9" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+    <circle cx="300" cy="286" r="19" fill="#E9F1F8" stroke="var(--robot)" stroke-width="4"/>
+    <circle id="jE" cx="300" cy="170" r="15" fill="#E9F1F8" stroke="var(--robot)" stroke-width="4"/>
+    <g id="grip">
+      <circle r="10" fill="#E9F1F8" stroke="var(--robot)" stroke-width="3"/>
+      <rect x="-9" y="6" width="18" height="30" rx="5" fill="#DCE7F1"/>
+      <rect x="-20" y="30" width="40" height="7" rx="3" fill="#C4D6E8"/>
+      <rect id="fL" x="-19" y="32" width="7" height="26" rx="3" fill="var(--robot)"/>
+      <rect id="fR" x="12" y="32" width="7" height="26" rx="3" fill="var(--robot)"/>
+    </g>
+    <g id="mover" opacity="1"><g class="m" ><g transform="scale(1.3)"><rect x="-5.5" y="-13" width="11" height="9" rx="2" fill="#FFDF6B"/><rect x="-7" y="-5" width="14" height="9" rx="3" fill="#2E7FE0"/><path d="M7 -2 q11 -2 11 9 q0 8 -9 8" fill="none" stroke="#2E7FE0" stroke-width="4" stroke-linecap="round"/><rect x="-18" y="2" width="36" height="50" rx="9" fill="#2E7FE0"/><rect x="-18" y="2" width="14" height="50" rx="9" fill="#fff" opacity=".16"/><rect x="-14" y="18" width="28" height="19" rx="3" fill="#fff"/><rect x="-10" y="23" width="20" height="3" rx="1.5" fill="#00457C"/><rect x="-10" y="29" width="14" height="3" rx="1.5" fill="#00457C" opacity=".6"/></g></g></g>
+    <!-- crate front wall hides the bottoms of placed jugs -->
+    <rect x="372" y="300" width="196" height="54" rx="6" fill="#163B5E" stroke="#2A5A86" stroke-width="2"/>
+    <rect x="384" y="312" width="172" height="8" rx="4" fill="#2A5A86" opacity=".7"/>
+  </svg>
+  <div class="cap">Conveyor to case, no breaks, both shifts</div>
+</div>
     </div>
   </div>
 </header>
-
 <main>
   <section class="band alt" id="savings">
     <div class="wrap">
@@ -313,6 +441,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <p class="lead" id="sv-lead">Both shifts, lease to own, compared with what those positions cost you today in bill rate, overtime and turnover.</p>
       </div>
       <div class="svgrid" id="svCards"></div>
+      <div class="linkrow"><a class="btn solid" href="pricing.html">See how it is priced</a><a class="btn line" href="videos.html">Watch the robots work</a></div>
       <div class="card rel" style="margin-top:20px">
         <h3>Yearly cost: today vs. with robots</h3>
         <div class="legend"><span><i style="background:var(--temp)"></i>Today, with temps</span><span><i style="background:var(--robot)"></i>Years 1–3, lease to own</span><span><i style="background:var(--navy)"></i>Year 4 on, you own them</span></div>
@@ -320,8 +449,18 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       </div>
     </div>
   </section>
-
-  <section class="band" id="door">
+  <section class="band" id="see">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">See how the robots work</div>
+        <h2>The same jobs, running on a real floor.</h2>
+        <p class="lead">Packing, palletizing and conveyor loading, the work closest to your line. All 55 Standard Bots videos are in the library.</p>
+      </div>
+      <div class="vpicks"><a class="vcard" href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-39.jpg" width="480" height="270"><span class="play"></span><span class="dur">0:28</span></div><div class="bd"><div class="t">Standard Bots Bottle Packing Application Example</div><div class="b">A 30-second clip of a Standard Bots robot packing bottles.</div><div class="meta"><span class="no">#39</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/shorts/MQpwh8MkhdY" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-40.jpg" width="480" height="270"><span class="play"></span><span class="dur">1:00</span></div><div class="bd"><div class="t">RO2 Core and RO3 Thor Robots - Palletizing Demo</div><div class="b">The Core and Thor robots palletizing side by side.</div><div class="meta"><span class="no">#40</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=WxWVB78T764" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-50.jpg" width="480" height="270"><span class="play"></span><span class="dur">1:12</span></div><div class="bd"><div class="t">Standard Bots Cobot Application - Conveyor Tending Demo</div><div class="b">A Standard Bots cobot tending a conveyor.</div><div class="meta"><span class="no">#50</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/shorts/WO2xHMURimA" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-41.jpg" width="480" height="270"><span class="play"></span><span class="dur">0:20</span></div><div class="bd"><div class="t">Standard Bots RO3 Thor Robot Palletizing</div><div class="b">Twenty seconds of the Thor robot palletizing.</div><div class="meta"><span class="no">#41</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=tQa6yvAwLUI" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-8.jpg" width="480" height="270"><span class="play"></span><span class="dur">0:44</span></div><div class="bd"><div class="t">Reconfigure Jobs in 30s with ClickFind Vision Feature</div><div class="b">Under a minute: the robot&#x27;s camera finds a new part with one click, so changing jobs takes seconds.</div><div class="meta"><span class="no">#8</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=Sr92hypxfco" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-27.jpg" width="480" height="270"><span class="play"></span><span class="dur">4:01</span></div><div class="bd"><div class="t">How Shaw Barrels 4X&#x27;d Production with the Core Robot</div><div class="b">How Shaw Barrels quadrupled production with the Core robot.</div><div class="meta"><span class="no">#27</span><span>Standard Bots · YouTube</span></div></div></a></div>
+      <div class="linkrow"><a class="btn solid" href="videos.html">Open the video library</a></div>
+    </div>
+  </section>
+  <section class="band alt" id="door">
     <div class="wrap">
       <div class="sec-head">
         <div class="kicker">The revolving door, in your own numbers</div>
@@ -342,51 +481,6 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       <p class="quote">A robot learns the job once. It doesn't call off, quit on day three, need orientation, or get hurt lifting the 400th case of the shift.</p>
     </div>
   </section>
-
-  <section class="band alt" id="hidden">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="kicker">The cost nobody invoices you for</div>
-        <h2>What each new start really costs OWI.</h2>
-        <p class="lead">The bill rate is only part of a temp hour. Move the sliders to match what your floor actually spends on every new face.</p>
-      </div>
-      <div class="calc">
-        <div class="card">
-          <div class="slider"><div class="top"><label for="s-starts">New starts per year</label><output id="o-starts" class="num"></output></div><input type="range" id="s-starts" min="50" max="500" step="5" value="290"><small>Your 2026 pace is about 290 a year (229 in 9½ months).</small></div>
-          <div class="slider"><div class="top"><label for="s-sup">Trainer and supervisor time</label><output id="o-sup" class="num"></output></div><input type="range" id="s-sup" min="0" max="16" step="1" value="4"><small>Hours a lead spends with each new start, at <span id="o-suprate"></span>/hr.</small></div>
-          <div class="slider"><div class="top"><label for="s-ramp">Lost output in week one</label><output id="o-ramp" class="num"></output></div><input type="range" id="s-ramp" min="0" max="80" step="5" value="40"><small>How far below a trained worker a new start runs in the first 40 hours.</small></div>
-          <div class="slider"><div class="top"><label for="s-hr">HR and admin per start</label><output id="o-hr" class="num"></output></div><input type="range" id="s-hr" min="0" max="6" step="0.5" value="1.5"><small>Badging, paperwork, PPE, scheduling, write-ups and the exit.</small></div>
-        </div>
-        <div class="result">
-          <div class="card">
-            <div class="kicker" style="color:var(--hidden)">Hidden turnover cost a year</div>
-            <div class="big" id="hid-total">$0</div>
-            <div class="rows" id="hid-rows"></div>
-          </div>
-          <div class="callout" id="hid-hour"></div>
-          <div class="callout">Not counted here: Commercial Employees sends a person on site to onboard and orient every new start, at no separate charge. With robots on the line, that churn of first days stops for both of us.</div>
-          <div class="callout">On top of that: <b>32% of workplace injuries happen in a worker's first year</b> (OSHA), and the average workers' comp claim now runs <b>$47,316</b> (National Safety Council, 2022–23). A temp hurt on your floor still goes on your OSHA log when your supervisors direct the work. Robots take the heavy, repetitive lifts out of human hands.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" id="hour">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="kicker">Cost per hour</div>
-        <h2>A temp hour vs. a robot hour.</h2>
-        <p class="lead">You pay for a robot like one full-time worker: its hourly rate on 2,080 hours a year. It works both shifts, so each hour it actually works costs about half that. It still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
-      </div>
-      <div class="card hourwrap">
-        <div class="hbar"><div class="name">Temp worker<small id="h-temp-sub"></small></div><div class="track"><span id="b-bill" style="background:var(--temp)"></span><span id="b-ot" style="background:var(--temp-ink)"></span><span id="b-hid" style="background:var(--hidden)"></span></div><div class="amt num" id="h-temp" style="color:var(--temp-ink)"></div></div>
-        <div class="hbar"><div class="name">Robot, per hour worked<small id="h-rob-sub">Lease to own, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
-        <div class="legend"><span><i style="background:var(--temp)"></i>Bill rate</span><span><i style="background:var(--temp-ink)"></i>Overtime premium</span><span><i style="background:var(--hidden)"></i>Turnover cost per hour</span><span><i style="background:var(--robot)"></i>Robot rate</span><span><i style="background:var(--robot-ink)"></i>Operator oversight</span></div>
-        <div><span class="savepill num" id="h-save"></span></div>
-      </div>
-    </div>
-  </section>
-
   <section class="band dark" id="how">
     <div class="wrap">
       <div class="sec-head">
@@ -411,77 +505,6 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       </div>
     </div>
   </section>
-
-  <section class="band alt" id="compare">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="kicker">Today vs. with robots</div>
-        <h2>What New Kensington spends now, and what it could.</h2>
-        <p class="lead">Pick how many robots go on the line. Each robot takes one station on every shift it runs. The comparison counts the full cost of a temp position, including turnover, against the robot's lease payment and the time a lead spends watching it.</p>
-      </div>
-      <div class="ctrls">
-        <div class="scope" role="group" aria-label="How many robots">
-          <button class="chip" data-scope="start" aria-pressed="true">Phase 1 · 4 robots</button>
-          <button class="chip" data-scope="plant" aria-pressed="false">Every temp position · 12 robots</button>
-        </div>
-        <div class="scope" role="group" aria-label="Shifts each robot runs">
-          <button class="chip" data-shifts="1" aria-pressed="false">1 shift</button>
-          <button class="chip" data-shifts="2" aria-pressed="true">2 shifts</button>
-        </div>
-        <div class="scope" role="group" aria-label="Tooling and infeed">
-          <button class="chip" data-setup="simple" aria-pressed="true">Simple setup</button>
-          <button class="chip" data-setup="standard" aria-pressed="false">Standard setup</button>
-          <button class="chip" data-setup="complex" aria-pressed="false">Complex setup</button>
-        </div>
-      </div>
-      <div class="card ratecard">
-        <div>
-          <h3>What the hourly rate covers</h3>
-          <p>The robot, its programming, service, insurance and a swap if one goes down, plus the end-of-arm tooling, suction and infeed that get product to it. Every station is different, so we rate each one at the site survey and build its tooling allowance into the rate. Nothing up front. If a station needs more than its allowance, you approve a change order before we spend it.</p>
-        </div>
-        <div class="scroll"><table class="rc"><thead><tr><th>Robot</th><th data-col="simple">Simple<small>$10k tooling</small></th><th data-col="standard">Standard<small>$20k tooling</small></th><th data-col="complex">Complex<small>$40k tooling</small></th></tr></thead><tbody id="rcBody"></tbody></table></div>
-      </div>
-      <div class="today">
-        <div class="card">
-          <div class="kicker" style="color:var(--temp-ink)">Today, staffing those stations</div>
-          <div class="tv num" id="t-now" style="color:var(--temp-ink)">$0</div>
-          <div class="rows" id="t-now-rows"></div>
-          <p class="note" id="t-now-note"></p>
-        </div>
-        <div class="card">
-          <div class="kicker">With robots, lease to own</div>
-          <div class="tv num" id="t-bot" style="color:var(--robot-ink)">$0</div>
-          <div class="rows" id="t-bot-rows"></div>
-        </div>
-        <div class="card savecard">
-          <div class="kicker" style="color:var(--ok)">OWI saves</div>
-          <div class="tv num" id="t-save" style="color:var(--ok)">$0</div>
-          <div class="rows" id="t-save-rows"></div>
-        </div>
-      </div>
-      <div class="card rel" style="margin-top:20px">
-        <h3>Six years, side by side</h3>
-        <div class="legend"><span><i style="background:var(--temp)"></i>Keep staffing with temps</span><span><i style="background:var(--robot)"></i>Lease to own, then own it</span></div>
-        <svg class="chart" id="yrChart" role="img" aria-label="Yearly cost of temps versus robots over six years"></svg>
-        <p class="note" id="yr-note"></p>
-      </div>
-      <div class="sec-head" style="margin-top:56px;margin-bottom:24px">
-        <div class="kicker">Three ways to pay</div>
-        <h2 style="font-size:clamp(30px,3.6vw,42px)">Lease to own, robot temps, or buy.</h2>
-        <p class="lead">Lease to own and pay-by-the-hour aren't available when you buy direct. Every option is a 36-month term, and billing starts once a station passes its acceptance test.</p>
-      </div>
-      <div class="opts" id="opts"></div>
-      <div class="card jobs">
-        <h3 style="margin-bottom:6px">The four jobs</h3>
-        <p class="lead" style="font-size:16px;margin-bottom:10px">One robot covers one station on every shift it runs. Change the counts to match your line.</p>
-        <div class="scroll"><table>
-          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temp positions</th><th>Rate/hr</th><th>Lease a year</th><th>Saved a year</th></tr></thead>
-          <tbody id="jobBody"></tbody><tfoot id="jobFoot"></tfoot>
-        </table></div>
-      </div>
-    </div>
-  </section>
-
   <section class="band" id="why">
     <div class="wrap">
       <div class="sec-head">
@@ -507,30 +530,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       </div>
     </div>
   </section>
-
-  <section class="band alt" id="rollout">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="kicker">Beyond New Kensington</div>
-        <h2>Prove it on one line. Roll it to every plant.</h2>
-        <p class="lead">Once the routines are proven here, each OWI site gets the same cells, the same training and the same support, without starting from scratch.</p>
-      </div>
-      <div class="roll">
-        <div class="card">
-          <div class="slider"><div class="top"><label for="s-sites">OWI sites with robots</label><output id="o-sites" class="num"></output></div><input type="range" id="s-sites" min="1" max="8" step="1" value="5"></div>
-          <div class="slider"><div class="top"><label for="s-per">Robots per site</label><output id="o-per" class="num"></output></div><input type="range" id="s-per" min="4" max="30" step="1" value="15"></div>
-          <div class="rows" id="roll-rows" style="margin-top:10px"></div>
-        </div>
-        <div class="card rel">
-          <h3>Savings as the rollout grows</h3>
-          <div class="legend"><span><i style="background:var(--robot)"></i>Saved each year, lease to own</span><span><i style="background:var(--navy)"></i>Running total over 3 years</span></div>
-          <svg class="chart" id="rollChart" role="img" aria-label="Savings by number of sites"></svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" id="start">
+  <section class="band alt" id="start">
     <div class="wrap">
       <div class="sec-head">
         <div class="kicker">Phase 1 · how we start</div>
@@ -543,44 +543,26 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <div class="step"><h3>Acceptance test</h3><p>Each station has to hit the rate we agree on before any billing starts. We train your leads on the floor while it runs.</p></div>
         <div class="step"><h3>36 months, then it's yours</h3><p>The station's rate on 2,080 hours a year. At month 36 you buy the robot and its tooling for $1. We keep supporting it, building routines and covering it with people if it's ever down.</p></div>
       </div>
-      <div class="vids">
-        <a href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><b>Bottle packing ↗</b><span>0:28 · A Core robot packing bottles into cases</span></a>
-        <a href="https://www.youtube.com/shorts/MQpwh8MkhdY" target="_blank" rel="noopener"><b>Palletizing ↗</b><span>1:00 · Core and Thor building pallets</span></a>
-        <a href="https://www.youtube.com/watch?v=WxWVB78T764" target="_blank" rel="noopener"><b>Conveyor tending ↗</b><span>1:12 · Loading and unloading a moving line</span></a>
-      </div>
-    </div>
+</div>
   </section>
 </main>
-
-<section class="final">
-  <div class="wrap">
+<section class="final"><div class="wrap">
     <h2>Let's walk your line.</h2>
     <p>Pick a day and we'll bring a robot. In an hour we'll know which four stations to start with, and you'll see it run.</p>
-    <div class="contact">Greg Madler · Madler Robotics &amp; Commercial Employees · <span class="addr">gregm@commercialemployees.com</span></div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div>How these numbers are built</div>
-    <ol>
-      <li>Workforce, hours, overtime and bill rate: Commercial Employees billing to OWI New Kensington, Jan 1 – Oct 13, 2026. Blended rate $22.80 straight time, 1.6% of hours overtime at 1.5×.</li>
-      <li>Lease to own: Spark $16, Core $18, Thor $20 per robot hour, plus a tooling and infeed allowance set per station at the site survey (Simple $10,000, +$2.00/hr; Standard $20,000, +$3.75/hr; Complex $40,000, +$7.50/hr). Billed on 2,080 hours a year for 36 months, then a $1 buyout of the robot and its tooling; service and insurance included during the term. Anything beyond a station's allowance is a change order you approve first. Robot temps: $1/hr below the lease rate, less another $0.75 at 5–9 robots and $1.50 at 10 or more, 36-month term; Madler Robotics keeps ownership. Billing starts after each station's acceptance test.</li>
-      <li>A robot runs every scheduled hour of its station: 8-hour shifts, 5 days, 50 weeks, one or two shifts as selected. Oversight is 1 hour of a lead's time per robot per shift at the temp rate. After month 36 an owned robot is shown with a support plan at 10% of list a year. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus the same tooling and infeed allowance. Final pricing follows a site survey.</li>
-      <li>Turnover cost: your inputs above. Injury figures: OSHA (share of injuries in a worker's first year) and National Safety Council Injury Facts (average workers' comp claim, 2022–23 claims).</li>
-    </ol>
-  </div>
-</footer>
-
+    <div class="finalrow"><span>Greg Madler</span><span>412-606-8810</span><span>gregm@commercialemployees.com</span></div>
+    <div class="brands"><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><img class="sblogo" src="standard-bots-logo.svg" alt="Standard Bots" width="150" height="17"></div>
+  </div></section>
+<footer><div class="wrap"><div class="fbrand"><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><span>Commercial Employees</span></div><div>Figures use Commercial Employees' billing to OWI New Kensington, Jan 1 – Oct 13, 2026, and the rates on the <a href="pricing.html">pricing page</a>, which also shows how every number is built. Final pricing follows a site survey.</div></div></footer>
 <script>
+
 (() => {
   const D = {
     months: [["Jan",25,2775.5],["Feb",46,4014.9],["Mar",40,3392.4],["Apr",37,3060.6],["May",66,4056.5],["Jun",47,4815.2],["Jul",28,3164.0],["Aug",35,3515.4],["Sep",68,5731.9],["Oct*",56,2444.5]],
     bill: 22.80, otShare: 0.016, supRate: 32, adminRate: 30,
     hrsPerShift: 8, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5, ceFte: 24,
     billHrs: 2080, term: 36, support: 0.10,
-    base: { Spark: 16, Core: 18, Thor: 20 },
-    setup: { simple: { label: "Simple", allow: 10000, add: 2.00 }, standard: { label: "Standard", allow: 20000, add: 3.75 }, complex: { label: "Complex", allow: 40000, add: 7.50 } },
+    base: { Spark: 18, Core: 20, Thor: 22 },
+    setup: { simple: { label: "Simple", allow: 10000, add: 0 }, standard: { label: "Standard", allow: 20000, add: 1.75 }, complex: { label: "Complex", allow: 40000, add: 5.50 } },
     rtDisc: [[10, 1.50], [5, 0.75], [1, 0]],
     jobs: [
       { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, start: 1, plant: 4 },
@@ -589,7 +571,10 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, start: 1, plant: 2 }
     ]
   };
-  const $ = id => document.getElementById(id);
+  const NOOP = new Proxy(function () {}, { get: (t, k) => k === "style" ? {} : k === "classList" ? { toggle() {}, add() {} } : NOOP, set: () => true, apply: () => NOOP });
+  const $ = id => document.getElementById(id) || NOOP;
+  const val = (id, d) => { const e = document.getElementById(id); return e ? +e.value : d; };
+  const has = id => !!document.getElementById(id);
   const usd = v => (v < 0 ? "-$" : "$") + Math.round(Math.abs(v)).toLocaleString("en-US");
   const usd2 = v => "$" + v.toFixed(2);
   const kM = v => Math.abs(v) >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/0$/, "") + "M" : "$" + Math.round(v / 1000) + "k";
@@ -602,7 +587,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const overYr = () => tempRate * D.oversight * state.shifts * D.days * D.weeks;
 
   function hidden() {
-    const starts = +$("s-starts").value, sup = +$("s-sup").value, ramp = +$("s-ramp").value / 100, hr = +$("s-hr").value;
+    const starts = val("s-starts", 290), sup = val("s-sup", 4), ramp = val("s-ramp", 40) / 100, hr = val("s-hr", 1.5);
     $("o-starts").textContent = starts; $("o-sup").textContent = sup + " hrs";
     $("o-ramp").textContent = Math.round(ramp * 100) + "%"; $("o-hr").textContent = hr + " hrs"; $("o-suprate").textContent = "$" + D.supRate;
     const parts = [
@@ -652,7 +637,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     const P = model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant])));
     state.shifts = keep;
     animateCounter(P.lease.save);
-    $("cnt-s").textContent = `${P.n} robots on lease to own replace the ~${P.n * 2} temp positions we fill for you, across two shifts. ${Math.round(P.lease.save / P.now * 100)}% less than today, turnover included. ${kM(P.lease.save3)} over the 36-month lease.`;
+    $("cnt-s").textContent = `Total annual spend for those ${P.n * 2} temp positions: ${usd(P.now)} today, ${usd(P.lease.yr)} with ${P.n} robots on lease to own (${Math.round(P.lease.save / P.now * 100)}% less, turnover included). Once you own them it drops to ${usd(P.lease.after)} a year.`;
 
     // Hidden cost
     $("hid-total").textContent = usd(H.total);
@@ -673,15 +658,16 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     const at2 = counts => { const k = state.shifts; state.shifts = 2; const m = model(counts); state.shifts = k; return m; };
     const SA = at2(Object.fromEntries(D.jobs.map(j => [j.id, j.start]))), SB = P;
     const svCard = (m, big, title) => `<div class="card svcard${big ? " all" : ""}"><div class="kicker">${title}</div><div class="sub">${m.n} robots replace ${m.n * 2} temp positions across two shifts</div>
-      <div class="hl"><span class="tv num">${usd(m.lease.save)}</span><span class="pct num">${Math.round(m.lease.save / m.now * 100)}% less</span></div><div class="sub" style="margin-top:-4px">saved in year one</div>
-      <div class="rows">${[["Those positions cost you today", usd(m.now)], ["With robots, years 1–3", usd(m.lease.yr)], ["Saved over the 36-month lease", usd(m.lease.save3)], ["Saved each year once you own them", usd(m.lease.saveAfter) + " (" + Math.round(m.lease.saveAfter / m.now * 100) + "% less)"], ["Saved over 6 years", usd(m.lease.save6)]].map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join("")}</div></div>`;
+      <div class="spend"><div><div class="k">Annual spend today</div><div class="v t num">${usd(m.now)}</div><small>${usd(m.nowBill)} bill rate and overtime<br>${usd(m.nowHid)} turnover and retraining</small></div><div class="arrow" aria-hidden="true">→</div><div><div class="k">With robots, yrs 1–3</div><div class="v r num">${usd(m.lease.yr)}</div><small>${usd(m.lease.after)} a year from year 4,<br>once you own them</small></div></div>
+      <div class="hl"><span class="tv num">${usd(m.lease.save)}</span><span class="pct num">${Math.round(m.lease.save / m.now * 100)}% less</span></div><div class="sub" style="margin-top:-4px">saved every year of the lease</div>
+      <div class="rows">${[["Saved over the 36-month lease", usd(m.lease.save3)], ["Saved each year once you own them (" + Math.round(m.lease.saveAfter / m.now * 100) + "% less)", usd(m.lease.saveAfter)], ["Saved over 6 years", usd(m.lease.save6)], ["Capital from OWI", "None"]].map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join("")}</div></div>`;
     $("svCards").innerHTML = svCard(SA, false, "Phase 1 · 4 robots") + svCard(SB, true, "Every temp position we fill · 12 robots");
     $("sv-lead").textContent = `Both shifts, lease to own with a ${SA.S.label.toLowerCase()} tooling allowance (${kM(SA.S.allow)} a station) built into the rate, compared with what those positions cost you today in bill rate, overtime and turnover.`;
     drawSv([["Phase 1 · 4 robots", SA], ["Every temp position · 12 robots", SB]]);
 
     // Rate card
     $("rcBody").replaceChildren(...["Spark", "Core", "Thor"].map(rb => { const tr = document.createElement("tr"); const a = document.createElement("td"); a.textContent = rb; a.style.font = "600 15.5px var(--f-body)"; tr.appendChild(a);
-      Object.entries(D.setup).forEach(([k, v]) => { const c = document.createElement("td"); c.textContent = usd2(D.base[rb] + v.add); if (k === state.setup) c.className = "on"; tr.appendChild(c); }); return tr; }));
+      Object.entries(D.setup).forEach(([k, v]) => { const c = document.createElement("td"); c.textContent = usd2(D.base[rb] + v.add) + "/hr"; if (k === state.setup) c.className = "on"; tr.appendChild(c); }); return tr; }));
     document.querySelectorAll("table.rc th[data-col]").forEach(th => th.classList.toggle("on", th.dataset.col === state.setup));
 
     // Today vs with robots
@@ -716,9 +702,8 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     // Options
     const card = (star, badge, tag, title, price, unit, items, foot, footLabel = "Saved over 6 years", footColor = "") => `<div class="opt${star ? " star" : ""}">${star ? `<span class="badge">${badge}</span>` : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${price}<small> ${unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">${footLabel}</span><span class="v num"${footColor ? ` style="color:${footColor}"` : ""}>${kM(foot)}</span></div></div>`;
     $("opts").innerHTML =
-      card(true, "Recommended", "Own it in 3 years", "Lease to own", usd2(T.avg), `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · ${T.S.label.toLowerCase()} setup`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Tooling and infeed", kM(T.S.allow) + " a station, in the rate"], ["Effective cost per hour worked", usd2(T.lease.hr)], ["Service and insurance during the term", "Included"], ["After month 36", "Yours for $1"]], T.lease.save6) +
-      card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate), `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · less from 5 robots`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Effective cost per hour worked", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6) +
-      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front, robots plus tooling and setup", [["Robots at list price", usd(T.buy.list)], ["Tooling, infeed and install", usd(T.buy.capex - T.buy.list)], ["Support plan, 10% of list a year", usd(T.buy.sup)], ["Lead oversight a year", usd(T.over)], ["Insurance", "Your policy"]], T.buy.capex + T.buy.yr * 6, "Total cost over 6 years", "var(--ink)");
+      card(true, "Recommended", "Own it in 3 years", "Lease to own", usd2(T.avg) + "/hr", `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · ${T.S.label.toLowerCase()} setup`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Tooling and infeed", kM(T.S.allow) + " a station, in the rate"], ["Effective cost per hour worked", usd2(T.lease.hr)], ["Service and insurance during the term", "Included"], ["After month 36", "Yours for $1"]], T.lease.save6) +
+      card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate) + "/hr", `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · less from 5 robots`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Effective cost per hour worked", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6);
 
     // Jobs table
     $("jobBody").replaceChildren(...T.rows.map(r => {
@@ -727,15 +712,15 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       const cc = document.createElement("td"); const inp = document.createElement("input"); inp.type = "number"; inp.min = 0; inp.max = 50; inp.value = r.c; inp.id = "c-" + r.j.id; inp.setAttribute("aria-label", r.j.name + " robots");
       inp.addEventListener("input", () => { const v = parseInt(inp.value, 10); state.counts[r.j.id] = isFinite(v) && v > 0 ? v : 0; const id = inp.id; render(); const el = $(id); if (el) { el.focus(); } });
       cc.appendChild(inp);
-      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * state.shifts)), td(usd2(r.rate)), td(usd(r.leaseYr)), td(usd(r.save), "var(--ok)"));
+      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * state.shifts)), td(usd2(r.rate) + "/hr"), td(usd(r.leaseYr)), td(usd(r.save), "var(--ok)"));
       return tr;
     }));
     const tf = document.createElement("tr");
-    ["All stations", "", String(T.n), String(pos), usd2(T.avg) + " avg", usd(T.lease.pay), usd(T.lease.save)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 6) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
+    ["All stations", "", String(T.n), String(pos), usd2(T.avg) + "/hr avg", usd(T.lease.pay), usd(T.lease.save)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 6) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
     $("jobFoot").replaceChildren(tf);
 
     // Rollout
-    const sites = +$("s-sites").value, per = +$("s-per").value;
+    const sites = val("s-sites", 5), per = val("s-per", 15);
     $("o-sites").textContent = sites; $("o-per").textContent = per;
     const perRobotSave = P.n ? (model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant]))).lease.save / P.n) : 0;
     const yr = perRobotSave * per * sites;
@@ -744,7 +729,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     drawDoor();
   }
 
-  function drawSv(list) {
+  function drawSv(list) { if (!has("svChart")) return;
     const svg = $("svChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 320; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
     const maxV = Math.max(...list.map(([, m]) => m.now));
     const step = [5e4, 1e5, 2.5e5, 5e5, 1e6].find(s => maxV / s <= 5) || 1e6, top = Math.ceil(maxV / step) * step;
@@ -765,7 +750,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     svg.addEventListener("mouseleave", () => tip.hide());
   }
 
-  function drawYears(T) {
+  function drawYears(T) { if (!has("yrChart")) return;
     const svg = $("yrChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
     const data = Array.from({ length: 6 }, (_, i) => ({ y: i + 1, t: T.now, r: i < 3 ? T.lease.yr : T.lease.after }));
     const maxV = Math.max(1, ...data.map(d => Math.max(d.t, d.r)));
@@ -797,7 +782,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const NS = "http://www.w3.org/2000/svg";
   const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
 
-  function drawDoor() {
+  function drawDoor() { if (!has("doorChart")) return;
     const svg = $("doorChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
     const m = { l: 34, r: 10, t: 16, b: 28 }; const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const rows = D.months.map(([mo, w, h]) => ({ mo, w, fte: h / (mo === "Oct*" ? 173.3 * 13 / 31 : 173.3) }));
@@ -815,7 +800,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     svg.addEventListener("mouseleave", () => tip.hide());
   }
 
-  function drawRoll(perRobotSave, per, sites) {
+  function drawRoll(perRobotSave, per, sites) { if (!has("rollChart")) return;
     const svg = $("rollChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
     const n = 8, data = Array.from({ length: n }, (_, i) => ({ s: i + 1, yr: perRobotSave * per * (i + 1) }));
     const maxV = data[n - 1].yr * 3;
@@ -860,6 +845,51 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 120); });
   render();
 })();
+
+
+(function () {
+  const svg = document.getElementById("scn"); if (!svg) return;
+  const $ = id => svg.querySelector("#" + id);
+  const S = { x: 300, y: 286 }, L1 = 128, L2 = 116, GR = 46;     // shoulder, link lengths, wrist-to-grip drop
+  const P1 = { x: 118, y: 228 }, SLOTS = [404, 458, 512], P2Y = 236;  // pick point (neck), crate slots (neck x)
+  const l1 = $("l1"), l1s = $("l1s"), l2 = $("l2"), l2s = $("l2s"), jE = $("jE"), grip = $("grip"), fL = $("fL"), fR = $("fR"), mover = $("mover"), placed = $("placed"), queue = $("queue");
+  const tpl = mover.cloneNode(true);
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  function ik(wx, wy) {                       // two-link, elbow up
+    let dx = wx - S.x, dy = wy - S.y, d = clamp(Math.hypot(dx, dy), 40, L1 + L2 - 2), a = Math.atan2(dy, dx);
+    const al = Math.acos(clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1));
+    const c = [a - al, a + al].map(t => ({ x: S.x + L1 * Math.cos(t), y: S.y + L1 * Math.sin(t) }));
+    const e = c[0].y < c[1].y ? c[0] : c[1];
+    return { e, w: { x: S.x + dx * d / Math.hypot(dx, dy), y: S.y + dy * d / Math.hypot(dx, dy) } };
+  }
+  function pose(tx, ty, open) {               // tx,ty = neck grip point
+    const r = ik(tx, ty - GR);
+    for (const [ln, sh, A, B] of [[l1, l1s, S, r.e], [l2, l2s, r.e, r.w]]) for (const el of [ln, sh]) { el.setAttribute("x1", A.x); el.setAttribute("y1", A.y); el.setAttribute("x2", B.x); el.setAttribute("y2", B.y); }
+    jE.setAttribute("cx", r.e.x); jE.setAttribute("cy", r.e.y);
+    grip.setAttribute("transform", `translate(${r.w.x} ${r.w.y})`);
+    const g = 12 + 6 * open; fL.setAttribute("x", -g - 7); fR.setAttribute("x", g);
+  }
+  function putMover(x, y, on) { mover.setAttribute("transform", `translate(${x} ${y})`); mover.style.display = on ? "" : "none"; }
+  function addPlaced(k) { const g = tpl.cloneNode(true); g.removeAttribute("id"); g.setAttribute("transform", `translate(${SLOTS[k]} ${P2Y})`); placed.appendChild(g); }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const T = 9000; let n = 0, lastCycle = -1, t0 = performance.now();
+  function frame(now) {
+    const el = reduce ? 0.3 * T : now - t0, cyc = Math.floor(el / T), t = (el % T) / T;
+    if (cyc !== lastCycle) { lastCycle = cyc; n = cyc % 4; if (n === 0) placed.innerHTML = ""; }
+    const P2 = { x: SLOTS[n], y: P2Y }, lift = 96;
+    let tx, ty, open, mx, my, mOn = true;
+    if (t < .12) { tx = P1.x; ty = P1.y; open = t < .06 ? 1 : lerp(1, 0, ease((t - .06) / .06)); mx = P1.x; my = P1.y; }
+    else if (t < .52) { const u = ease((t - .12) / .40); tx = lerp(P1.x, P2.x, u); ty = lerp(P1.y, P2.y, u) - lift * Math.sin(Math.PI * u); open = 0; mx = tx; my = ty; }
+    else if (t < .62) { tx = P2.x; ty = P2.y; open = t < .56 ? 0 : lerp(0, 1, ease((t - .56) / .06)); mx = tx; my = ty; if (t >= .56 && !placed.querySelector(`[data-s="${n}"]`)) { addPlaced(n); placed.lastChild.setAttribute("data-s", n); } mOn = t < .56; }
+    else { const u = ease((t - .62) / .34); tx = lerp(P2.x, P1.x, u); ty = lerp(P2.y, P1.y, u) - lift * Math.sin(Math.PI * u); open = 1; const v = clamp((t - .70) / .26, 0, 1); mx = lerp(-34, P1.x, ease(v)); my = P1.y; mOn = true; }
+    if (t >= .96) { tx = P1.x; ty = P1.y; }
+    pose(tx, ty, open); putMover(mx, my, mOn);
+    queue.style.display = "none";
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
 </script>
 </body>
 </html>
