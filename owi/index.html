@@ -179,6 +179,14 @@ section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,t
 .today .rows{font-size:15px}
 .savecard{border:2px solid var(--ok)}
 .note{color:var(--muted);font-size:14.5px;margin-top:8px}
+.ratecard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:center;margin-bottom:18px}
+@media (max-width:900px){.ratecard{grid-template-columns:1fr}}
+.ratecard h3{margin-bottom:8px}
+.ratecard p{color:var(--muted);font-size:15.5px}
+table.rc{min-width:0}
+table.rc th small{display:block;font:500 12px var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted)}
+table.rc td{font:700 20px var(--f-display)}
+table.rc .on{background:rgba(18,181,166,.12);color:var(--robot-ink)}
 .scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;min-width:620px}
 th{font:600 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding:10px;border-bottom:1px solid var(--rule)}
@@ -246,7 +254,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     <div class="hero-grid">
       <div>
         <h1 class="rise">The line that <em>shows up</em> every shift.</h1>
-        <p class="lead rise d1">Six-axis, AI-enabled Standard Bots arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. <b style="color:#fff">$22 an hour, billed like one full-time worker, while it covers both shifts. Yours for $1 after 36 months.</b></p>
+        <p class="lead rise d1">Six-axis, AI-enabled Standard Bots arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. <b style="color:#fff">Billed by the hour like one full-time worker, while it covers both shifts. Yours for $1 after 36 months.</b></p>
         <div class="counter rise d2" aria-live="polite">
           <div class="k" id="cnt-k">What New Kensington saves each year</div>
           <div class="v num" id="cnt-v">$<span>0</span></div>
@@ -344,11 +352,11 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       <div class="sec-head">
         <div class="kicker">Cost per hour</div>
         <h2>A temp hour vs. a robot hour.</h2>
-        <p class="lead">You pay for a robot like one full-time worker: $22 an hour on 2,080 hours a year. It works both shifts, so each hour of work costs about half that. It still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
+        <p class="lead">You pay for a robot like one full-time worker: its hourly rate on 2,080 hours a year. It works both shifts, so each hour it actually works costs about half that. It still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
       </div>
       <div class="card hourwrap">
         <div class="hbar"><div class="name">Temp worker<small id="h-temp-sub"></small></div><div class="track"><span id="b-bill" style="background:var(--temp)"></span><span id="b-ot" style="background:var(--temp-ink)"></span><span id="b-hid" style="background:var(--hidden)"></span></div><div class="amt num" id="h-temp" style="color:var(--temp-ink)"></div></div>
-        <div class="hbar"><div class="name">Robot<small id="h-rob-sub">Lease to own, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
+        <div class="hbar"><div class="name">Robot, per hour worked<small id="h-rob-sub">Lease to own, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
         <div class="legend"><span><i style="background:var(--temp)"></i>Bill rate</span><span><i style="background:var(--temp-ink)"></i>Overtime premium</span><span><i style="background:var(--hidden)"></i>Turnover cost per hour</span><span><i style="background:var(--robot)"></i>Robot rate</span><span><i style="background:var(--robot-ink)"></i>Operator oversight</span></div>
         <div><span class="savepill num" id="h-save"></span></div>
       </div>
@@ -363,14 +371,14 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <p class="lead">Traditional automation is bolted to one line, behind a cage, built by engineers for one product. Robot temps are collaborative arms on a rolling base that your own people run, and that move to wherever the work is this week.</p>
       </div>
       <div class="howgrid">
-        <div class="howcard"><div class="n">Own it or rent it</div><h3>No capital request</h3><p>Lease to own at $22 an hour for 36 months and the robot is yours for $1. Or keep it as a robot temp, from $21 an hour, that we own, insure and maintain. Either way it's on the same invoice as your staffing.</p></div>
+        <div class="howcard"><div class="n">Own it or rent it</div><h3>No capital request</h3><p>Lease to own by the hour for 36 months and the robot and its tooling are yours for $1. Or keep it as a robot temp, $1 an hour less, that we own, insure and maintain. Either way it's on the same invoice as your staffing.</p></div>
         <div class="howcard"><div class="n">You run them</div><h3>Your supervisors are in control</h3><p>Start, stop, pause and switch jobs from a tablet. One lead can watch several robots from a single screen, the way a lead watches a crew today.</p><q>Any factory worker becomes a robot operator in a day.</q><p style="font-size:13px">Standard Bots</p></div>
         <div class="howcard"><div class="n">They move</div><h3>Line to line, job to job</h3><p>Each robot sits on a mobile base. Roll it to another line, load a different routine, and it's working. New bottle, new case or new pallet pattern? We build and test the routine for you.</p></div>
         <div class="howcard"><div class="n">We engineer it</div><h3>We handle how product reaches it</h3><p>The real work is getting product to the robot the same way every time: infeed, guides, pick stations, pallet positions. We survey each station, design that piece and prove it before billing starts.</p></div>
       </div>
       <div class="trad" role="table" aria-label="Traditional automation compared with robot temps">
         <div class="h" role="columnheader">&nbsp;</div><div class="h" role="columnheader">Traditional automation</div><div class="h us" role="columnheader">Robot temps</div>
-        <div role="cell">Upfront cost</div><div role="cell">Often six figures per cell</div><div role="cell" class="us">$22 an hour, no capital</div>
+        <div role="cell">Upfront cost</div><div role="cell">Often six figures per cell</div><div role="cell" class="us">By the hour, no capital</div>
         <div role="cell">Time to running</div><div role="cell">Months of engineering</div><div role="cell" class="us">Weeks, per station</div>
         <div role="cell">Change a product or line</div><div role="cell">Re-engineer the cell</div><div role="cell" class="us">Load a new routine</div>
         <div role="cell">Who runs it</div><div role="cell">Controls engineers</div><div role="cell" class="us">Your floor leads</div>
@@ -396,6 +404,18 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
           <button class="chip" data-shifts="1" aria-pressed="false">1 shift</button>
           <button class="chip" data-shifts="2" aria-pressed="true">2 shifts</button>
         </div>
+        <div class="scope" role="group" aria-label="Tooling and infeed">
+          <button class="chip" data-setup="simple" aria-pressed="false">Simple setup</button>
+          <button class="chip" data-setup="standard" aria-pressed="true">Standard setup</button>
+          <button class="chip" data-setup="complex" aria-pressed="false">Complex setup</button>
+        </div>
+      </div>
+      <div class="card ratecard">
+        <div>
+          <h3>What the hourly rate covers</h3>
+          <p>The robot, its programming, service, insurance and a swap if one goes down, plus the end-of-arm tooling, suction and infeed that get product to it. Every station is different, so we rate each one at the site survey and build its tooling allowance into the rate. Nothing up front. If a station needs more than its allowance, you approve a change order before we spend it.</p>
+        </div>
+        <div class="scroll"><table class="rc"><thead><tr><th>Robot</th><th data-col="simple">Simple<small>$10k tooling</small></th><th data-col="standard">Standard<small>$20k tooling</small></th><th data-col="complex">Complex<small>$40k tooling</small></th></tr></thead><tbody id="rcBody"></tbody></table></div>
       </div>
       <div class="today">
         <div class="card">
@@ -405,7 +425,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
           <p class="note" id="t-now-note"></p>
         </div>
         <div class="card">
-          <div class="kicker">With robots, lease to own at $22/hr</div>
+          <div class="kicker">With robots, lease to own</div>
           <div class="tv num" id="t-bot" style="color:var(--robot-ink)">$0</div>
           <div class="rows" id="t-bot-rows"></div>
         </div>
@@ -431,7 +451,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <h3 style="margin-bottom:6px">The four jobs</h3>
         <p class="lead" style="font-size:16px;margin-bottom:10px">One robot covers one station on every shift it runs. Change the counts to match your line.</p>
         <div class="scroll"><table>
-          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temp positions</th><th>Lease a year</th><th>Saved a year</th></tr></thead>
+          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temp positions</th><th>Rate/hr</th><th>Lease a year</th><th>Saved a year</th></tr></thead>
           <tbody id="jobBody"></tbody><tfoot id="jobFoot"></tfoot>
         </table></div>
       </div>
@@ -495,9 +515,9 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       </div>
       <div class="steps">
         <div class="step"><h3>Walk the line</h3><p>Together we pick four stations with the most turnover: case packing, palletizing, line loading and pick and place.</p></div>
-        <div class="step"><h3>Survey and set up</h3><p>We engineer how product reaches each robot, then install and program the cell with Standard Bots. A one-time setup fee per station, quoted after the survey.</p></div>
+        <div class="step"><h3>Survey and set up</h3><p>We engineer how product reaches each robot, then install and program the cell with Standard Bots. Each station is rated Simple, Standard or Complex, and its tooling allowance goes into the hourly rate.</p></div>
         <div class="step"><h3>Acceptance test</h3><p>Each station has to hit the rate we agree on before any billing starts. We train your leads on the floor while it runs.</p></div>
-        <div class="step"><h3>36 months, then it's yours</h3><p>$22 an hour on 2,080 hours a year. At month 36 you buy it for $1. We keep supporting it, building routines and covering it with people if it's ever down.</p></div>
+        <div class="step"><h3>36 months, then it's yours</h3><p>The station's rate on 2,080 hours a year. At month 36 you buy the robot and its tooling for $1. We keep supporting it, building routines and covering it with people if it's ever down.</p></div>
       </div>
       <div class="vids">
         <a href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><b>Bottle packing ↗</b><span>0:28 · A Core robot packing bottles into cases</span></a>
@@ -521,8 +541,8 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     <div>How these numbers are built</div>
     <ol>
       <li>Workforce, hours, overtime and bill rate: Commercial Employees billing to OWI New Kensington, Jan 1 – Oct 13, 2026. Blended rate $22.80 straight time, 1.6% of hours overtime at 1.5×.</li>
-      <li>Lease to own: $22 per robot hour on 2,080 hours a year ($45,760 a year) for 36 months, then a $1 buyout; service and insurance included during the term. Robot temps: billed on 2,080 hours a year for a 36-month term at $21.00/hr for 1–4 robots, $20.25 for 5–9, $19.50 for 10 or more; Madler Robotics keeps ownership, and the rate includes the robot, tooling, programming, service, software, insurance and a swap if one goes down. Billing starts after each station's acceptance test. A one-time setup fee per station is quoted after the site survey and is not in the savings shown.</li>
-      <li>A robot runs every scheduled hour of its station: 8-hour shifts, 5 days, 50 weeks, one or two shifts as selected. Oversight is 1 hour of a lead's time per robot per shift at the temp rate. After month 36 an owned robot is shown with a support plan at 10% of list a year. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus install estimates, spread over 5 years. Final pricing follows a site survey.</li>
+      <li>Lease to own: Spark $20, Core $22, Thor $24 per robot hour, plus a tooling and infeed allowance set per station at the site survey (Simple $10,000, +$2.00/hr; Standard $20,000, +$3.75/hr; Complex $40,000, +$7.50/hr). Billed on 2,080 hours a year for 36 months, then a $1 buyout of the robot and its tooling; service and insurance included during the term. Anything beyond a station's allowance is a change order you approve first. Robot temps: $1/hr below the lease rate, less another $0.75 at 5–9 robots and $1.50 at 10 or more, 36-month term; Madler Robotics keeps ownership. Billing starts after each station's acceptance test.</li>
+      <li>A robot runs every scheduled hour of its station: 8-hour shifts, 5 days, 50 weeks, one or two shifts as selected. Oversight is 1 hour of a lead's time per robot per shift at the temp rate. After month 36 an owned robot is shown with a support plan at 10% of list a year. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus the same tooling and infeed allowance. Final pricing follows a site survey.</li>
       <li>Turnover cost: your inputs above. Injury figures: OSHA (share of injuries in a worker's first year) and National Safety Council Injury Facts (average workers' comp claim, 2022–23 claims).</li>
     </ol>
   </div>
@@ -534,8 +554,10 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     months: [["Jan",25,2775.5],["Feb",46,4014.9],["Mar",40,3392.4],["Apr",37,3060.6],["May",66,4056.5],["Jun",47,4815.2],["Jul",28,3164.0],["Aug",35,3515.4],["Sep",68,5731.9],["Oct*",56,2444.5]],
     bill: 22.80, otShare: 0.016, supRate: 32, adminRate: 30,
     hrsPerShift: 8, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5, ceFte: 23,
-    leaseRate: 22, billHrs: 2080, term: 36, support: 0.10,
-    tiers: [[10, 19.50], [5, 20.25], [1, 21.00]],
+    billHrs: 2080, term: 36, support: 0.10,
+    base: { Spark: 20, Core: 22, Thor: 24 },
+    setup: { simple: { label: "Simple", allow: 10000, add: 2.00 }, standard: { label: "Standard", allow: 20000, add: 3.75 }, complex: { label: "Complex", allow: 40000, add: 7.50 } },
+    rtDisc: [[10, 1.50], [5, 0.75], [1, 0]],
     jobs: [
       { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, start: 1, plant: 5 },
       { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, start: 1, plant: 4 },
@@ -549,9 +571,9 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const kM = v => Math.abs(v) >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/0$/, "") + "M" : "$" + Math.round(v / 1000) + "k";
   const tempRate = D.bill * (1 + 0.5 * D.otShare);
   const otPrem = tempRate - D.bill;
-  const leaseYr = D.leaseRate * D.billHrs;
-  const tier = n => (D.tiers.find(([m]) => n >= m) || D.tiers[D.tiers.length - 1])[1];
-  const state = { scope: "start", shifts: 2, counts: Object.fromEntries(D.jobs.map(j => [j.id, j.start])) };
+  const rtDisc = n => (D.rtDisc.find(([m]) => n >= m) || D.rtDisc[D.rtDisc.length - 1])[1];
+  const rateOf = robot => D.base[robot] + D.setup[state.setup].add;
+  const state = { scope: "start", shifts: 2, setup: "standard", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.start])) };
   const workHrs = () => D.hrsPerShift * state.shifts * D.days * D.weeks;
   const overYr = () => tempRate * D.oversight * state.shifts * D.days * D.weeks;
 
@@ -571,20 +593,21 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   // Everything for a set of robot counts at the current shift setting.
   function model(counts) {
     const H = hidden(), trueTemp = tempRate + H.perHour, wh = workHrs(), ov = overYr();
-    let n = 0, now = 0, nowBill = 0, nowHid = 0, lease = 0, rt = 0, over = 0, sup = 0, capex = 0;
+    let n = 0, now = 0, nowBill = 0, nowHid = 0, lease = 0, rt = 0, over = 0, sup = 0, capex = 0, list = 0;
+    const N = D.jobs.reduce((t, j) => t + (counts[j.id] || 0), 0), disc = rtDisc(N || 1), S = D.setup[state.setup];
     const rows = D.jobs.map(j => {
-      const c = counts[j.id] || 0;
+      const c = counts[j.id] || 0, rate = rateOf(j.robot), ly = rate * D.billHrs * c;
       const staffed = trueTemp * wh * c;
       n += c; now += staffed; nowBill += tempRate * wh * c; nowHid += H.perHour * wh * c;
-      lease += leaseYr * c; over += ov * c; sup += j.list * D.support * c; capex += (j.list + j.install) * c;
-      return { j, c, staffed, leaseYr: leaseYr * c, save: staffed - (leaseYr + ov) * c };
+      lease += ly; rt += (rate - 1 - disc) * D.billHrs * c; over += ov * c; sup += j.list * D.support * c; capex += (j.list + S.allow) * c; list += j.list * c;
+      return { j, c, rate, staffed, leaseYr: ly, save: staffed - ly - ov * c };
     });
-    const hrs = n * wh, rtRate = tier(n || 1); rt = rtRate * D.billHrs * n;
+    const hrs = n * wh, avg = n ? lease / (n * D.billHrs) : rateOf("Core"), rtRate = n ? rt / (n * D.billHrs) : rateOf("Core") - 1;
     const L = lease + over, A = sup + over, R = rt + over, B = sup + over;
-    return { H, trueTemp, n, rows, hrs, now, nowBill, nowHid, over,
+    return { H, trueTemp, n, rows, hrs, now, nowBill, nowHid, over, avg, S,
       lease: { yr: L, pay: lease, hr: hrs ? L / hrs : 0, save: now - L, save3: (now - L) * 3, after: A, saveAfter: now - A, save6: (now - L) * 3 + (now - A) * 3 },
       rt: { rate: rtRate, yr: R, pay: rt, hr: hrs ? R / hrs : 0, save: now - R, save3: (now - R) * 3 },
-      buy: { yr: B, capex, sup, list: capex - D.jobs.reduce((t, j) => t + j.install * (counts[j.id] || 0), 0), hr: hrs ? (B + capex / 5) / hrs : 0, save3: (now - B) * 3 - capex, save6: (now - B) * 6 - capex, payback: now > B ? capex / ((now - B) / 12) : null } };
+      buy: { yr: B, capex, sup, list, hr: hrs ? (B + capex / 5) / hrs : 0, save3: (now - B) * 3 - capex, save6: (now - B) * 6 - capex, payback: now > B ? capex / ((now - B) / 12) : null } };
   }
 
   let shown = 0, animFrom = 0, animStart = 0, animTo = 0, raf = 0;
@@ -605,7 +628,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     const P = model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant])));
     state.shifts = keep;
     animateCounter(P.lease.save);
-    $("cnt-s").textContent = `${P.n} robots on the $22/hr lease to own, covering ${P.n * 2} temp positions across two shifts. Turnover costs included. ${kM(P.lease.save3)} over the 36-month lease.`;
+    $("cnt-s").textContent = `${P.n} robots on lease to own with a ${P.S.label.toLowerCase()} tooling allowance, covering ${P.n * 2} temp positions across two shifts. Turnover costs included. ${kM(P.lease.save3)} over the 36-month lease.`;
 
     // Hidden cost
     $("hid-total").textContent = usd(H.total);
@@ -613,14 +636,19 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     $("hid-hour").innerHTML = `That's <b>${usd2(H.perHour)}</b> on top of every temp hour you buy, so a temp hour really costs about <b>${usd2(T.trueTemp)}</b>, not ${usd2(D.bill)}.`;
 
     // Hourly bars (lease to own, per hour of work)
-    const robPay = leaseYr / wh, robOv = tempRate * D.oversight / D.hrsPerShift, rob = robPay + robOv;
+    const robPay = T.avg * D.billHrs / wh, robOv = tempRate * D.oversight / D.hrsPerShift, rob = robPay + robOv;
     const max = Math.max(T.trueTemp, rob) * 1.02;
     $("b-bill").style.width = (D.bill / max * 100) + "%"; $("b-ot").style.width = (otPrem / max * 100) + "%"; $("b-hid").style.width = (H.perHour / max * 100) + "%";
     $("b-rob").style.width = (robPay / max * 100) + "%"; $("b-ovr").style.width = (robOv / max * 100) + "%";
     $("h-temp").textContent = usd2(T.trueTemp); $("h-rob").textContent = usd2(rob);
     $("h-temp-sub").textContent = `${usd2(D.bill)} bill + overtime + turnover`;
-    $("h-rob-sub").textContent = `$22/hr on 2,080 hrs, spread over ${wh.toLocaleString("en-US")} hrs worked, plus oversight`;
+    $("h-rob-sub").textContent = `${usd2(T.avg)}/hr${T.n > 1 ? " avg" : ""} on 2,080 hrs, spread over ${wh.toLocaleString("en-US")} hrs worked, plus oversight`;
     $("h-save").textContent = `${usd2(T.trueTemp - rob)} saved every hour of work · ${Math.round((1 - rob / T.trueTemp) * 100)}% less`;
+
+    // Rate card
+    $("rcBody").replaceChildren(...["Spark", "Core", "Thor"].map(rb => { const tr = document.createElement("tr"); const a = document.createElement("td"); a.textContent = rb; a.style.font = "600 15.5px var(--f-body)"; tr.appendChild(a);
+      Object.entries(D.setup).forEach(([k, v]) => { const c = document.createElement("td"); c.textContent = usd2(D.base[rb] + v.add); if (k === state.setup) c.className = "on"; tr.appendChild(c); }); return tr; }));
+    document.querySelectorAll("table.rc th[data-col]").forEach(th => th.classList.toggle("on", th.dataset.col === state.setup));
 
     // Today vs with robots
     $("t-now").textContent = usd(T.now);
@@ -634,9 +662,10 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     $("t-now-note").textContent = pos > D.ceFte ? `That's more than the ~${D.ceFte} full-time positions Commercial Employees fills for you today, so it includes stations your own people staff, priced at the same all-in cost per hour.` : "";
     $("t-bot").textContent = usd(T.lease.yr);
     fillRows("t-bot-rows", [
-      [`${T.n} robot${T.n === 1 ? "" : "s"} × $45,760 a year`, usd(T.lease.pay)],
+      [`${T.n} robot${T.n === 1 ? "" : "s"}, avg ${usd2(T.avg)}/hr × 2,080 hrs`, usd(T.lease.pay)],
+      [`${T.S.label} tooling allowance, ${kM(T.S.allow)} a station`, "In the rate"],
       ["Lead oversight, 1 hr per robot per shift", usd(T.over)],
-      ["Cost per hour of work", usd2(T.lease.hr)],
+      ["Effective cost per hour worked", usd2(T.lease.hr)],
       ["Capital from OWI", "None"],
       ["After month 36", "You own them for $1"]
     ]);
@@ -653,9 +682,9 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     // Options
     const card = (star, badge, tag, title, price, unit, items, foot, footLabel = "Saved over 6 years", footColor = "") => `<div class="opt${star ? " star" : ""}">${star ? `<span class="badge">${badge}</span>` : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${price}<small> ${unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">${footLabel}</span><span class="v num"${footColor ? ` style="color:${footColor}"` : ""}>${kM(foot)}</span></div></div>`;
     $("opts").innerHTML =
-      card(true, "Recommended", "Own it in 3 years", "Lease to own", "$22.00", "per robot hour · 2,080 hrs a year", [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Cost per hour of work", usd2(T.lease.hr)], ["Service and insurance during the term", "Included"], ["After month 36", "Yours for $1"]], T.lease.save6) +
-      card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate), "per robot hour · 2,080 hrs a year · less from 5 robots", [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Cost per hour of work", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6) +
-      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front, robots plus install", [["Robots at list price", usd(T.buy.list)], ["Install and setup", usd(T.buy.capex - T.buy.list)], ["Support plan, 10% of list a year", usd(T.buy.sup)], ["Lead oversight a year", usd(T.over)], ["Insurance", "Your policy"]], T.buy.capex + T.buy.yr * 6, "Total cost over 6 years", "var(--ink)");
+      card(true, "Recommended", "Own it in 3 years", "Lease to own", usd2(T.avg), `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · ${T.S.label.toLowerCase()} setup`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Tooling and infeed", kM(T.S.allow) + " a station, in the rate"], ["Effective cost per hour worked", usd2(T.lease.hr)], ["Service and insurance during the term", "Included"], ["After month 36", "Yours for $1"]], T.lease.save6) +
+      card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate), `${T.n > 1 ? "avg " : ""}per robot hour · 2,080 hrs a year · less from 5 robots`, [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Effective cost per hour worked", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6) +
+      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front, robots plus tooling and setup", [["Robots at list price", usd(T.buy.list)], ["Tooling, infeed and install", usd(T.buy.capex - T.buy.list)], ["Support plan, 10% of list a year", usd(T.buy.sup)], ["Lead oversight a year", usd(T.over)], ["Insurance", "Your policy"]], T.buy.capex + T.buy.yr * 6, "Total cost over 6 years", "var(--ink)");
 
     // Jobs table
     $("jobBody").replaceChildren(...T.rows.map(r => {
@@ -664,11 +693,11 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       const cc = document.createElement("td"); const inp = document.createElement("input"); inp.type = "number"; inp.min = 0; inp.max = 50; inp.value = r.c; inp.id = "c-" + r.j.id; inp.setAttribute("aria-label", r.j.name + " robots");
       inp.addEventListener("input", () => { const v = parseInt(inp.value, 10); state.counts[r.j.id] = isFinite(v) && v > 0 ? v : 0; const id = inp.id; render(); const el = $(id); if (el) { el.focus(); } });
       cc.appendChild(inp);
-      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * state.shifts)), td(usd(r.leaseYr)), td(usd(r.save), "var(--ok)"));
+      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * state.shifts)), td(usd2(r.rate)), td(usd(r.leaseYr)), td(usd(r.save), "var(--ok)"));
       return tr;
     }));
     const tf = document.createElement("tr");
-    ["All stations", "", String(T.n), String(pos), usd(T.lease.pay), usd(T.lease.save)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 5) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
+    ["All stations", "", String(T.n), String(pos), usd2(T.avg) + " avg", usd(T.lease.pay), usd(T.lease.save)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 6) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
     $("jobFoot").replaceChildren(tf);
 
     // Rollout
@@ -761,6 +790,11 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     state.scope = b.dataset.scope;
     document.querySelectorAll("[data-scope]").forEach(x => x.setAttribute("aria-pressed", x === b));
     D.jobs.forEach(j => state.counts[j.id] = state.scope === "start" ? j.start : j.plant);
+    render();
+  }));
+  document.querySelectorAll("[data-setup]").forEach(b => b.addEventListener("click", () => {
+    state.setup = b.dataset.setup;
+    document.querySelectorAll("[data-setup]").forEach(x => x.setAttribute("aria-pressed", x === b));
     render();
   }));
   document.querySelectorAll("[data-shifts]").forEach(b => b.addEventListener("click", () => {
