@@ -521,7 +521,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     <div>How these numbers are built</div>
     <ol>
       <li>Workforce, hours, overtime and bill rate: Commercial Employees billing to OWI New Kensington, Jan 1 – Oct 13, 2026. Blended rate $22.80 straight time, 1.6% of hours overtime at 1.5×.</li>
-      <li>Lease to own: $22 per robot hour on 2,080 hours a year ($45,760 a year) for 36 months, then a $1 buyout; service included during the term and OWI insures the robots. Robot temps: billed on 2,080 hours a year for a 36-month term at $21.00/hr for 1–4 robots, $20.25 for 5–9, $19.50 for 10 or more; Madler Robotics keeps ownership, and the rate includes the robot, tooling, programming, service, software, insurance and a swap if one goes down. Billing starts after each station's acceptance test. A one-time setup fee per station is quoted after the site survey and is not in the savings shown.</li>
+      <li>Lease to own: $22 per robot hour on 2,080 hours a year ($45,760 a year) for 36 months, then a $1 buyout; service and insurance included during the term. Robot temps: billed on 2,080 hours a year for a 36-month term at $21.00/hr for 1–4 robots, $20.25 for 5–9, $19.50 for 10 or more; Madler Robotics keeps ownership, and the rate includes the robot, tooling, programming, service, software, insurance and a swap if one goes down. Billing starts after each station's acceptance test. A one-time setup fee per station is quoted after the site survey and is not in the savings shown.</li>
       <li>A robot runs every scheduled hour of its station: 8-hour shifts, 5 days, 50 weeks, one or two shifts as selected. Oversight is 1 hour of a lead's time per robot per shift at the temp rate. After month 36 an owned robot is shown with a support plan at 10% of list a year. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus install estimates, spread over 5 years. Final pricing follows a site survey.</li>
       <li>Turnover cost: your inputs above. Injury figures: OSHA (share of injuries in a worker's first year) and National Safety Council Injury Facts (average workers' comp claim, 2022–23 claims).</li>
     </ol>
@@ -584,7 +584,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     return { H, trueTemp, n, rows, hrs, now, nowBill, nowHid, over,
       lease: { yr: L, pay: lease, hr: hrs ? L / hrs : 0, save: now - L, save3: (now - L) * 3, after: A, saveAfter: now - A, save6: (now - L) * 3 + (now - A) * 3 },
       rt: { rate: rtRate, yr: R, pay: rt, hr: hrs ? R / hrs : 0, save: now - R, save3: (now - R) * 3 },
-      buy: { yr: B, capex, hr: hrs ? (B + capex / 5) / hrs : 0, save3: (now - B) * 3 - capex, save6: (now - B) * 6 - capex, payback: now > B ? capex / ((now - B) / 12) : null } };
+      buy: { yr: B, capex, sup, list: capex - D.jobs.reduce((t, j) => t + j.install * (counts[j.id] || 0), 0), hr: hrs ? (B + capex / 5) / hrs : 0, save3: (now - B) * 3 - capex, save6: (now - B) * 6 - capex, payback: now > B ? capex / ((now - B) / 12) : null } };
   }
 
   let shown = 0, animFrom = 0, animStart = 0, animTo = 0, raf = 0;
@@ -651,11 +651,11 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     drawYears(T);
 
     // Options
-    const card = (star, badge, tag, title, price, unit, items, foot) => `<div class="opt${star ? " star" : ""}">${star ? `<span class="badge">${badge}</span>` : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${price}<small> ${unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">Saved over 6 years</span><span class="v num">${kM(foot)}</span></div></div>`;
+    const card = (star, badge, tag, title, price, unit, items, foot, footLabel = "Saved over 6 years", footColor = "") => `<div class="opt${star ? " star" : ""}">${star ? `<span class="badge">${badge}</span>` : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${price}<small> ${unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">${footLabel}</span><span class="v num"${footColor ? ` style="color:${footColor}"` : ""}>${kM(foot)}</span></div></div>`;
     $("opts").innerHTML =
-      card(true, "Recommended", "Own it in 3 years", "Lease to own", "$22.00", "per robot hour · 2,080 hrs a year", [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Cost per hour of work", usd2(T.lease.hr)], ["Service during the term", "Included"], ["Insurance", "OWI's policy"], ["After month 36", "Yours for $1"]], T.lease.save6) +
+      card(true, "Recommended", "Own it in 3 years", "Lease to own", "$22.00", "per robot hour · 2,080 hrs a year", [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Cost per hour of work", usd2(T.lease.hr)], ["Service and insurance during the term", "Included"], ["After month 36", "Yours for $1"]], T.lease.save6) +
       card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate), "per robot hour · 2,080 hrs a year · less from 5 robots", [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Cost per hour of work", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6) +
-      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front", [["Capital from OWI", usd(T.buy.capex)], ["Yearly running cost", usd(T.buy.yr)], ["Payback", T.buy.payback ? Math.ceil(T.buy.payback) + " months" : "–"], ["Support plan", "10% a year"]], T.buy.save6);
+      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front, robots plus install", [["Robots at list price", usd(T.buy.list)], ["Install and setup", usd(T.buy.capex - T.buy.list)], ["Support plan, 10% of list a year", usd(T.buy.sup)], ["Lead oversight a year", usd(T.over)], ["Insurance", "Your policy"]], T.buy.capex + T.buy.yr * 6, "Total cost over 6 years", "var(--ink)");
 
     // Jobs table
     $("jobBody").replaceChildren(...T.rows.map(r => {
