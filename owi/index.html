@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: full-bleed navy hero with a live savings counter and animated arm, then alternating light bands:
-   the revolving door (their data) → hidden cost calculator → cost per hour → three ways to pay → why us → rollout → pilot. */
+   the revolving door (their data) → hidden cost calculator → cost per hour → what a robot temp is → today vs. with robots + three ways to pay → why us → rollout → how we start. */
 :root{
   --bg:#F3F6FA; --surface:#FFFFFF; --ink:#0F1B2A; --muted:#566578; --rule:#D8E0EA;
   --navy:#00457C; --deep:#04213D; --night:#020F1F;
@@ -161,7 +161,7 @@ section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,t
 .badge{position:absolute;top:-12px;left:18px;background:var(--robot);color:#022;font:700 12px var(--f-display);letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
 .opt .tag{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .opt .price{font:800 48px/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--robot-ink)}
-.opt .price small{font:500 15px var(--f-body);color:var(--muted)}
+.opt .price small{display:block;font:500 14.5px var(--f-body);color:var(--muted);margin-top:6px}
 .opt ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
 .opt li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:8px;font-variant-numeric:tabular-nums}
 .opt li span:first-child{color:var(--muted)}
@@ -170,6 +170,15 @@ section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,t
 .opt .foot .k{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .opt .foot .v{font:800 34px var(--f-display);color:var(--ok);font-variant-numeric:tabular-nums}
 .jobs{margin-top:22px}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px 28px;margin-bottom:22px}
+.ctrls .scope{margin-bottom:0}
+.today{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:920px){.today{grid-template-columns:1fr}}
+.today .card{display:grid;gap:10px;align-content:start}
+.tv{font:800 clamp(44px,5vw,60px)/1 var(--f-display)}
+.today .rows{font-size:15px}
+.savecard{border:2px solid var(--ok)}
+.note{color:var(--muted);font-size:14.5px;margin-top:8px}
 .scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;min-width:620px}
 th{font:600 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding:10px;border-bottom:1px solid var(--rule)}
@@ -200,7 +209,7 @@ td input{width:64px;font:600 16px var(--f-body);text-align:center;padding:6px;bo
 .roll{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:start}
 @media (max-width:900px){.roll{grid-template-columns:1fr}}
 
-/* Pilot */
+/* How we start */
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
 @media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.steps{grid-template-columns:1fr}}
@@ -237,15 +246,15 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     <div class="hero-grid">
       <div>
         <h1 class="rise">The line that <em>shows up</em> every shift.</h1>
-        <p class="lead rise d1">Standard Bots robot arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. Billed like one full-time hire, working both shifts, with no capital and no turnover.</p>
+        <p class="lead rise d1">Six-axis, AI-enabled Standard Bots arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. <b style="color:#fff">$22 an hour, billed like one full-time worker, while it covers both shifts. Yours for $1 after 36 months.</b></p>
         <div class="counter rise d2" aria-live="polite">
-          <div class="k" id="cnt-k">What New Kensington gets back each year</div>
+          <div class="k" id="cnt-k">What New Kensington saves each year</div>
           <div class="v num" id="cnt-v">$<span>0</span></div>
           <div class="s" id="cnt-s">Calculating…</div>
         </div>
         <div class="cta-row rise d3">
-          <a class="btn primary" href="#hidden">See your real cost of a temp hour</a>
-          <a class="btn ghost" href="#pilot">How Phase 1 works</a>
+          <a class="btn primary" href="#compare">Today vs. with robots</a>
+          <a class="btn ghost" href="#start">How Phase 1 works</a>
         </div>
       </div>
       <div class="armbox" aria-hidden="true">
@@ -335,11 +344,11 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       <div class="sec-head">
         <div class="kicker">Cost per hour</div>
         <h2>A temp hour vs. a robot hour.</h2>
-        <p class="lead">You pay for one full-time hire's hours, and the robot covers both shifts. It still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
+        <p class="lead">You pay for a robot like one full-time worker: $22 an hour on 2,080 hours a year. It works both shifts, so each hour of work costs about half that. It still needs a person to keep an eye on it for part of each shift, so that time is in its number too.</p>
       </div>
       <div class="card hourwrap">
         <div class="hbar"><div class="name">Temp worker<small id="h-temp-sub"></small></div><div class="track"><span id="b-bill" style="background:var(--temp)"></span><span id="b-ot" style="background:var(--temp-ink)"></span><span id="b-hid" style="background:var(--hidden)"></span></div><div class="amt num" id="h-temp" style="color:var(--temp-ink)"></div></div>
-        <div class="hbar"><div class="name">Robot temp<small id="h-rob-sub"></small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
+        <div class="hbar"><div class="name">Robot<small id="h-rob-sub">Lease to own, with oversight</small></div><div class="track"><span id="b-rob" style="background:var(--robot)"></span><span id="b-ovr" style="background:var(--robot-ink)"></span></div><div class="amt num" id="h-rob" style="color:var(--robot-ink)"></div></div>
         <div class="legend"><span><i style="background:var(--temp)"></i>Bill rate</span><span><i style="background:var(--temp-ink)"></i>Overtime premium</span><span><i style="background:var(--hidden)"></i>Turnover cost per hour</span><span><i style="background:var(--robot)"></i>Robot rate</span><span><i style="background:var(--robot-ink)"></i>Operator oversight</span></div>
         <div><span class="savepill num" id="h-save"></span></div>
       </div>
@@ -354,40 +363,75 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <p class="lead">Traditional automation is bolted to one line, behind a cage, built by engineers for one product. Robot temps are collaborative arms on a rolling base that your own people run, and that move to wherever the work is this week.</p>
       </div>
       <div class="howgrid">
-        <div class="howcard"><div class="n">They're ours</div><h3>We own the robots</h3><p>Madler Robotics owns, insures and maintains every robot. You pay a flat rate, like one full-time hire, on the same invoice as your staffing, and it works both shifts. No capital request, no asset on your books.</p></div>
+        <div class="howcard"><div class="n">Own it or rent it</div><h3>No capital request</h3><p>Lease to own at $22 an hour for 36 months and the robot is yours for $1. Or keep it as a robot temp, from $21 an hour, that we own, insure and maintain. Either way it's on the same invoice as your staffing.</p></div>
         <div class="howcard"><div class="n">You run them</div><h3>Your supervisors are in control</h3><p>Start, stop, pause and switch jobs from a tablet. One lead can watch several robots from a single screen, the way a lead watches a crew today.</p><q>Any factory worker becomes a robot operator in a day.</q><p style="font-size:13px">Standard Bots</p></div>
         <div class="howcard"><div class="n">They move</div><h3>Line to line, job to job</h3><p>Each robot sits on a mobile base. Roll it to another line, load a different routine, and it's working. New bottle, new case or new pallet pattern? We build and test the routine for you.</p></div>
-        <div class="howcard"><div class="n">We engineer it</div><h3>We handle how product reaches it</h3><p>The real work is getting product to the robot the same way every time: infeed, guides, pick stations, pallet positions. We survey each station, design that piece and prove it in the acceptance test.</p></div>
+        <div class="howcard"><div class="n">We engineer it</div><h3>We handle how product reaches it</h3><p>The real work is getting product to the robot the same way every time: infeed, guides, pick stations, pallet positions. We survey each station, design that piece and prove it before billing starts.</p></div>
       </div>
       <div class="trad" role="table" aria-label="Traditional automation compared with robot temps">
         <div class="h" role="columnheader">&nbsp;</div><div class="h" role="columnheader">Traditional automation</div><div class="h us" role="columnheader">Robot temps</div>
-        <div role="cell">Upfront cost</div><div role="cell">Often six figures per cell</div><div role="cell" class="us">Hourly, no capital</div>
-        <div role="cell">Time to running</div><div role="cell">Months of engineering</div><div role="cell" class="us">Weeks, acceptance-tested</div>
+        <div role="cell">Upfront cost</div><div role="cell">Often six figures per cell</div><div role="cell" class="us">$22 an hour, no capital</div>
+        <div role="cell">Time to running</div><div role="cell">Months of engineering</div><div role="cell" class="us">Weeks, per station</div>
         <div role="cell">Change a product or line</div><div role="cell">Re-engineer the cell</div><div role="cell" class="us">Load a new routine</div>
         <div role="cell">Who runs it</div><div role="cell">Controls engineers</div><div role="cell" class="us">Your floor leads</div>
         <div role="cell">Safety</div><div role="cell">Fenced off</div><div role="cell" class="us">Works beside people</div>
-        <div role="cell">When you start paying</div><div role="cell">On delivery</div><div role="cell" class="us">After it passes its acceptance test</div>
+        <div role="cell">If it isn't working</div><div role="cell">You own it anyway</div><div role="cell" class="us">Billing waits until it passes</div>
       </div>
     </div>
   </section>
 
-  <section class="band alt" id="pay">
+  <section class="band alt" id="compare">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker">Three ways to put robots on the line</div>
-        <h2>Pay by the hour, lease to own, or buy.</h2>
-        <p class="lead">Lease to own and pay-by-the-hour aren't available when you buy direct. Through Madler Robotics you choose how the robots hit your budget, and you can start without a capital request.</p>
+        <div class="kicker">Today vs. with robots</div>
+        <h2>What New Kensington spends now, and what it could.</h2>
+        <p class="lead">Pick how many robots go on the line. Each robot takes one station on every shift it runs. The comparison counts the full cost of a temp position, including turnover, against the robot's lease payment and the time a lead spends watching it.</p>
       </div>
-      <div class="scope" role="group" aria-label="Scope">
-        <button class="chip" data-scope="pilot" aria-pressed="true">Phase 1 · 4 robots</button>
-        <button class="chip" data-scope="plant" aria-pressed="false">New Kensington · 15 robots</button>
+      <div class="ctrls">
+        <div class="scope" role="group" aria-label="How many robots">
+          <button class="chip" data-scope="start" aria-pressed="true">Phase 1 · 4 robots</button>
+          <button class="chip" data-scope="plant" aria-pressed="false">Full line · 15 robots</button>
+        </div>
+        <div class="scope" role="group" aria-label="Shifts each robot runs">
+          <button class="chip" data-shifts="1" aria-pressed="false">1 shift</button>
+          <button class="chip" data-shifts="2" aria-pressed="true">2 shifts</button>
+        </div>
+      </div>
+      <div class="today">
+        <div class="card">
+          <div class="kicker" style="color:var(--temp-ink)">Today, staffing those stations</div>
+          <div class="tv num" id="t-now" style="color:var(--temp-ink)">$0</div>
+          <div class="rows" id="t-now-rows"></div>
+          <p class="note" id="t-now-note"></p>
+        </div>
+        <div class="card">
+          <div class="kicker">With robots, lease to own at $22/hr</div>
+          <div class="tv num" id="t-bot" style="color:var(--robot-ink)">$0</div>
+          <div class="rows" id="t-bot-rows"></div>
+        </div>
+        <div class="card savecard">
+          <div class="kicker" style="color:var(--ok)">OWI saves</div>
+          <div class="tv num" id="t-save" style="color:var(--ok)">$0</div>
+          <div class="rows" id="t-save-rows"></div>
+        </div>
+      </div>
+      <div class="card rel" style="margin-top:20px">
+        <h3>Six years, side by side</h3>
+        <div class="legend"><span><i style="background:var(--temp)"></i>Keep staffing with temps</span><span><i style="background:var(--robot)"></i>Lease to own, then own it</span></div>
+        <svg class="chart" id="yrChart" role="img" aria-label="Yearly cost of temps versus robots over six years"></svg>
+        <p class="note" id="yr-note"></p>
+      </div>
+      <div class="sec-head" style="margin-top:56px;margin-bottom:24px">
+        <div class="kicker">Three ways to pay</div>
+        <h2 style="font-size:clamp(30px,3.6vw,42px)">Lease to own, robot temps, or buy.</h2>
+        <p class="lead">Lease to own and pay-by-the-hour aren't available when you buy direct. Every option is a 36-month term, and billing starts once a station passes its acceptance test.</p>
       </div>
       <div class="opts" id="opts"></div>
       <div class="card jobs">
         <h3 style="margin-bottom:6px">The four jobs</h3>
-        <p class="lead" style="font-size:16px;margin-bottom:10px">One robot covers one station on both shifts. Change the counts to match your line.</p>
+        <p class="lead" style="font-size:16px;margin-bottom:10px">One robot covers one station on every shift it runs. Change the counts to match your line.</p>
         <div class="scroll"><table>
-          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temps replaced</th><th>Robot temps / mo</th><th>Saved a year</th></tr></thead>
+          <thead><tr><th>Station</th><th>Robot</th><th>Robots</th><th>Temp positions</th><th>Lease a year</th><th>Saved a year</th></tr></thead>
           <tbody id="jobBody"></tbody><tfoot id="jobFoot"></tfoot>
         </table></div>
       </div>
@@ -435,25 +479,25 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         </div>
         <div class="card rel">
           <h3>Savings as the rollout grows</h3>
-          <div class="legend"><span><i style="background:var(--robot)"></i>Saved each year, robot temps</span><span><i style="background:var(--navy)"></i>Running total over 3 years</span></div>
+          <div class="legend"><span><i style="background:var(--robot)"></i>Saved each year, lease to own</span><span><i style="background:var(--navy)"></i>Running total over 3 years</span></div>
           <svg class="chart" id="rollChart" role="img" aria-label="Savings by number of sites"></svg>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="band" id="pilot">
+  <section class="band" id="start">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker">Phase 1</div>
-        <h2>Four robots. One 36-month commitment.</h2>
-        <p class="lead">You choose robot temps or lease to own. Either way, payments don't start until each robot proves itself on your line.</p>
+        <div class="kicker">Phase 1 · how we start</div>
+        <h2>Four stations, one 36-month commitment.</h2>
+        <p class="lead">Payments don't start until each robot proves itself on your line.</p>
       </div>
       <div class="steps">
         <div class="step"><h3>Walk the line</h3><p>Together we pick four stations with the most turnover: case packing, palletizing, line loading and pick and place.</p></div>
-        <div class="step"><h3>Sign a 36-month term</h3><p>Robot temps at a flat 2,080 hours a year while we own the robot, or lease to own with a $1 buyout. No capital from OWI either way.</p></div>
-        <div class="step"><h3>Install and acceptance test</h3><p>We set up each cell with Standard Bots and run it on your line. Payments start only when each station hits the units per hour and uptime we agree up front.</p></div>
-        <div class="step"><h3>Run, report, expand</h3><p>We service the robots, build new routines and report uptime and units per hour every week. Add stations or plants on the same terms.</p></div>
+        <div class="step"><h3>Survey and set up</h3><p>We engineer how product reaches each robot, then install and program the cell with Standard Bots. A one-time setup fee per station, quoted after the survey.</p></div>
+        <div class="step"><h3>Acceptance test</h3><p>Each station has to hit the rate we agree on before any billing starts. We train your leads on the floor while it runs.</p></div>
+        <div class="step"><h3>36 months, then it's yours</h3><p>$22 an hour on 2,080 hours a year. At month 36 you buy it for $1. We keep supporting it, building routines and covering it with people if it's ever down.</p></div>
       </div>
       <div class="vids">
         <a href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><b>Bottle packing ↗</b><span>0:28 · A Core robot packing bottles into cases</span></a>
@@ -477,8 +521,8 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     <div>How these numbers are built</div>
     <ol>
       <li>Workforce, hours, overtime and bill rate: Commercial Employees billing to OWI New Kensington, Jan 1 – Oct 13, 2026. Blended rate $22.80 straight time, 1.6% of hours overtime at 1.5×.</li>
-      <li>Robot temps: a flat rate billed on 2,080 hours a year per robot, the hours of one full-time hire, for a 36-month term: $21.00/hr for 1–4 robots, $20.25 for 5–9, $19.50 for 10 or more. Includes the robot, tooling, install, service, software, insurance, new routines and a swap if one goes down. Each robot runs two 8-hour shifts, 5 days, 50 weeks; oversight is 1 hour per robot per shift at the temp rate.</li>
-      <li>Lease to own: $22.00/hr on 2,080 hours a year for 36 months, service included during the term, OWI insures the robots, $1 buyout. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus install estimates, with a 10% yearly support plan. Final pricing follows a site survey.</li>
+      <li>Lease to own: $22 per robot hour on 2,080 hours a year ($45,760 a year) for 36 months, then a $1 buyout; service included during the term and OWI insures the robots. Robot temps: billed on 2,080 hours a year for a 36-month term at $21.00/hr for 1–4 robots, $20.25 for 5–9, $19.50 for 10 or more; Madler Robotics keeps ownership, and the rate includes the robot, tooling, programming, service, software, insurance and a swap if one goes down. Billing starts after each station's acceptance test. A one-time setup fee per station is quoted after the site survey and is not in the savings shown.</li>
+      <li>A robot runs every scheduled hour of its station: 8-hour shifts, 5 days, 50 weeks, one or two shifts as selected. Oversight is 1 hour of a lead's time per robot per shift at the temp rate. After month 36 an owned robot is shown with a support plan at 10% of list a year. Purchase: Standard Bots published starting prices (Spark $29,500, Core $39,500, Thor $49,500, Oct 2026) plus install estimates, spread over 5 years. Final pricing follows a site survey.</li>
       <li>Turnover cost: your inputs above. Injury figures: OSHA (share of injuries in a worker's first year) and National Safety Council Injury Facts (average workers' comp claim, 2022–23 claims).</li>
     </ol>
   </div>
@@ -489,25 +533,27 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const D = {
     months: [["Jan",25,2775.5],["Feb",46,4014.9],["Mar",40,3392.4],["Apr",37,3060.6],["May",66,4056.5],["Jun",47,4815.2],["Jul",28,3164.0],["Aug",35,3515.4],["Sep",68,5731.9],["Oct*",56,2444.5]],
     bill: 22.80, otShare: 0.016, supRate: 32, adminRate: 30,
-    hrsPerShift: 8, shifts: 2, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5,
-    billHrs: 2080, leaseRate: 22.00, term: 36, support: 0.10, renewRate: 12.50,
+    hrsPerShift: 8, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5, ceFte: 23,
+    leaseRate: 22, billHrs: 2080, term: 36, support: 0.10,
     tiers: [[10, 19.50], [5, 20.25], [1, 21.00]],
     jobs: [
-      { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, rate: 15, pilot: 1, plant: 5 },
-      { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, rate: 16, pilot: 1, plant: 4 },
-      { id: "tend", name: "Line loading and unloading", robot: "Core", list: 39500, install: 12000, rate: 15, pilot: 1, plant: 3 },
-      { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, rate: 13, pilot: 1, plant: 3 }
+      { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, start: 1, plant: 5 },
+      { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, start: 1, plant: 4 },
+      { id: "tend", name: "Line loading and unloading", robot: "Core", list: 39500, install: 12000, start: 1, plant: 3 },
+      { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, start: 1, plant: 3 }
     ]
   };
   const $ = id => document.getElementById(id);
   const usd = v => (v < 0 ? "-$" : "$") + Math.round(Math.abs(v)).toLocaleString("en-US");
   const usd2 = v => "$" + v.toFixed(2);
-  const kM = v => v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v / 1000) + "k";
-  const robotHrsYr = D.hrsPerShift * D.shifts * D.days * D.weeks;
+  const kM = v => Math.abs(v) >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/0$/, "") + "M" : "$" + Math.round(v / 1000) + "k";
   const tempRate = D.bill * (1 + 0.5 * D.otShare);
   const otPrem = tempRate - D.bill;
-  const pmt = (P, r, n) => { const i = r / 1200; return i === 0 ? P / n : P * i / (1 - Math.pow(1 + i, -n)); };
-  const state = { scope: "pilot", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.pilot])) };
+  const leaseYr = D.leaseRate * D.billHrs;
+  const tier = n => (D.tiers.find(([m]) => n >= m) || D.tiers[D.tiers.length - 1])[1];
+  const state = { scope: "start", shifts: 2, counts: Object.fromEntries(D.jobs.map(j => [j.id, j.start])) };
+  const workHrs = () => D.hrsPerShift * state.shifts * D.days * D.weeks;
+  const overYr = () => tempRate * D.oversight * state.shifts * D.days * D.weeks;
 
   function hidden() {
     const starts = +$("s-starts").value, sup = +$("s-sup").value, ramp = +$("s-ramp").value / 100, hr = +$("s-hr").value;
@@ -522,30 +568,23 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     return { starts, parts, total, perStart: starts ? total / starts : 0, perHour: total / D.annualTempHours };
   }
 
-  const tier = n => (D.tiers.find(([m]) => n >= m) || D.tiers[D.tiers.length - 1])[1];
-  const overYr = tempRate * D.oversight * D.shifts * D.days * D.weeks;
-  // Robot temps: billed like one full-time hire (rate x 2,080 hrs) but works both shifts.
-  const robotYr = n => tier(n) * D.billHrs + overYr;
-  const robotHr = n => robotYr(n) / robotHrsYr;
-
-  function totals() {
-    const H = hidden();
-    const trueTemp = tempRate + H.perHour;
-    const N = D.jobs.reduce((t, j) => t + (state.counts[j.id] || 0), 0);
-    let n = 0, staffedYr = 0, temps = 0, lease = 0, leaseAfter = 0, capex = 0, buyYr = 0;
+  // Everything for a set of robot counts at the current shift setting.
+  function model(counts) {
+    const H = hidden(), trueTemp = tempRate + H.perHour, wh = workHrs(), ov = overYr();
+    let n = 0, now = 0, nowBill = 0, nowHid = 0, lease = 0, rt = 0, over = 0, sup = 0, capex = 0;
     const rows = D.jobs.map(j => {
-      const c = state.counts[j.id] || 0;
-      const staffed = trueTemp * robotHrsYr * c, robot = robotYr(N) * c;
-      const over = overYr * c;
-      const sup = j.list * D.support * c;
-      n += c; staffedYr += staffed; temps += robot; lease += (D.leaseRate * D.billHrs + over) * c; leaseAfter += sup + over; capex += (j.list + j.install) * c; buyYr += sup + over;
-      return { j, c, staffed, robot, save: staffed - robot };
+      const c = counts[j.id] || 0;
+      const staffed = trueTemp * wh * c;
+      n += c; now += staffed; nowBill += tempRate * wh * c; nowHid += H.perHour * wh * c;
+      lease += leaseYr * c; over += ov * c; sup += j.list * D.support * c; capex += (j.list + j.install) * c;
+      return { j, c, staffed, leaseYr: leaseYr * c, save: staffed - (leaseYr + ov) * c };
     });
-    const hrs = n * robotHrsYr;
-    return { H, trueTemp, n, rows, staffedYr, hrs,
-      temps: { yr: temps, hr: hrs ? temps / hrs : 0, save3: (staffedYr - temps) * 3 },
-      lease: { yr: lease, hr: hrs ? lease / hrs : 0, after: hrs ? leaseAfter / hrs : 0, save3: (staffedYr - lease) * 3 },
-      buy: { yr: buyYr, capex, hr: hrs ? (buyYr + capex / 5) / hrs : 0, save3: (staffedYr - buyYr) * 3 - capex, payback: staffedYr > buyYr ? capex / ((staffedYr - buyYr) / 12) : null } };
+    const hrs = n * wh, rtRate = tier(n || 1); rt = rtRate * D.billHrs * n;
+    const L = lease + over, A = sup + over, R = rt + over, B = sup + over;
+    return { H, trueTemp, n, rows, hrs, now, nowBill, nowHid, over,
+      lease: { yr: L, pay: lease, hr: hrs ? L / hrs : 0, save: now - L, save3: (now - L) * 3, after: A, saveAfter: now - A, save6: (now - L) * 3 + (now - A) * 3 },
+      rt: { rate: rtRate, yr: R, pay: rt, hr: hrs ? R / hrs : 0, save: now - R, save3: (now - R) * 3 },
+      buy: { yr: B, capex, hr: hrs ? (B + capex / 5) / hrs : 0, save3: (now - B) * 3 - capex, save6: (now - B) * 6 - capex, payback: now > B ? capex / ((now - B) / 12) : null } };
   }
 
   let shown = 0, animFrom = 0, animStart = 0, animTo = 0, raf = 0;
@@ -557,39 +596,66 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       if (p < 1) raf = requestAnimationFrame(step); };
     raf = requestAnimationFrame(step);
   }
+  const fillRows = (id, list) => $(id).replaceChildren(...list.map(([a, b]) => { const d = document.createElement("div"); const x = document.createElement("span"); x.textContent = a; const y = document.createElement("b"); y.textContent = b; d.append(x, y); return d; }));
 
   function render() {
-    const T = totals(), H = T.H;
-    // Counter (full plant, robot temps)
-    const plantCounts = Object.fromEntries(D.jobs.map(j => [j.id, j.plant]));
-    let plantSave = 0, plantN = 0;
-    D.jobs.forEach(j => { plantN += plantCounts[j.id]; });
-    plantSave = (T.trueTemp * robotHrsYr - robotYr(plantN)) * plantN;
-    animateCounter(plantSave);
-    $("cnt-s").textContent = `${plantN} robots on robot-temp rates, replacing ${plantN * D.shifts} temp positions across two shifts. Turnover costs included.`;
+    const T = model(state.counts), H = T.H, pos = T.n * state.shifts, wh = workHrs();
+    // Hero counter: full line, two shifts, lease to own
+    const keep = state.shifts; state.shifts = 2;
+    const P = model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant])));
+    state.shifts = keep;
+    animateCounter(P.lease.save);
+    $("cnt-s").textContent = `${P.n} robots on the $22/hr lease to own, covering ${P.n * 2} temp positions across two shifts. Turnover costs included. ${kM(P.lease.save3)} over the 36-month lease.`;
 
     // Hidden cost
     $("hid-total").textContent = usd(H.total);
-    $("hid-rows").replaceChildren(...H.parts.map(([n, v]) => { const d = document.createElement("div"); const a = document.createElement("span"); a.textContent = n; const b = document.createElement("b"); b.textContent = usd(v); d.append(a, b); return d; }),
-      (() => { const d = document.createElement("div"); const a = document.createElement("span"); a.textContent = "Per new start"; const b = document.createElement("b"); b.textContent = usd(H.perStart); d.append(a, b); return d; })());
+    fillRows("hid-rows", [...H.parts.map(([n, v]) => [n, usd(v)]), ["Per new start", usd(H.perStart)]]);
     $("hid-hour").innerHTML = `That's <b>${usd2(H.perHour)}</b> on top of every temp hour you buy, so a temp hour really costs about <b>${usd2(T.trueTemp)}</b>, not ${usd2(D.bill)}.`;
 
-    // Hourly bars
-    const rob = robotHr(T.n || 1);
-    const robRate = tier(T.n || 1) * D.billHrs / robotHrsYr;
+    // Hourly bars (lease to own, per hour of work)
+    const robPay = leaseYr / wh, robOv = tempRate * D.oversight / D.hrsPerShift, rob = robPay + robOv;
     const max = Math.max(T.trueTemp, rob) * 1.02;
     $("b-bill").style.width = (D.bill / max * 100) + "%"; $("b-ot").style.width = (otPrem / max * 100) + "%"; $("b-hid").style.width = (H.perHour / max * 100) + "%";
-    $("b-rob").style.width = (robRate / max * 100) + "%"; $("b-ovr").style.width = ((rob - robRate) / max * 100) + "%";
-    $("h-rob-sub").textContent = `${usd2(tier(T.n || 1))} × 2,080 hrs, spread over both shifts, plus oversight`; $("h-temp").textContent = usd2(T.trueTemp); $("h-rob").textContent = usd2(rob);
+    $("b-rob").style.width = (robPay / max * 100) + "%"; $("b-ovr").style.width = (robOv / max * 100) + "%";
+    $("h-temp").textContent = usd2(T.trueTemp); $("h-rob").textContent = usd2(rob);
     $("h-temp-sub").textContent = `${usd2(D.bill)} bill + overtime + turnover`;
-    $("h-save").textContent = `${usd2(T.trueTemp - rob)} saved every hour · ${Math.round((1 - rob / T.trueTemp) * 100)}% less`;
+    $("h-rob-sub").textContent = `$22/hr on 2,080 hrs, spread over ${wh.toLocaleString("en-US")} hrs worked, plus oversight`;
+    $("h-save").textContent = `${usd2(T.trueTemp - rob)} saved every hour of work · ${Math.round((1 - rob / T.trueTemp) * 100)}% less`;
+
+    // Today vs with robots
+    $("t-now").textContent = usd(T.now);
+    fillRows("t-now-rows", [
+      ["Temp positions on these stations", String(pos)],
+      ["Bill rate and overtime", usd(T.nowBill)],
+      ["Turnover and retraining", usd(T.nowHid)],
+      ["Cost per hour, all in", usd2(T.trueTemp)],
+      ["Your temp billing with us today", kM(D.annualTempHours * tempRate) + " a year"]
+    ]);
+    $("t-now-note").textContent = pos > D.ceFte ? `That's more than the ~${D.ceFte} full-time positions Commercial Employees fills for you today, so it includes stations your own people staff, priced at the same all-in cost per hour.` : "";
+    $("t-bot").textContent = usd(T.lease.yr);
+    fillRows("t-bot-rows", [
+      [`${T.n} robot${T.n === 1 ? "" : "s"} × $45,760 a year`, usd(T.lease.pay)],
+      ["Lead oversight, 1 hr per robot per shift", usd(T.over)],
+      ["Cost per hour of work", usd2(T.lease.hr)],
+      ["Capital from OWI", "None"],
+      ["After month 36", "You own them for $1"]
+    ]);
+    $("t-save").textContent = usd(T.lease.save);
+    fillRows("t-save-rows", [
+      ["Each year of the lease", usd(T.lease.save)],
+      ["Over the 36-month lease", usd(T.lease.save3)],
+      ["Each year after you own them", usd(T.lease.saveAfter)],
+      ["Over 6 years", usd(T.lease.save6)],
+      ["New starts you stop onboarding", "~" + Math.round(H.starts / (D.annualTempHours / 2000) * pos) + " a year"]
+    ]);
+    drawYears(T);
 
     // Options
-    const card = (star, tag, title, o, items, foot) => `<div class="opt${star ? " star" : ""}">${star ? '<span class="badge">Recommended</span>' : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${o.price}<small> ${o.unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">Saved over 3 years</span><span class="v num">${kM(foot)}</span></div></div>`;
+    const card = (star, badge, tag, title, price, unit, items, foot) => `<div class="opt${star ? " star" : ""}">${star ? `<span class="badge">${badge}</span>` : ""}<div class="tag">${tag}</div><h3>${title}</h3><div class="price num">${price}<small> ${unit}</small></div><ul>${items.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul><div class="foot"><span class="k">Saved over 6 years</span><span class="v num">${kM(foot)}</span></div></div>`;
     $("opts").innerHTML =
-      card(true, "We own it · 36-month term", "Robot temps", { price: usd2(tier(T.n || 1)), unit: "/hr × 2,080 hrs a year" }, [["Per robot, per month", usd(tier(T.n || 1) * D.billHrs / 12)], ["Works", "Both shifts, one bill"], ["Capital from OWI", "None"], ["Service, insurance, swaps, new routines", "Included"], ["Your cost a year, with oversight", usd(T.temps.yr)], ["Saved a year", usd(T.staffedYr - T.temps.yr)]], T.temps.save3) +
-      card(false, "You own it in 36 months", "Lease to own", { price: usd2(D.leaseRate), unit: "/hr × 2,080 hrs a year" }, [["Per robot, per month", usd(D.leaseRate * D.billHrs / 12)], ["Capital from OWI", "None"], ["Service during the term", "Included"], ["Insurance", "OWI's policy"], ["Buyout at month 36", "$1"], ["After that", "Optional plan, 10% of list a year"]], T.lease.save3) +
-      card(false, "Capital purchase", "Buy outright", { price: usd(T.buy.capex), unit: "installed" }, [["Capital from OWI", usd(T.buy.capex)], ["Support plan", "10% of list a year"], ["Yearly running cost", usd(T.buy.yr)], ["Payback", T.buy.payback ? Math.ceil(T.buy.payback) + " months" : "–"]], T.buy.save3);
+      card(true, "Recommended", "Own it in 3 years", "Lease to own", "$22.00", "per robot hour · 2,080 hrs a year", [["Capital from OWI", "None"], ["Yearly payment", usd(T.lease.pay)], ["Cost per hour of work", usd2(T.lease.hr)], ["Service during the term", "Included"], ["Insurance", "OWI's policy"], ["After month 36", "Yours for $1"]], T.lease.save6) +
+      card(false, "", "We own it · 36-month term", "Robot temps", usd2(T.rt.rate), "per robot hour · 2,080 hrs a year · less from 5 robots", [["Capital from OWI", "None"], ["Yearly payment", usd(T.rt.pay)], ["Cost per hour of work", usd2(T.rt.hr)], ["Insurance, service, swaps", "Included"], ["After month 36", "Keep renting, or return"]], T.rt.save * 6) +
+      card(false, "", "Capital purchase", "Buy outright", usd(T.buy.capex), "up front", [["Capital from OWI", usd(T.buy.capex)], ["Yearly running cost", usd(T.buy.yr)], ["Payback", T.buy.payback ? Math.ceil(T.buy.payback) + " months" : "–"], ["Support plan", "10% a year"]], T.buy.save6);
 
     // Jobs table
     $("jobBody").replaceChildren(...T.rows.map(r => {
@@ -598,22 +664,45 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       const cc = document.createElement("td"); const inp = document.createElement("input"); inp.type = "number"; inp.min = 0; inp.max = 50; inp.value = r.c; inp.id = "c-" + r.j.id; inp.setAttribute("aria-label", r.j.name + " robots");
       inp.addEventListener("input", () => { const v = parseInt(inp.value, 10); state.counts[r.j.id] = isFinite(v) && v > 0 ? v : 0; const id = inp.id; render(); const el = $(id); if (el) { el.focus(); } });
       cc.appendChild(inp);
-      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * D.shifts)), td(usd(tier(T.n || 1) * D.billHrs / 12 * r.c) + "/mo"), td(usd(r.save), "var(--ok)"));
+      tr.append(td(r.j.name), td(r.j.robot), cc, td(String(r.c * state.shifts)), td(usd(r.leaseYr)), td(usd(r.save), "var(--ok)"));
       return tr;
     }));
     const tf = document.createElement("tr");
-    ["All stations", "", String(T.n), String(T.n * D.shifts), "", usd(T.staffedYr - T.temps.yr)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 5) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
+    ["All stations", "", String(T.n), String(pos), usd(T.lease.pay), usd(T.lease.save)].forEach((t, i) => { const c = document.createElement("td"); c.textContent = t; if (i === 5) c.style.color = "var(--ok)"; if (i === 2) c.style.textAlign = "center"; tf.appendChild(c); });
     $("jobFoot").replaceChildren(tf);
 
     // Rollout
     const sites = +$("s-sites").value, per = +$("s-per").value;
     $("o-sites").textContent = sites; $("o-per").textContent = per;
-    const perRobotSave = T.trueTemp * robotHrsYr - robotYr(per * sites);
+    const perRobotSave = P.n ? (model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant]))).lease.save / P.n) : 0;
     const yr = perRobotSave * per * sites;
-    $("roll-rows").innerHTML = "";
-    [["Robots across OWI", String(per * sites)], ["Temp positions replaced", String(per * sites * D.shifts)], ["New starts avoided, at New Kensington's turnover", "~" + Math.round(H.starts / (D.annualTempHours / 2000) * per * sites * D.shifts).toLocaleString("en-US") + " a year"], ["Saved a year", usd(yr)], ["Saved over 3 years", usd(yr * 3)]].forEach(([a, b]) => { const d = document.createElement("div"); const x = document.createElement("span"); x.textContent = a; const y = document.createElement("b"); y.textContent = b; d.append(x, y); $("roll-rows").appendChild(d); });
+    fillRows("roll-rows", [["Robots across OWI", String(per * sites)], ["Temp positions covered", String(per * sites * state.shifts)], ["New starts avoided, at New Kensington's turnover", "~" + Math.round(H.starts / (D.annualTempHours / 2000) * per * sites * state.shifts).toLocaleString("en-US") + " a year"], ["Saved a year, during the lease", usd(yr)], ["Saved over 3 years", usd(yr * 3)]]);
     drawRoll(perRobotSave, per, sites);
     drawDoor();
+  }
+
+  function drawYears(T) {
+    const svg = $("yrChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 300; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
+    const data = Array.from({ length: 6 }, (_, i) => ({ y: i + 1, t: T.now, r: i < 3 ? T.lease.yr : T.lease.after }));
+    const maxV = Math.max(1, ...data.map(d => Math.max(d.t, d.r)));
+    const step = [1e4, 2.5e4, 5e4, 1e5, 2.5e5, 5e5, 1e6, 2e6, 5e6].find(s => maxV / s <= 5) || 5e6;
+    const top = Math.ceil(maxV / step) * step;
+    const m = { l: 56, r: 10, t: 16, b: 30 }; const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const y = v => m.t + ih - v / top * ih; const bw = iw / data.length;
+    for (let v = 0; v <= top + 1; v += step) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = kM(v); }
+    const tip = tipper(svg);
+    data.forEach((d, i) => {
+      const x = m.l + i * bw, w = bw * 0.34;
+      el("rect", { x: x + bw * 0.13, y: y(d.t), width: w, height: Math.max(0, y(0) - y(d.t)), rx: 4, fill: "var(--temp)" }, svg);
+      el("rect", { x: x + bw * 0.53, y: y(d.r), width: w, height: Math.max(0, y(0) - y(d.r)), rx: 4, fill: "var(--robot)" }, svg);
+      el("text", { x: x + bw / 2, y: H - 10, "text-anchor": "middle", class: i === 3 ? "lb" : "" }, svg).textContent = W < 560 ? "Yr " + d.y : "Year " + d.y + (i === 3 ? " · owned" : "");
+      el("rect", { x, y: m.t, width: bw, height: ih, fill: "transparent" }, svg).addEventListener("mousemove", ev => tip.show(ev, `<b>Year ${d.y}${i >= 3 ? ", robots owned" : ", lease"}</b><br>Temps ${usd(d.t)}<br>Robots ${usd(d.r)}<br>Saved ${usd(d.t - d.r)}`));
+    });
+    if (T.n) {
+      const xL = m.l + 3 * bw; el("line", { x1: xL, x2: xL, y1: m.t, y2: H - m.b, stroke: "var(--muted)", "stroke-dasharray": "4 4" }, svg);
+    }
+    svg.addEventListener("mouseleave", () => tip.hide());
+    $("yr-note").textContent = T.n ? `Over six years: ${usd(T.now * 6)} keeping temps on these stations, ${usd(T.lease.yr * 3 + T.lease.after * 3)} with robots. After month 36 the robots are yours and the yearly cost drops to the support plan and a lead's oversight time.` : "Add a robot to a station to see the comparison.";
   }
 
   function tipper(svg) {
@@ -671,7 +760,12 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   document.querySelectorAll("[data-scope]").forEach(b => b.addEventListener("click", () => {
     state.scope = b.dataset.scope;
     document.querySelectorAll("[data-scope]").forEach(x => x.setAttribute("aria-pressed", x === b));
-    D.jobs.forEach(j => state.counts[j.id] = state.scope === "pilot" ? j.pilot : j.plant);
+    D.jobs.forEach(j => state.counts[j.id] = state.scope === "start" ? j.start : j.plant);
+    render();
+  }));
+  document.querySelectorAll("[data-shifts]").forEach(b => b.addEventListener("click", () => {
+    state.shifts = +b.dataset.shifts;
+    document.querySelectorAll("[data-shifts]").forEach(x => x.setAttribute("aria-pressed", x === b));
     render();
   }));
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 120); });
