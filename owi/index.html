@@ -179,6 +179,14 @@ section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,t
 .today .rows{font-size:15px}
 .savecard{border:2px solid var(--ok)}
 .note{color:var(--muted);font-size:14.5px;margin-top:8px}
+.svgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.svgrid{grid-template-columns:1fr}}
+.svcard{display:grid;gap:10px;align-content:start;border-top:5px solid var(--robot)}
+.svcard.all{border-top-color:var(--navy)}
+.svcard .sub{color:var(--muted);font-size:15px}
+.svcard .hl{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.svcard .hl .tv{color:var(--ok)}
+.svcard .pct{font:800 26px var(--f-display);color:var(--ok);background:rgba(21,136,90,.10);padding:2px 10px;border-radius:999px}
 .ratecard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:center;margin-bottom:18px}
 @media (max-width:900px){.ratecard{grid-template-columns:1fr}}
 .ratecard h3{margin-bottom:8px}
@@ -256,7 +264,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
         <h1 class="rise">The line that <em>shows up</em> every shift.</h1>
         <p class="lead rise d1">Six-axis, AI-enabled Standard Bots arms on your packing, palletizing and line-loading jobs, installed, serviced and run by the people who already staff those jobs. <b style="color:#fff">Billed by the hour like one full-time worker, while it covers both shifts. Yours for $1 after 36 months.</b></p>
         <div class="counter rise d2" aria-live="polite">
-          <div class="k" id="cnt-k">What New Kensington saves each year</div>
+          <div class="k" id="cnt-k">Saved each year, every temp position on robots</div>
           <div class="v num" id="cnt-v">$<span>0</span></div>
           <div class="s" id="cnt-s">Calculating…</div>
         </div>
@@ -297,6 +305,22 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
 </header>
 
 <main>
+  <section class="band alt" id="savings">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">What OWI saves</div>
+        <h2>Start with four robots. Grow to every temp position.</h2>
+        <p class="lead" id="sv-lead">Both shifts, lease to own, compared with what those positions cost you today in bill rate, overtime and turnover.</p>
+      </div>
+      <div class="svgrid" id="svCards"></div>
+      <div class="card rel" style="margin-top:20px">
+        <h3>Yearly cost: today vs. with robots</h3>
+        <div class="legend"><span><i style="background:var(--temp)"></i>Today, with temps</span><span><i style="background:var(--robot)"></i>Years 1–3, lease to own</span><span><i style="background:var(--navy)"></i>Year 4 on, you own them</span></div>
+        <svg class="chart" id="svChart" role="img" aria-label="Yearly cost today versus with robots for both scenarios"></svg>
+      </div>
+    </div>
+  </section>
+
   <section class="band" id="door">
     <div class="wrap">
       <div class="sec-head">
@@ -398,15 +422,15 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
       <div class="ctrls">
         <div class="scope" role="group" aria-label="How many robots">
           <button class="chip" data-scope="start" aria-pressed="true">Phase 1 · 4 robots</button>
-          <button class="chip" data-scope="plant" aria-pressed="false">Full line · 15 robots</button>
+          <button class="chip" data-scope="plant" aria-pressed="false">Every temp position · 12 robots</button>
         </div>
         <div class="scope" role="group" aria-label="Shifts each robot runs">
           <button class="chip" data-shifts="1" aria-pressed="false">1 shift</button>
           <button class="chip" data-shifts="2" aria-pressed="true">2 shifts</button>
         </div>
         <div class="scope" role="group" aria-label="Tooling and infeed">
-          <button class="chip" data-setup="simple" aria-pressed="false">Simple setup</button>
-          <button class="chip" data-setup="standard" aria-pressed="true">Standard setup</button>
+          <button class="chip" data-setup="simple" aria-pressed="true">Simple setup</button>
+          <button class="chip" data-setup="standard" aria-pressed="false">Standard setup</button>
           <button class="chip" data-setup="complex" aria-pressed="false">Complex setup</button>
         </div>
       </div>
@@ -553,16 +577,16 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const D = {
     months: [["Jan",25,2775.5],["Feb",46,4014.9],["Mar",40,3392.4],["Apr",37,3060.6],["May",66,4056.5],["Jun",47,4815.2],["Jul",28,3164.0],["Aug",35,3515.4],["Sep",68,5731.9],["Oct*",56,2444.5]],
     bill: 22.80, otShare: 0.016, supRate: 32, adminRate: 30,
-    hrsPerShift: 8, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5, ceFte: 23,
+    hrsPerShift: 8, days: 5, weeks: 50, oversight: 1, annualTempHours: 36971 * 12 / 9.5, ceFte: 24,
     billHrs: 2080, term: 36, support: 0.10,
     base: { Spark: 20, Core: 22, Thor: 24 },
     setup: { simple: { label: "Simple", allow: 10000, add: 2.00 }, standard: { label: "Standard", allow: 20000, add: 3.75 }, complex: { label: "Complex", allow: 40000, add: 7.50 } },
     rtDisc: [[10, 1.50], [5, 0.75], [1, 0]],
     jobs: [
-      { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, start: 1, plant: 5 },
-      { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, start: 1, plant: 4 },
+      { id: "pack", name: "Case packing jugs and bottles", robot: "Core", list: 39500, install: 15000, start: 1, plant: 4 },
+      { id: "pallet", name: "Palletizing cases", robot: "Thor", list: 49500, install: 25000, start: 1, plant: 3 },
       { id: "tend", name: "Line loading and unloading", robot: "Core", list: 39500, install: 12000, start: 1, plant: 3 },
-      { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, start: 1, plant: 3 }
+      { id: "pick", name: "Pick and place, kitting", robot: "Spark", list: 29500, install: 8000, start: 1, plant: 2 }
     ]
   };
   const $ = id => document.getElementById(id);
@@ -573,7 +597,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
   const otPrem = tempRate - D.bill;
   const rtDisc = n => (D.rtDisc.find(([m]) => n >= m) || D.rtDisc[D.rtDisc.length - 1])[1];
   const rateOf = robot => D.base[robot] + D.setup[state.setup].add;
-  const state = { scope: "start", shifts: 2, setup: "standard", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.start])) };
+  const state = { scope: "start", shifts: 2, setup: "simple", counts: Object.fromEntries(D.jobs.map(j => [j.id, j.start])) };
   const workHrs = () => D.hrsPerShift * state.shifts * D.days * D.weeks;
   const overYr = () => tempRate * D.oversight * state.shifts * D.days * D.weeks;
 
@@ -628,7 +652,7 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     const P = model(Object.fromEntries(D.jobs.map(j => [j.id, j.plant])));
     state.shifts = keep;
     animateCounter(P.lease.save);
-    $("cnt-s").textContent = `${P.n} robots on lease to own with a ${P.S.label.toLowerCase()} tooling allowance, covering ${P.n * 2} temp positions across two shifts. Turnover costs included. ${kM(P.lease.save3)} over the 36-month lease.`;
+    $("cnt-s").textContent = `${P.n} robots on lease to own replace the ~${P.n * 2} temp positions we fill for you, across two shifts. ${Math.round(P.lease.save / P.now * 100)}% less than today, turnover included. ${kM(P.lease.save3)} over the 36-month lease.`;
 
     // Hidden cost
     $("hid-total").textContent = usd(H.total);
@@ -644,6 +668,16 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     $("h-temp-sub").textContent = `${usd2(D.bill)} bill + overtime + turnover`;
     $("h-rob-sub").textContent = `${usd2(T.avg)}/hr${T.n > 1 ? " avg" : ""} on 2,080 hrs, spread over ${wh.toLocaleString("en-US")} hrs worked, plus oversight`;
     $("h-save").textContent = `${usd2(T.trueTemp - rob)} saved every hour of work · ${Math.round((1 - rob / T.trueTemp) * 100)}% less`;
+
+    // Top savings section: Phase 1 vs every temp position, both shifts
+    const at2 = counts => { const k = state.shifts; state.shifts = 2; const m = model(counts); state.shifts = k; return m; };
+    const SA = at2(Object.fromEntries(D.jobs.map(j => [j.id, j.start]))), SB = P;
+    const svCard = (m, big, title) => `<div class="card svcard${big ? " all" : ""}"><div class="kicker">${title}</div><div class="sub">${m.n} robots replace ${m.n * 2} temp positions across two shifts</div>
+      <div class="hl"><span class="tv num">${usd(m.lease.save)}</span><span class="pct num">${Math.round(m.lease.save / m.now * 100)}% less</span></div><div class="sub" style="margin-top:-4px">saved in year one</div>
+      <div class="rows">${[["Those positions cost you today", usd(m.now)], ["With robots, years 1–3", usd(m.lease.yr)], ["Saved over the 36-month lease", usd(m.lease.save3)], ["Saved each year once you own them", usd(m.lease.saveAfter) + " (" + Math.round(m.lease.saveAfter / m.now * 100) + "% less)"], ["Saved over 6 years", usd(m.lease.save6)]].map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join("")}</div></div>`;
+    $("svCards").innerHTML = svCard(SA, false, "Phase 1 · 4 robots") + svCard(SB, true, "Every temp position we fill · 12 robots");
+    $("sv-lead").textContent = `Both shifts, lease to own with a ${SA.S.label.toLowerCase()} tooling allowance (${kM(SA.S.allow)} a station) built into the rate, compared with what those positions cost you today in bill rate, overtime and turnover.`;
+    drawSv([["Phase 1 · 4 robots", SA], ["Every temp position · 12 robots", SB]]);
 
     // Rate card
     $("rcBody").replaceChildren(...["Spark", "Core", "Thor"].map(rb => { const tr = document.createElement("tr"); const a = document.createElement("td"); a.textContent = rb; a.style.font = "600 15.5px var(--f-body)"; tr.appendChild(a);
@@ -708,6 +742,27 @@ footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
     fillRows("roll-rows", [["Robots across OWI", String(per * sites)], ["Temp positions covered", String(per * sites * state.shifts)], ["New starts avoided, at New Kensington's turnover", "~" + Math.round(H.starts / (D.annualTempHours / 2000) * per * sites * state.shifts).toLocaleString("en-US") + " a year"], ["Saved a year, during the lease", usd(yr)], ["Saved over 3 years", usd(yr * 3)]]);
     drawRoll(perRobotSave, per, sites);
     drawDoor();
+  }
+
+  function drawSv(list) {
+    const svg = $("svChart"); const W = Math.max(300, svg.parentElement.clientWidth - 2), H = 320; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.replaceChildren();
+    const maxV = Math.max(...list.map(([, m]) => m.now));
+    const step = [5e4, 1e5, 2.5e5, 5e5, 1e6].find(s => maxV / s <= 5) || 1e6, top = Math.ceil(maxV / step) * step;
+    const m = { l: 56, r: 10, t: 34, b: 34 }; const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const y = v => m.t + ih - v / top * ih; const gw = iw / list.length;
+    for (let v = 0; v <= top + 1; v += step) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = kM(v); }
+    const tip = tipper(svg);
+    list.forEach(([name, md], i) => {
+      const x0 = m.l + i * gw, bw = Math.min(90, gw * 0.24), gap = Math.min(14, gw * 0.04), start = x0 + (gw - (bw * 3 + gap * 2)) / 2;
+      [[md.now, "var(--temp)", "Today"], [md.lease.yr, "var(--robot)", "Years 1–3"], [md.lease.after, "var(--navy)", "Year 4 on"]].forEach(([v, f, lb], k) => {
+        const x = start + k * (bw + gap);
+        el("rect", { x, y: y(v), width: bw, height: Math.max(0, y(0) - y(v)), rx: 5, fill: f }, svg);
+        const t = el("text", { x: x + bw / 2, y: y(v) - 8, "text-anchor": "middle", class: "lb" }, svg); t.textContent = kM(v);
+        el("rect", { x, y: m.t, width: bw, height: ih, fill: "transparent" }, svg).addEventListener("mousemove", ev => tip.show(ev, `<b>${name}</b><br>${lb}: ${usd(v)} a year${k ? `<br>Saved ${usd(md.now - v)} (${Math.round((md.now - v) / md.now * 100)}%)` : ""}`));
+      });
+      el("text", { x: x0 + gw / 2, y: H - 10, "text-anchor": "middle", class: "lb" }, svg).textContent = W < 560 ? name.split(" · ")[1] : name;
+    });
+    svg.addEventListener("mouseleave", () => tip.hide());
   }
 
   function drawYears(T) {
