@@ -1,0 +1,45 @@
+// Recruiter Activity Board data. Replaced each weekday by the automatic refresh.
+window.META={day:"Wed Oct 28",date:"Oct 28 2026",asof:"11:58 AM",sysSent:6,sysReplies:0,startingToday:7};
+window.RAW=[
+["Brittany Lear","Delmont",2,0,0,0,0,0,752,26,31,"12:01","11:53",[2,145,91,246,270,0,0,0,0,0],[5,25,11,9,7,0,0,0,0,0],0,0],
+["Ross Madler","Charleston",21,14,13,2,17,1,12,660,73,"7:50","11:50",[9,35,21,9,6,0,0,0,0,0],[12,32,599,73,17,0,0,0,0,0],13,6],
+["Kaytee Jack","Delmont",22,10,5,7,5,1,8,54,12,"7:07","11:55",[2,9,17,15,15,0,0,0,0,0],[7,12,21,13,13,0,0,0,0,0],5,0],
+["Alison Fisher","Delmont",13,13,6,10,6,1,7,301,5,"9:05","11:58",[0,0,7,8,41,0,0,0,0,0],[2,0,2,298,4,0,0,0,0,0],6,0],
+["Stephen Nelson","New Kensington",16,5,2,9,2,1,2,434,7,"8:30","11:50",[0,9,6,14,8,0,0,0,0,0],[3,307,128,1,2,0,0,0,0,0],2,0],
+["Donna Hecht","Delmont",20,4,3,3,3,0,4,1028,21,"8:24","11:49",[0,8,4,13,12,0,0,0,0,0],[1,7,564,467,10,0,0,0,0,0],3,0],
+["Derek Smith","Fox Chapel",6,3,5,7,5,5,4,1012,30,"8:06","11:43",[0,10,16,4,5,0,0,0,0,0],[0,590,446,2,4,0,0,0,0,0],5,0],
+["Sharon Houseman","Fox Chapel",7,2,5,2,6,3,2,255,21,"8:18","11:47",[0,7,10,7,3,0,0,0,0,0],[0,13,241,3,19,0,0,0,0,0],6,1],
+["Brooke Woody","Charleston",7,1,4,1,6,0,3,194,7,"9:13","11:44",[0,0,12,6,4,0,0,0,0,0],[0,12,10,172,7,0,0,0,0,0],6,0],
+["Hannah Oteri","Charleston",2,3,5,5,4,0,0,254,20,"8:18","11:51",[0,3,5,8,3,0,0,0,0,0],[0,259,5,6,4,0,0,0,0,0],5,1],
+["Donna Nagg","Delmont",4,0,3,2,4,2,1,15,2,"7:33","11:17",[1,3,8,3,1,0,0,0,0,0],[3,4,8,2,0,0,0,0,0,0],3,1],
+["Sam Skeba","New Kensington",0,0,2,1,2,2,1,166,6,"8:27","11:52",[0,1,5,1,1,0,0,0,0,0],[2,157,10,3,0,0,0,0,0,0],2,0],
+["Sam Madler","COEM: Executive Inhouse",0,0,0,0,0,0,8,0,0,"10:35","11:47",[0,0,0,4,4,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],0,0],
+["Shauna Whipple","Wilkinsburg",2,0,0,1,0,1,4,0,0,"8:30","11:24",[0,1,4,1,2,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],0,0],
+["Andy Draskovic","New Kensington",0,0,0,0,1,0,2,9,10,"8:40","11:25",[0,1,0,1,1,0,0,0,0,0],[9,4,1,4,1,0,0,0,0,0],1,0],
+["Greg Madler","Delmont",0,0,0,0,0,0,0,5,1,"","",[0,0,0,0,0,0,0,0,0,0],[0,3,2,1,0,0,0,0,0,0],0,0],
+];
+window.STARTS=[
+["Delmont","Biscotti Brothers Bakery","Alison Fisher",1,"10/29"],
+["Delmont","Carclo Technical Plastics-Latrobe","Alison Fisher",1,"11/05"],
+["Delmont","Technimark, Inc","Donna Nagg",1,"11/09"],
+["Fox Chapel","Old World Industries","Greg Madler",1,"10/29"],
+["Fox Chapel","Old World Industries","Shauna Whipple",4,"10/26, 10/29, 10/28"],
+["New Kensington","Leed's","Andy Draskovic",1,"10/28"],
+["Wilkinsburg","Valassis","Shauna Whipple",2,"10/26"],
+];
+window.SHOW=[
+["Derek Smith","Fox Chapel",5,31,5],
+["Sharon Houseman","Fox Chapel",3,65,18],
+["Donna Nagg","Delmont",2,45,9],
+["Ross Madler","Charleston",1,57,13],
+["Kaytee Jack","Delmont",1,44,12],
+["Alison Fisher","Delmont",1,34,10],
+["Sam Skeba","New Kensington",1,27,5],
+["Stephen Nelson","New Kensington",1,19,4],
+["Shauna Whipple","Wilkinsburg",1,0,0],
+["Donna Hecht","Delmont",0,40,11],
+["Hannah Oteri","Charleston",0,28,9],
+["Brooke Woody","Charleston",0,26,2],
+["Andy Draskovic","New Kensington",0,12,2],
+["Zack Bowman","Delmont",0,10,4],
+];
