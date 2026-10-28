@@ -2,11 +2,13 @@ name: Refresh Recruiter Activity Board
 
 on:
   schedule:
-    # Weekdays, Eastern time: 11:40 AM (midday email) and 3:55 PM (end-of-day email).
-    # Each is listed twice so it works in both daylight time (UTC-4) and standard time (UTC-5).
-    # Extra runs just refresh the website; the email step sends each email only once a day.
-    - cron: "40 15,16 * * 1-5"
-    - cron: "55 19,20 * * 1-5"
+    # Weekdays, every 15 minutes around midday and end of day (times are UTC; covers both
+    # daylight and standard time). GitHub starts scheduled runs 20-45 minutes late, so several
+    # slots are queued: every run refreshes the website, and the first run that starts at or after
+    # 11:45 AM ET sends the midday email and the first at or after 4:00 PM ET sends the end-of-day
+    # email (once each per day; see scripts/send-recruiter-email.mjs).
+    - cron: "0,15,30,45 15,16 * * 1-5"
+    - cron: "0,15,30,45 19,20,21 * * 1-5"
   workflow_dispatch:
     inputs:
       email:
