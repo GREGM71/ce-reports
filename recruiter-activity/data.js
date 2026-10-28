@@ -1,10 +1,10 @@
 // Recruiter Activity Board data. Replaced each weekday by the automatic refresh.
-window.META={day:"Wed Oct 28",date:"Oct 28 2026",asof:"4:59 PM",sysSent:37,sysReplies:3,startingToday:8};
+window.META={day:"Wed Oct 28",date:"Oct 28 2026",asof:"5:30 PM",sysSent:45,sysReplies:3,startingToday:8};
 window.RAW=[
-["Brittany Lear","Delmont",2,0,3,0,1,0,2607,28,35,"12:01","4:54",[2,145,91,246,270,143,566,402,389,359],[5,25,11,9,7,1,1,2,2,0],2,0],
+["Brittany Lear","Delmont",2,0,3,0,1,0,2607,28,37,"12:01","4:54",[2,145,91,246,270,143,566,402,389,359],[5,25,11,9,7,1,1,2,2,2],2,0],
 ["Alison Fisher","Delmont",29,26,10,20,15,1,11,308,16,"9:05","4:13",[0,0,7,8,41,3,0,20,28,5],[2,0,2,298,4,3,5,9,1,0],10,5],
 ["Kaytee Jack","Delmont",43,15,9,14,10,2,14,97,22,"7:07","4:29",[2,9,17,15,15,12,11,10,11,5],[7,12,21,13,13,13,14,16,10,0],9,1],
-["Ross Madler","Charleston",30,16,14,2,27,3,13,694,85,"7:50","4:18",[9,35,21,9,6,3,1,0,3,18],[12,32,599,73,17,15,1,7,4,19],14,15],
+["Ross Madler","Charleston",30,16,14,2,27,3,13,694,86,"7:50","4:18",[9,35,21,9,6,3,1,0,3,18],[12,32,599,73,17,15,1,7,4,20],14,15],
 ["Donna Hecht","Delmont",37,14,8,7,8,2,9,1044,34,"8:24","4:24",[0,8,4,13,12,4,11,21,4,8],[1,7,564,467,10,3,13,2,4,7],8,0],
 ["Stephen Nelson","New Kensington",31,13,5,15,10,5,5,444,12,"8:30","4:45",[0,9,6,14,8,11,8,11,11,6],[3,307,128,1,2,7,1,2,4,1],7,3],
 ["Sam Skeba","New Kensington",36,10,4,14,6,2,11,225,14,"8:27","4:23",[0,1,5,1,1,9,18,27,12,9],[2,157,10,3,0,9,12,23,11,12],6,0],
@@ -23,8 +23,8 @@ window.STARTS=[
 ["Charleston","Key Logistics","Ross Madler",1,"10/30"],
 ["Delmont","Biscotti Brothers Bakery","Alison Fisher",1,"10/29"],
 ["Delmont","Carclo Technical Plastics-Latrobe","Alison Fisher",1,"11/05"],
-["Delmont","Namsco Plastics","Donna Nagg",2,"11/02, 10/28"],
-["Delmont","Technimark, Inc","Donna Nagg",3,"11/02, 11/09"],
+["Delmont","Namsco Plastics","Donna Nagg",2,"10/28, 11/02"],
+["Delmont","Technimark, Inc","Donna Nagg",3,"11/09, 11/02"],
 ["Fox Chapel","American Textile Company","Derek Smith",3,"11/01"],
 ["Fox Chapel","American Textile Company","Sharon Houseman",2,"11/01"],
 ["Fox Chapel","American Textile Company","Shauna Whipple",1,"11/01"],
