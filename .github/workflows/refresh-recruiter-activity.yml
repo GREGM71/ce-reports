@@ -40,9 +40,15 @@ jobs:
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
           REPORT_DATE: ${{ inputs.date }}
         run: node scripts/refresh-recruiter-activity.mjs
+      - name: Pull Branch Production Board numbers
+        if: ${{ inputs.date == '' }}
+        continue-on-error: true
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: node scripts/refresh-branch-production.mjs
       - name: Publish
         run: |
-          git add -A recruiter-activity/data.js recruiter-activity/days
+          git add -A recruiter-activity/data.js recruiter-activity/days branch-production/data.js
           if git diff --cached --quiet; then echo "No change."; exit 0; fi
           git config user.name "ce-reports-bot"
           git config user.email "ce-reports-bot@users.noreply.github.com"
