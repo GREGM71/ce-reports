@@ -64,6 +64,8 @@ h2{font-family:var(--f-display);font-weight:700;font-size:24px;margin:0;letter-s
 .track i{display:block;height:100%;position:relative}
 .track i span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 11px var(--f-mono);color:#fff;white-space:nowrap;overflow:hidden}
 .track i.light span{color:#14212E}
+.track.over{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.35) 6px 9px);background-size:28px 100%;background-repeat:no-repeat;background-position:right}
+.track.over i{opacity:.85}
 .tot{font:600 14px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
 .sub{color:var(--muted);font-size:12px;font-family:var(--f-mono)}
 .scroll{overflow-x:auto}
@@ -125,7 +127,7 @@ footer{color:var(--muted);font-size:12px}
     </div>
     <div class="legend" id="leg1"></div>
     <div class="rows" id="rows1"></div>
-    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Interview booked" counts each person once, whether it was logged as "Call Completed – Interview Scheduled", "Interview Scheduled" or both. "Interview confirmed" is a confirmation call on an interview booked on an earlier day.</p>
+    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Interview booked" counts each person once, whether it was logged as "Call Completed – Interview Scheduled", "Interview Scheduled" or both. "Interview confirmed" is a confirmation call on an interview booked on an earlier day. Bars are scaled to the busiest person; anyone more than double the next person (usually a bulk action in BOLD) is drawn full width and marked off scale.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-sense">
@@ -182,11 +184,15 @@ function kpis(){
 }
 function legend(el,S){$(el).innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s[2]})"></i>${s[1]}</span>`).join("");}
 function bars(el,list,S,totKey,subFn){
-  const max=Math.max(...list.map(p=>S.reduce((a,s)=>a+p[s[0]],0)))||1;
+  // Scale to the busiest normal day. Anyone more than double the next person (usually a bulk
+  // action in BOLD) is drawn full width and marked "off scale" so everyone else's bars fill the row.
+  const tots=list.map(p=>S.reduce((a,s)=>a+p[s[0]],0)).sort((a,b)=>b-a);
+  let i=0;while(i<tots.length-1&&tots[i]>2*tots[i+1])i++;
+  const max=tots[i]||1;
   $(el).innerHTML=list.map(p=>{
-    const t=S.reduce((a,s)=>a+p[s[0]],0);
-    const segs=S.map(s=>{const v=p[s[0]];if(!v)return"";const w=v/max*100;return `<i class="${s[3]?"light":""}" style="width:${w}%;background:var(${s[2]})" title="${s[1]}: ${v}"><span>${w>3.2?v:""}</span></i>`}).join("");
-    return `<div class="row"><div class="who"><div class="n">${p.n}</div><div class="o">${p.o}</div></div><div class="track" role="img" aria-label="${p.n}: ${S.map(s=>s[1]+' '+p[s[0]]).join(', ')}">${segs}</div><div class="tot">${t.toLocaleString()}${subFn?`<div class="sub">${subFn(p)}</div>`:""}</div></div>`}).join("");
+    const t=S.reduce((a,s)=>a+p[s[0]],0), over=t>max, den=over?t:max;
+    const segs=S.map(s=>{const v=p[s[0]];if(!v)return"";const w=v/den*100;return `<i class="${s[3]?"light":""}" style="width:${w}%;background:var(${s[2]})" title="${s[1]}: ${v}"><span>${w>3.2?v.toLocaleString():""}</span></i>`}).join("");
+    return `<div class="row"><div class="who"><div class="n">${p.n}</div><div class="o">${p.o}${over?' <span class="flag" title="More than double anyone else, so this bar is not drawn to scale">off scale</span>':""}</div></div><div class="track${over?" over":""}" role="img" aria-label="${p.n}: ${S.map(s=>s[1]+' '+p[s[0]]).join(', ')}">${segs}</div><div class="tot">${t.toLocaleString()}${subFn?`<div class="sub">${subFn(p)}</div>`:""}</div></div>`}).join("");
 }
 let sortKey=NEW?"ints":"tot";
 function draw1(){const l=[...D].sort((a,b)=>b[sortKey]-a[sortKey]||b.tot-a.tot);bars("rows1",l,S1,null,NEW?p=>`<b style="color:var(--c-il)">${p.ib}</b> booked`:null);}
