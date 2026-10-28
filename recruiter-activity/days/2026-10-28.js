@@ -1,26 +1,26 @@
 // Recruiter Activity Board data. Replaced each weekday by the automatic refresh.
-window.META={day:"Wed Oct 28",date:"Oct 28 2026",asof:"5:30 PM",sysSent:45,sysReplies:3,startingToday:8};
+window.META={day:"Wed Oct 28",date:"Oct 28 2026",asof:"5:58 PM",sysSent:45,sysReplies:3,startingToday:8};
 window.RAW=[
-["Brittany Lear","Delmont",2,0,3,0,1,0,2607,28,37,"12:01","4:54",[2,145,91,246,270,143,566,402,389,359],[5,25,11,9,7,1,1,2,2,2],2,0],
+["Brittany Lear","Delmont",2,0,3,0,1,0,2735,28,37,"12:01","5:56",[2,145,91,246,270,143,566,402,389,487],[5,25,11,9,7,1,1,2,2,2],2,0],
 ["Alison Fisher","Delmont",29,26,10,20,15,1,11,308,16,"9:05","4:13",[0,0,7,8,41,3,0,20,28,5],[2,0,2,298,4,3,5,9,1,0],10,5],
 ["Kaytee Jack","Delmont",43,15,9,14,10,2,14,97,22,"7:07","4:29",[2,9,17,15,15,12,11,10,11,5],[7,12,21,13,13,13,14,16,10,0],9,1],
-["Ross Madler","Charleston",30,16,14,2,27,3,13,694,86,"7:50","4:18",[9,35,21,9,6,3,1,0,3,18],[12,32,599,73,17,15,1,7,4,20],14,15],
+["Ross Madler","Charleston",30,16,14,2,27,3,13,700,87,"7:50","4:18",[9,35,21,9,6,3,1,0,3,18],[12,32,599,73,17,15,1,7,4,27],14,15],
 ["Donna Hecht","Delmont",37,14,8,7,8,2,9,1044,34,"8:24","4:24",[0,8,4,13,12,4,11,21,4,8],[1,7,564,467,10,3,13,2,4,7],8,0],
 ["Stephen Nelson","New Kensington",31,13,5,15,10,5,5,444,12,"8:30","4:45",[0,9,6,14,8,11,8,11,11,6],[3,307,128,1,2,7,1,2,4,1],7,3],
-["Sam Skeba","New Kensington",36,10,4,14,6,2,11,225,14,"8:27","4:23",[0,1,5,1,1,9,18,27,12,9],[2,157,10,3,0,9,12,23,11,12],6,0],
+["Sam Skeba","New Kensington",36,10,4,14,6,2,11,225,15,"8:27","4:23",[0,1,5,1,1,9,18,27,12,9],[2,157,10,3,0,9,12,23,11,13],6,0],
 ["Derek Smith","Fox Chapel",15,5,16,16,19,5,5,1526,55,"8:06","4:29",[0,10,16,4,5,4,9,10,10,13],[0,590,446,2,4,8,509,6,8,8],18,0],
 ["Sharon Houseman","Fox Chapel",14,5,10,7,12,4,4,284,32,"8:18","4:04",[0,7,10,7,3,3,4,10,10,2],[0,13,241,3,19,1,5,18,13,3],12,1],
-["Hannah Oteri","Charleston",11,8,8,8,8,0,0,534,34,"8:18","4:02",[0,3,5,8,3,9,3,0,11,1],[0,259,5,6,4,4,2,0,288,0],8,2],
+["Hannah Oteri","Charleston",11,8,8,8,8,0,0,534,37,"8:18","4:02",[0,3,5,8,3,9,3,0,11,1],[0,259,5,6,4,4,2,0,288,3],8,2],
 ["Donna Nagg","Delmont",13,0,7,4,12,4,3,32,5,"7:33","4:13",[1,3,8,3,1,5,2,3,12,5],[3,4,8,2,0,1,3,5,11,0],8,4],
 ["Brooke Woody","Charleston",12,5,5,2,8,3,6,194,9,"9:13","4:06",[0,0,12,6,4,17,1,0,0,1],[0,12,10,172,7,1,0,0,1,0],9,0],
 ["Shauna Whipple","Wilkinsburg",3,0,8,2,13,2,6,0,0,"8:30","4:05",[0,1,4,1,2,2,2,5,15,2],[0,0,0,0,0,0,0,0,0,0],10,0],
 ["Sam Madler","COEM: Executive Inhouse",0,0,0,0,0,0,9,0,0,"10:35","12:10",[0,0,0,4,4,1,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],0,0],
 ["Andy Draskovic","New Kensington",0,0,0,0,3,2,4,27,21,"8:40","3:49",[0,1,0,1,1,0,2,0,4,0],[9,4,1,4,1,2,4,17,3,3],3,0],
 ["Robert Petrisko","COEM: Inhouse",1,0,0,0,0,0,0,13,3,"12:02","12:02",[0,0,0,0,0,1,0,0,0,0],[0,1,0,1,0,0,8,0,6,0],0,0],
-["Greg Madler","Delmont",0,0,0,0,0,0,0,231,21,"","",[0,0,0,0,0,0,0,0,0,0],[0,3,2,1,0,96,2,44,101,3],0,0],
+["Greg Madler","Delmont",0,0,0,0,0,0,0,231,22,"","",[0,0,0,0,0,0,0,0,0,0],[0,3,2,1,0,96,2,44,101,4],0,0],
 ];
 window.STARTS=[
-["Charleston","Key Logistics","Ross Madler",1,"10/30"],
+["Charleston","Key Logistics","Ross Madler",2,"10/30"],
 ["Delmont","Biscotti Brothers Bakery","Alison Fisher",1,"10/29"],
 ["Delmont","Carclo Technical Plastics-Latrobe","Alison Fisher",1,"11/05"],
 ["Delmont","Namsco Plastics","Donna Nagg",2,"10/28, 11/02"],
@@ -29,7 +29,7 @@ window.STARTS=[
 ["Fox Chapel","American Textile Company","Sharon Houseman",2,"11/01"],
 ["Fox Chapel","American Textile Company","Shauna Whipple",1,"11/01"],
 ["Fox Chapel","Old World Industries","Greg Madler",1,"10/29"],
-["Fox Chapel","Old World Industries","Shauna Whipple",4,"10/26, 10/28, 10/29"],
+["Fox Chapel","Old World Industries","Shauna Whipple",4,"10/29, 10/28, 10/26"],
 ["Fox Chapel","Sampco","Sharon Houseman",1,"11/09"],
 ["Fox Chapel","Sampco","Shauna Whipple",2,"11/09"],
 ["New Kensington","Leed's","Andy Draskovic",1,"10/28"],
