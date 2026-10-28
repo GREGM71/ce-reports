@@ -9,6 +9,10 @@ on:
     # email (once each per day; see scripts/send-recruiter-email.mjs).
     - cron: "0,15,30,45 15,16 * * 1-5"
     - cron: "0,15,30,45 19,20,21 * * 1-5"
+  # Power Automate flow "Recruiter board - run on time" sends a repository_dispatch (type "refresh")
+  # at exactly 11:50 AM and 4:00 PM ET on weekdays, because GitHub's own schedule starts runs late.
+  repository_dispatch:
+    types: [refresh]
   workflow_dispatch:
     inputs:
       email:
@@ -57,7 +61,7 @@ jobs:
           git commit -m "Refresh recruiter activity ${{ inputs.date }} $(TZ=America/New_York date '+%a %b %d %I:%M %p ET')"
           git push
       - name: Send team email
-        if: ${{ github.event_name == 'schedule' || (inputs.email != 'none' && inputs.date == '') }}
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'repository_dispatch' || (inputs.email != 'none' && inputs.date == '') }}
         env:
           M365_TENANT_ID: ${{ secrets.M365_TENANT_ID }}
           M365_CLIENT_ID: ${{ secrets.M365_CLIENT_ID }}
