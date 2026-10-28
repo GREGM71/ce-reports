@@ -1,7 +1,9 @@
 // Builds and sends the Midday / End of Day Recruiter Activity email from GitHub Actions.
 // Sends through Microsoft Graph as gregm@ using an Entra app (client credentials).
 // Usage: node scripts/send-recruiter-email.mjs [auto|midday|eod] [test]
-//   auto  = pick by Eastern time: 11:00-12:59 -> midday, 15:00-17:59 -> eod, otherwise skip.
+//   auto  = pick by Eastern time: 11:45-12:59 -> midday, 4:00-5:59 PM -> eod, otherwise skip.
+//           The workflow runs every 15 minutes around those times because GitHub starts scheduled
+//           runs 20-45 minutes late; the first run that lands inside a window sends, the rest only refresh.
 //   test  = send only to Greg, and don't mark the day's email as sent.
 // Env: M365_TENANT_ID, M365_CLIENT_ID, M365_CLIENT_SECRET (repo secrets). DRY_RUN=1 builds but doesn't send.
 import fs from "node:fs";
@@ -16,15 +18,16 @@ const test = flag === "test";
 
 const etParts = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
   timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
-  hour: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  hour: "2-digit", minute: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date()).map(p => [p.type, p.value]));
 const today = `${etParts.year}-${etParts.month}-${etParts.day}`;
 const hour = Number(etParts.hour) % 24;
+const mins = hour * 60 + Number(etParts.minute);
 
 let kind = mode;
 if (mode === "auto") {
-  if (hour >= 11 && hour < 13) kind = "midday";
-  else if (hour >= 15 && hour < 18) kind = "eod";
-  else { console.log(`Eastern hour ${hour}: not an email window. Skipping.`); process.exit(0); }
+  if (mins >= 11 * 60 + 45 && mins < 13 * 60) kind = "midday";
+  else if (mins >= 16 * 60 && mins < 18 * 60) kind = "eod";
+  else { console.log(`Eastern time ${etParts.hour}:${etParts.minute}: not an email window, website refresh only.`); process.exit(0); }
 }
 if (!["midday", "eod"].includes(kind)) { console.error(`Unknown kind "${kind}"`); process.exit(1); }
 
