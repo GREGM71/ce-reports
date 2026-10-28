@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Videos · Madler Robotics for Biscotti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+
+/* Layout: full-bleed navy hero with a live savings counter and animated arm, then alternating light bands:
+   the revolving door (their data) → hidden cost calculator → cost per hour → what a robot temp is → today vs. with robots + three ways to pay → why us → rollout → how we start. */
+:root{
+  --bg:#F3F6FA; --surface:#FFFFFF; --ink:#0F1B2A; --muted:#566578; --rule:#D8E0EA;
+  --navy:#00457C; --deep:#04213D; --night:#020F1F;
+  --robot:#FFB000; --robot-ink:#00457C; --temp:#8696AA; --temp-ink:#52627A; --hidden:#D9534F;
+  --gold:#FFDF6B; --ok:#15885A; --outc:var(--navy); --pilltxt:#fff;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#97A8BB; --rule:#20344A;
+  --robot:#FFC233; --robot-ink:#FFCB52; --temp:#8FA3B8; --temp-ink:#AFC0D2; --hidden:#F07470; --ok:#43C98C;
+  color-scheme:dark;--outc:var(--robot-ink);--pilltxt:#03140C}}
+:root[data-theme="dark"]{
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#97A8BB; --rule:#20344A;
+  --robot:#FFC233; --robot-ink:#FFCB52; --temp:#8FA3B8; --temp-ink:#AFC0D2; --hidden:#F07470; --ok:#43C98C;
+  color-scheme:dark;--outc:var(--robot-ink);--pilltxt:#03140C}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.02;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,4.6vw,54px);font-weight:700;letter-spacing:.005em}
+h3{font-size:24px;font-weight:700}
+p{margin:0}
+.kicker{font:600 14px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--robot-ink)}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--muted);max-width:62ch}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+section.band{padding-block:clamp(56px,8vw,104px)}
+section.band.alt{background:var(--surface);border-block:1px solid var(--rule)}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:820px}
+
+/* Hero */
+.hero{background:radial-gradient(1200px 600px at 85% -10%,#0B5FA5 0%,transparent 60%),radial-gradient(900px 500px at -10% 110%,#12408A 0%,transparent 55%),var(--night);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{padding-block:28px clamp(56px,8vw,96px);position:relative;z-index:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:clamp(36px,6vw,72px)}
+.brand{display:flex;align-items:center;gap:12px;font:700 22px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.brand .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FFC233,#E39A00);display:grid;place-items:center}
+.brand small{display:block;font:500 12px var(--f-body);letter-spacing:.04em;text-transform:none;color:#A9C2DA}
+.for{font:600 13px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(46px,7.2vw,92px);font-weight:800;letter-spacing:-.005em}
+.hero h1 em{font-style:normal;color:var(--robot)}
+.hero .lead{color:#C4D6E8;margin-top:18px}
+.counter{margin-top:34px;padding:22px 24px;border-radius:var(--r);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px);max-width:560px}
+.counter .k{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:#9FC0DD}
+.counter .v{font:800 clamp(52px,7vw,84px)/1 var(--f-display);color:#fff;margin-top:6px}
+.counter .v span{color:var(--robot)}
+.counter .s{color:#B8CCE0;font-size:15px;margin-top:6px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font:600 16px var(--f-body);text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--robot);color:#022;}
+.btn.ghost{border-color:rgba(255,255,255,.35);color:#fff}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.armbox{position:relative;aspect-ratio:1/1;max-width:440px;width:100%;justify-self:center}
+.armbox svg{width:100%;height:100%;display:block}
+@media (prefers-reduced-motion:no-preference){
+  .a-shoulder{animation:shoulder 6s ease-in-out infinite;transform-origin:150px 300px}
+  .a-elbow{animation:elbow 6s ease-in-out infinite;transform-origin:150px 190px}
+  .a-wrist{animation:wrist 6s ease-in-out infinite;transform-origin:150px 100px}
+  .a-box{animation:box 6s ease-in-out infinite}
+  .rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}
+}
+@keyframes shoulder{0%,100%{transform:rotate(-28deg)}45%,55%{transform:rotate(26deg)}}
+@keyframes elbow{0%,100%{transform:rotate(38deg)}45%,55%{transform:rotate(-30deg)}}
+@keyframes wrist{0%,100%{transform:rotate(-12deg)}45%,55%{transform:rotate(6deg)}}
+@keyframes box{0%,8%{opacity:0}12%,42%{opacity:1}50%,100%{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:20px}
+.alt .stat{background:var(--bg)}
+.stat .v{font:800 clamp(44px,5vw,64px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .v.t{color:var(--temp-ink)}.stat .v.h{color:var(--hidden)}.stat .v.r{color:var(--robot-ink)}
+.stat .k{font-weight:600;margin-top:8px}
+.stat .s{color:var(--muted);font-size:14.5px;margin-top:2px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:clamp(18px,2.4vw,28px);min-width:0}
+.alt .card{background:var(--bg)}
+.chart{width:100%;display:block}
+.chart text{font:12px var(--f-body);fill:var(--muted)}
+.chart .lb{fill:var(--ink);font-weight:600;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:var(--muted);margin:10px 0 4px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:20px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.quote{font:600 clamp(22px,2.4vw,30px)/1.25 var(--f-display);color:var(--ink);border-left:4px solid var(--hidden);padding-left:18px;margin-top:28px;max-width:60ch}
+
+/* Calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}}
+.slider{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.slider:last-child{border-bottom:0}
+.slider .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.slider label{font-weight:600}
+.slider output{font:700 22px var(--f-display);font-variant-numeric:tabular-nums;color:var(--outc)}
+
+.slider small{color:var(--muted);font-size:13.5px}
+input[type=range]{width:100%;accent-color:var(--robot);height:28px}
+input[type=range]:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
+.result{display:grid;gap:14px;align-content:start}
+.big{font:800 clamp(56px,7vw,88px)/1 var(--f-display);color:var(--hidden);font-variant-numeric:tabular-nums}
+.rows{display:grid;gap:8px;font-variant-numeric:tabular-nums}
+.rows div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed var(--rule)}
+.rows div b{font-weight:700}
+.callout{background:linear-gradient(135deg,rgba(255,176,0,.12),rgba(0,69,124,.10));border:1px solid var(--rule);border-radius:12px;padding:14px 16px;font-size:15.5px}
+
+/* Hourly */
+.hourwrap{display:grid;gap:18px}
+.hbar{display:grid;grid-template-columns:170px minmax(0,1fr) 92px;gap:14px;align-items:center}
+@media (max-width:620px){.hbar{grid-template-columns:110px minmax(0,1fr) 72px}}
+.hbar .name{font-weight:600;line-height:1.2}
+.hbar .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.track{display:flex;height:42px;border-radius:10px;overflow:hidden;background:var(--rule)}
+.track span{display:block;height:100%;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.hbar .amt{font:800 28px var(--f-display);text-align:right;font-variant-numeric:tabular-nums}
+.savepill{display:inline-flex;align-items:baseline;gap:10px;background:var(--ok);color:var(--pilltxt);border-radius:999px;padding:8px 18px;font:700 20px var(--f-display);letter-spacing:.02em}
+
+
+/* Robot temps explainer (dark band) */
+section.band.dark{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--deep);color:#fff}
+.dark .kicker{color:var(--gold)}
+.dark .lead{color:#C4D6E8}
+.howgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.howgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.howgrid{grid-template-columns:1fr}}
+.howcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.howcard .n{font:800 15px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--robot)}
+.howcard h3{font-size:24px;color:#fff}
+.howcard p{color:#C4D6E8;font-size:15.5px}
+.howcard q{display:block;margin-top:4px;color:#fff;font-style:italic;font-size:14.5px;quotes:"\201C" "\201D"}
+.trad{margin-top:28px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);overflow:hidden}
+.trad > div{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.12);font-size:15.5px;color:#DCE8F4}
+.trad .h{font:700 17px var(--f-display);letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.06);color:#fff}
+.trad .h.us{background:var(--robot);color:#022}
+.trad .us{background:rgba(255,176,0,.10);color:#fff;font-weight:600}
+@media (max-width:640px){.trad{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);font-size:14px}.trad > div{padding:10px}}
+/* Options */
+.scope{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{font:600 15px var(--f-body);padding:9px 16px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:920px){.opts{grid-template-columns:1fr}}
+.opt{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:22px}
+.opt.star{border:2px solid var(--robot);box-shadow:0 18px 40px -24px rgba(255,176,0,.55)}
+.badge{position:absolute;top:-12px;left:18px;background:var(--robot);color:#022;font:700 12px var(--f-display);letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.opt .tag{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.opt .price{font:800 48px/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--robot-ink)}
+.opt .price small{display:block;font:500 14.5px var(--f-body);color:var(--muted);margin-top:6px}
+.opt ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
+.opt li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:8px;font-variant-numeric:tabular-nums}
+.opt li span:first-child{color:var(--muted)}
+.opt li b{font-weight:700;text-align:right}
+.opt .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:6px}
+.opt .foot .k{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.opt .foot .v{font:800 34px var(--f-display);color:var(--ok);font-variant-numeric:tabular-nums}
+.jobs{margin-top:22px}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px 28px;margin-bottom:22px}
+.ctrls .scope{margin-bottom:0}
+.today{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:920px){.today{grid-template-columns:1fr}}
+.today .card{display:grid;gap:10px;align-content:start}
+.tv{font:800 clamp(44px,5vw,60px)/1 var(--f-display)}
+.today .rows{font-size:15px}
+.savecard{border:2px solid var(--ok)}
+.note{color:var(--muted);font-size:14.5px;margin-top:8px}
+.svgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.svgrid{grid-template-columns:1fr}}
+.svcard{display:grid;gap:10px;align-content:start;border-top:5px solid var(--robot)}
+.svcard.all{border-top-color:var(--navy)}
+.svcard .sub{color:var(--muted);font-size:15px}
+.svcard .hl{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.svcard .hl .tv{color:var(--ok)}
+.svcard .pct{font:800 26px var(--f-display);color:var(--ok);background:rgba(21,136,90,.10);padding:2px 10px;border-radius:999px}
+.ratecard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:center;margin-bottom:18px}
+@media (max-width:900px){.ratecard{grid-template-columns:1fr}}
+.ratecard h3{margin-bottom:8px}
+.ratecard p{color:var(--muted);font-size:15.5px}
+table.rc{min-width:0}
+table.rc th small{display:block;font:500 12px var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted)}
+table.rc td{font:700 20px var(--f-display)}
+table.rc .on{background:rgba(255,176,0,.12);color:var(--robot-ink)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;min-width:620px}
+th{font:600 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding:10px;border-bottom:1px solid var(--rule)}
+td{text-align:right;padding:12px 10px;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+tfoot td{font-weight:700;border-bottom:0}
+td input{width:64px;font:600 16px var(--f-body);text-align:center;padding:6px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+
+/* Why us */
+.vs{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.vs > div{padding:14px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px;font-size:15.5px}
+.vs .h{font:700 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:var(--bg)}
+.vs .h.us{background:var(--navy);color:#fff}
+.vs .us-col{background:rgba(255,176,0,.07)}
+.yes{color:var(--ok);font-weight:700}.no{color:var(--muted)}
+.ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800}
+.ico.y{background:var(--ok);color:#fff}.ico.n{background:var(--rule);color:var(--muted)}
+@media (max-width:700px){.vs{grid-template-columns:minmax(0,1.2fr) 70px 70px}.vs .txt{display:none}}
+.promise{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+@media (max-width:900px){.promise{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.promise{grid-template-columns:1fr}}
+.promise .card h3{font-size:22px;margin:10px 0 6px}
+.promise .card p{color:var(--muted);font-size:15.5px}
+.pi{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0B5FA5,var(--navy));display:grid;place-items:center}
+.pi svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Rollout */
+.roll{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:start}
+@media (max-width:900px){.roll{grid-template-columns:1fr}}
+
+/* How we start */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:56px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font:700 20px var(--f-display)}
+.step h3{font-size:22px;margin-bottom:6px}
+.step p{color:var(--muted);font-size:15.5px}
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+@media (max-width:760px){.vids{grid-template-columns:1fr}}
+.vids a{display:grid;gap:2px;padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--rule);text-decoration:none}
+.vids a:hover,.vids a:focus-visible{border-color:var(--robot);outline:none}
+.vids b{font:700 19px var(--f-display)}
+.vids span{color:var(--muted);font-size:14px}
+.final{background:radial-gradient(800px 400px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--night);color:#fff}
+.final .wrap{padding-block:clamp(56px,8vw,96px);display:grid;gap:18px;justify-items:start}
+.final h2{font-size:clamp(38px,5vw,62px)}
+.final p{color:#C4D6E8;max-width:60ch;font-size:19px}
+.contact{font:600 18px var(--f-body);color:#fff}
+.contact .addr{font-family:var(--f-mono);font-size:16px;background:rgba(255,255,255,.08);padding:4px 10px;border-radius:8px;user-select:all}
+footer{padding-block:28px;color:var(--muted);font-size:13.5px}
+footer ol{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.35);padding:8px 12px;font-size:13.5px;display:none;z-index:5;white-space:nowrap}
+.rel{position:relative}
+
+.jobs{margin-top:0;margin-bottom:22px}
+.mix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
+@media (max-width:820px){.mix{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mix > div{background:var(--bg);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;min-width:0}
+.mix .k{font:600 11.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mix .v{font:800 clamp(26px,3vw,34px)/1.05 var(--f-display);margin-top:4px;font-variant-numeric:tabular-nums}
+.mix .v.t{color:var(--temp-ink)}.mix .v.r{color:var(--robot-ink)}.mix .v.s{color:var(--ok)}
+.mix small{display:block;margin-top:2px;color:var(--muted);font-size:13px;line-height:1.3}
+table.jt{min-width:760px}
+table.jt td.nm,table.jt td.rb,table.jt td.cn,table.jt th.cn{text-align:left}
+table.jt td.cn input,table.jt td.rb select,table.jt td.nm input.nameIn{font:600 16px var(--f-body);padding:7px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+table.jt td.cn input{width:72px;text-align:center}
+table.jt td.rb select{min-width:92px}
+table.jt td.nm input.nameIn{width:100%;min-width:150px;text-align:left}
+table.jt td.cn{white-space:nowrap}
+table.jt tfoot td.cn{text-align:left;padding-left:18px}
+table.jt tfoot td.ok,table.jt td.c-save{color:var(--ok)}
+table.jt td.c-save{font-weight:700}
+table.jt td.rm{width:44px;text-align:center;padding-inline:4px}
+table.jt .x{width:32px;height:32px;border-radius:50%;border:1px solid var(--rule);background:var(--surface);color:var(--muted);font:600 20px/1 var(--f-body);cursor:pointer}
+table.jt .x:hover{color:#fff;background:var(--hidden);border-color:var(--hidden)}
+table.jt input:focus-visible,table.jt select:focus-visible,table.jt .x:focus-visible{outline:2px solid var(--robot);outline-offset:2px}
+.scroll{position:relative}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.addrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+.addrow > span{font:600 12.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.addrow .chip{background:var(--surface)}
+.addrow .chip:hover{border-color:var(--robot);box-shadow:0 0 0 1px var(--robot)}
+.addrow .ghostchip{margin-left:auto;border-style:dashed;color:var(--muted)}
+
+.bizmark{display:flex;flex-direction:column;align-items:center;gap:2px;color:#fff;text-align:center;margin:4px 0 2px}
+.bizmark b{font:800 clamp(34px,5vw,54px)/1 var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.bizmark span{font:600 13px var(--f-display);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.for-row .bizmark{align-items:flex-start;text-align:left;margin:0}
+.for-row .bizmark b{font-size:30px}
+
+/* ---- site chrome ---- */
+:root{--navh:62px}
+.sitenav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(2,15,31,.95);backdrop-filter:blur(8px);color:#fff;border-bottom:1px solid rgba(255,255,255,.10)}
+.sitenav .wrap{display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap;padding-block:10px}
+.sitenav .brand{font-size:19px}
+.sitenav .brand .mark{width:32px;height:32px;border-radius:9px}
+.navlinks{display:flex;gap:4px;margin-left:auto}
+.navlinks a{padding:8px 15px;border-radius:999px;font:600 15px var(--f-body);text-decoration:none;color:#C4D6E8}
+.navlinks a:hover{color:#fff}
+.navlinks a[aria-current="page"]{background:rgba(255,255,255,.14);color:#fff}
+.navlinks a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.partner{display:flex;align-items:center;gap:10px;padding-left:20px;border-left:1px solid rgba(255,255,255,.22)}
+.partner small{font:600 11px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:#9FC0DD;white-space:nowrap}
+.sblogo{display:block;height:17px;width:auto;max-width:100%}
+@media (max-width:860px){.partner{display:none}.navlinks{margin-left:0;width:100%}.navlinks a{flex:1;text-align:center}}
+.hero .wrap{padding-block:clamp(40px,6vw,72px) clamp(56px,8vw,96px)}
+.hero.small .wrap{padding-block:clamp(36px,5vw,56px) clamp(40px,5vw,60px)}
+.hero.small h1{font-size:clamp(40px,6vw,72px);max-width:22ch}
+.hero .for{margin-bottom:16px}
+.btn.primary:hover{filter:brightness(1.06)}
+.linkrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn.solid{background:var(--navy);color:#fff}
+.btn.line{border-color:var(--rule);color:var(--ink);background:var(--surface)}
+.btn.line:hover,.btn.solid:hover{filter:brightness(1.08)}
+/* proposal header, CE + Biscotti marks */
+.celogo{display:block;width:34px;height:34px}
+.partner .cename{font:700 13px/1.05 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.partner.ce{border-left:0;padding-left:0}
+.prop-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-bottom:clamp(26px,4vw,44px);margin-bottom:clamp(22px,3.5vw,40px);border-bottom:1px solid rgba(255,255,255,.14)}
+.prop-head .ph-k{font:600 13px var(--f-display);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.prop-head .owilogo{display:block;width:clamp(190px,26vw,270px);height:auto;margin:4px 0 2px}
+.prop-head .ph-t{font:700 clamp(22px,3vw,34px)/1.1 var(--f-display);letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.prop-head .ph-s{color:#B8CCE0;font-size:15px;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:center}
+.prop-head .ph-by{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;align-items:center;margin-top:10px;color:#9FC0DD;font:600 11.5px var(--f-display);letter-spacing:.16em;text-transform:uppercase}
+.prop-head .ph-by .celogo{width:40px;height:40px}
+.prop-head .ph-by .sblogo{height:16px}
+.prop-head .ph-by i{display:inline-flex;align-items:center;gap:9px;font-style:normal}
+.prop-head .ph-by .sep{width:1px;height:26px;background:rgba(255,255,255,.22)}
+.for-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px 22px;margin-bottom:18px}
+.for-row .owilogo{display:block;width:150px;height:auto}
+.for-row .for{margin:0}
+.final .brands{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:10px}
+.final .brands .celogo{width:46px;height:46px}
+.final .brands .sblogo{margin:0}
+footer{background:#020F1F;color:#B8CCE0;padding-block:34px}footer a{color:#fff}footer ol{color:#B8CCE0}
+footer .fbrand{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:#fff;font:700 14px var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+footer .fbrand .celogo{width:40px;height:40px}
+@media (max-width:560px){.prop-head .ph-by .sep,.prop-head .ph-s span[aria-hidden]{display:none}.prop-head .ph-s{flex-direction:column;gap:2px}}
+/* robot scene */
+.scene{position:relative;width:100%;max-width:600px;justify-self:center}
+.scene svg{width:100%;height:auto;display:block;overflow:visible}
+.scene .cap{margin-top:8px;text-align:center;font:600 11.5px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:#9FC0DD}
+@media (max-width:880px){.hero-grid{gap:30px}}
+.hero:not(.small) h1{font-size:clamp(40px,5.4vw,70px)}
+.hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+/* spend comparison */
+.spend{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end;margin:6px 0 2px}
+.spend .arrow{font:800 28px var(--f-display);color:var(--muted);padding-bottom:6px}
+.spend .k{font:600 12.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.spend .v{font:800 clamp(34px,3.6vw,46px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.spend .v.t{color:var(--temp-ink)}.spend .v.r{color:var(--robot-ink)}
+.spend small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+@media (max-width:420px){.spend{grid-template-columns:1fr}.spend .arrow{display:none}}
+.svcard .hl{margin-top:6px}
+/* video cards */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.vpicks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.vpicks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.vpicks{grid-template-columns:1fr}}
+.vcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;text-decoration:none;min-width:0}
+.vcard:hover,.vcard:focus-visible{border-color:var(--robot);box-shadow:0 14px 30px -20px rgba(0,40,80,.55);outline:none}
+.vcard .th{position:relative;aspect-ratio:16/9;max-width:100%;background:#000;overflow:hidden}
+.vcard .th img{width:100%;height:100%;object-fit:cover;display:block}
+.vcard .play{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(2,15,31,.84);border:2px solid rgba(255,255,255,.92);display:grid;place-items:center}
+.vcard .play::after{content:"";border-left:14px solid var(--gold);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.vcard .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.8);color:#fff;font:700 12px var(--f-body);padding:2px 7px;border-radius:4px;font-variant-numeric:tabular-nums}
+.vcard .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.vcard .t{font:700 21px/1.12 var(--f-display)}
+.vcard .b{font-size:14.5px;color:var(--muted);line-height:1.4}
+.vcard .meta{margin-top:auto;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.vcard .no{font:700 12px var(--f-body);background:var(--bg);border:1px solid var(--rule);padding:0 6px;border-radius:5px;color:var(--ink);font-variant-numeric:tabular-nums}
+.vfilters{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--navh));z-index:15;background:var(--bg);border-bottom:1px solid var(--rule);padding-block:12px}
+@media (max-width:860px){.vfilters{position:static}}
+.vfilters .wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vfilters .chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip .n{opacity:.6;margin-left:5px;font-variant-numeric:tabular-nums}
+#q{flex:1 1 200px;min-width:0;font:inherit;font-size:15px;padding:8px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink)}
+.vgroup{padding-top:30px}
+.vgroup h3{font-size:30px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+.vgroup h3 .count{font:600 14px var(--f-body);color:var(--muted)}
+.vgroup p.d{color:var(--muted);max-width:70ch;margin-bottom:12px}
+.learn{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 14px}
+.learn a{font-size:14px;font-weight:600;color:var(--robot-ink);text-decoration:none;border-bottom:1px solid currentColor}
+.vstats{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:22px;font:700 15px var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:#C4D6E8}
+.vstats b{font-size:32px;color:#fff;margin-right:6px;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);padding:24px 0}
+.finalrow{display:flex;flex-wrap:wrap;gap:10px}
+.finalrow span{font:600 16px var(--f-body);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:6px 12px;border-radius:8px;user-select:all}
+.final .sblogo{height:19px;margin-top:8px;opacity:.9}
+.lead a,.note a{color:inherit}
+
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h14"/><path d="M9 20v-4l3-6 5-3"/><circle cx="12" cy="10" r="1.6"/><path d="M17 7l2-1.5M17 7l1.5 2"/></svg></span><span>Madler Robotics</span></div>
+  <div class="navlinks"><a href="index.html">Overview</a><a href="videos.html" aria-current="page">Videos</a><a href="pricing.html">Pricing</a></div>
+  <div class="partner"><small>With</small><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><span class="cename">Commercial<br>Employees</span></div>
+  <div class="partner"><small>Partner</small><img class="sblogo" src="standard-bots-logo.svg" alt="Standard Bots" width="150" height="17"></div>
+</div></nav>
+<header class="hero small">
+  <div class="wrap">
+    <div class="for-row"><div class="bizmark"><b>Biscotti Brothers</b><span>Bakery · Greensburg, PA</span></div><div class="for">Customized proposal and information · Greensburg</div></div>
+    <h1>See the robots <em style="font-style:normal;color:var(--robot)">do the work.</em></h1>
+    <p class="lead">Every video we have on Standard Bots robot arms: conveyor tending, packing, machine tending, welding, vision picking and how simple they are to program. Click any video to watch it.</p>
+    <div class="vstats" id="vstats"></div>
+    <div class="linkrow"><a class="btn primary" href="pricing.html">How it is priced</a><a class="btn ghost" href="index.html#savings">Total annual spend</a></div>
+  </div>
+</header>
+<main>
+  <section class="band" style="padding-bottom:8px">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:22px"><div class="kicker">Start here</div><h2>Closest to your line.</h2><p class="lead">Six short ones that show conveyor, packing and vision work on a real floor.</p></div>
+      <div class="vpicks"><a class="vcard" href="https://www.youtube.com/watch?v=WxWVB78T764" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-50.jpg" width="480" height="270"><span class="play"></span><span class="dur">1:12</span></div><div class="bd"><div class="t">Standard Bots Cobot Application - Conveyor Tending Demo</div><div class="b">A Standard Bots cobot tending a conveyor.</div><div class="meta"><span class="no">#50</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/shorts/mCsIDsjCnIg" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-39.jpg" width="480" height="270"><span class="play"></span><span class="dur">0:28</span></div><div class="bd"><div class="t">Standard Bots Bottle Packing Application Example</div><div class="b">A 30-second clip of a Standard Bots robot packing bottles.</div><div class="meta"><span class="no">#39</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=tQa6yvAwLUI" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-8.jpg" width="480" height="270"><span class="play"></span><span class="dur">0:44</span></div><div class="bd"><div class="t">Reconfigure Jobs in 30s with ClickFind Vision Feature</div><div class="b">Under a minute: the robot&#x27;s camera finds a new part with one click, so changing jobs takes seconds.</div><div class="meta"><span class="no">#8</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=Epv36qkDu2s" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-24.jpg" width="480" height="270"><span class="play"></span><span class="dur">4:17</span></div><div class="bd"><div class="t">Pika&#x27;s Farm Table Focuses on Quality</div><div class="b">Pika&#x27;s Farm Table uses USA-made robot arms from Standard Bots to grow production without giving up on quality.</div><div class="meta"><span class="no">#24</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=nAoB3GhvvWQ" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-2.jpg" width="480" height="270"><span class="play"></span><span class="dur">2:50</span></div><div class="bd"><div class="t">Industry&#x27;s Easiest Interface: Setting up a routine</div><div class="b">See how a full robot routine gets built in the Standard Bots software in under three minutes.</div><div class="meta"><span class="no">#2</span><span>Standard Bots · YouTube</span></div></div></a><a class="vcard" href="https://www.youtube.com/watch?v=Sr92hypxfco" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-27.jpg" width="480" height="270"><span class="play"></span><span class="dur">4:01</span></div><div class="bd"><div class="t">How Shaw Barrels 4X&#x27;d Production with the Core Robot</div><div class="b">How Shaw Barrels quadrupled production with the Core robot.</div><div class="meta"><span class="no">#27</span><span>Standard Bots · YouTube</span></div></div></a></div>
+    </div>
+  </section>
+  <div class="vfilters" role="search"><div class="wrap"><div class="chips" id="chips"></div><input id="q" type="text" placeholder="Search videos, e.g. palletizing" aria-label="Search videos"></div></div>
+  <div class="wrap" style="padding-bottom:40px"><div id="groups"></div><p class="empty" id="empty" hidden>No videos match that search.</p></div>
+</main>
+<section class="final"><div class="wrap">
+    <h2>Want one of these on your line?</h2>
+    <p>Madler Robotics installs, services and runs Standard Bots robots with the same team that already staffs your jobs. Tell us which video looks like your work and we will walk your floor.</p>
+    <div class="finalrow"><span>Greg Madler</span><span>412-606-8810</span><span>gregm@commercialemployees.com</span></div>
+    <div class="brands"><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><img class="sblogo" src="standard-bots-logo.svg" alt="Standard Bots" width="150" height="17"></div>
+  </div></section>
+<footer><div class="wrap"><div class="fbrand"><img class="celogo" src="ce-seal-white.png" alt="Commercial Employees" width="320" height="320"><span>Commercial Employees</span></div><div>Videos are produced by Standard Bots and the outlets named on each card, and play on YouTube or Vimeo. Madler Robotics is a Standard Bots deployment partner.</div></div></footer>
+<script>
+const VIDEOS=[{"n": 1, "title": "Industry's Easiest Interface: Moving and training the robot", "dur": "6:34", "blurb": "A six-minute walkthrough of how you move a Standard Bots arm by hand and teach it positions, with no code.", "url": "https://www.youtube.com/watch?v=q4iJkXLN2ZM", "src": "Standard Bots"}, {"n": 2, "title": "Industry's Easiest Interface: Setting up a routine", "dur": "2:50", "blurb": "See how a full robot routine gets built in the Standard Bots software in under three minutes.", "url": "https://www.youtube.com/watch?v=nAoB3GhvvWQ", "src": "Standard Bots"}, {"n": 3, "title": "Industry's Easiest Interface: Third party grippers", "dur": "1:07", "blurb": "A one-minute look at hooking up third-party grippers to a Standard Bots arm.", "url": "https://www.youtube.com/watch?v=XDf920x-58Y", "src": "Standard Bots"}, {"n": 4, "title": "Industry's Easiest Interface: In-depth palletizing", "dur": "1:28", "blurb": "A quick look at how palletizing jobs are set up on a Standard Bots robot.", "url": "https://www.youtube.com/watch?v=F6MNU1ggnpM", "src": "Standard Bots"}, {"n": 5, "title": "Industry's Easiest Interface: Custom dashboards", "dur": "1:49", "blurb": "How operators get their own simple dashboard to run the robot from the floor.", "url": "https://www.youtube.com/watch?v=S2TyZnUFinQ", "src": "Standard Bots"}, {"n": 6, "title": "The easiest software in industrial robotics just got easier (UI Overhaul)", "dur": "1:13", "blurb": "A short tour of Standard Bots' redesigned robot software.", "url": "https://www.youtube.com/watch?v=UqRzgQ9QoeQ", "src": "Standard Bots"}, {"n": 7, "title": "No Code Robot Programming: Standard Bots AI Teleoperation", "dur": "1:10", "blurb": "Teaching a robot a task by demonstrating it, with no programming.", "url": "https://www.youtube.com/watch?v=Ov07Vy6yKf8", "src": "Standard Bots"}, {"n": 8, "title": "Reconfigure Jobs in 30s with ClickFind Vision Feature", "dur": "0:44", "blurb": "Under a minute: the robot's camera finds a new part with one click, so changing jobs takes seconds.", "url": "https://www.youtube.com/watch?v=tQa6yvAwLUI", "src": "Standard Bots"}, {"n": 9, "title": "Teach a Robot to Find Parts with ClickFind | AI Skills Demo", "dur": "0:34", "blurb": "A 34-second demo of teaching the robot to find parts with its built-in camera.", "url": "https://www.youtube.com/watch?v=qjtsW9Xhg7A", "src": "Standard Bots"}, {"n": 10, "title": "Fast, Simple AI Inspection Setup", "dur": "0:32", "blurb": "How quickly an AI quality inspection gets set up on a Standard Bots robot.", "url": "https://www.youtube.com/watch?v=-xOW9PZubMI", "src": "Standard Bots"}, {"n": 11, "title": "AI Demo", "dur": "0:56", "blurb": "A one-minute demo of Standard Bots' AI features in action.", "url": "https://www.youtube.com/watch?v=Txq0a3Btnts", "src": "Standard Bots"}, {"n": 12, "title": "Vision 2", "dur": "5:44", "blurb": "A deeper look at the robot's vision system and what it can pick out.", "url": "https://www.youtube.com/watch?v=AqWyNAJRPRw", "src": "Standard Bots"}, {"n": 13, "title": "Machine Tending with No Fixtures: AI Part Picking + Native Haas Integration", "dur": "0:43", "blurb": "A robot loading a Haas machine, picking parts with AI and no fixtures.", "url": "https://www.youtube.com/watch?v=J9NnslgGp8I", "src": "Standard Bots"}, {"n": 14, "title": "Standard Bots - Machine Tending Demo", "dur": "1:47", "blurb": "A robot loading and unloading a machine so an operator doesn't have to.", "url": "https://www.youtube.com/watch?v=H0KfhUT4jso", "src": "Standard Bots"}, {"n": 15, "title": "Standard Bots Core Machine Tending Demo", "dur": "1:35", "blurb": "The Core robot running a machine tending cell.", "url": "https://www.youtube.com/watch?v=rgeuRem4s_Y", "src": "Standard Bots"}, {"n": 16, "title": "Haas MT Video", "dur": "2:27", "blurb": "A Standard Bots arm tending a Haas machine.", "url": "https://www.youtube.com/watch?v=jwwIdi9HbEI", "src": "Standard Bots"}, {"n": 17, "title": "Machine Tending Lathe", "dur": "0:57", "blurb": "Under a minute of a robot loading and unloading a lathe.", "url": "https://www.youtube.com/watch?v=y7_irUCpxuo", "src": "Standard Bots"}, {"n": 18, "title": "RO1 - Machine Tending Application", "dur": "2:47", "blurb": "The RO1 robot set up for machine tending.", "url": "https://www.youtube.com/watch?v=wOaYGGl3xwY", "src": "Standard Bots"}, {"n": 19, "title": "Stitch and Weave Welding with a Standard Bots Robot", "dur": "0:39", "blurb": "A Standard Bots arm doing stitch and weave welding.", "url": "https://www.youtube.com/watch?v=kXaIpWIUemk", "src": "Standard Bots"}, {"n": 20, "title": "Robotic Sanding, Grinding, and Deburring | FerRobotics + Standard Bots", "dur": "0:33", "blurb": "Sanding, grinding and deburring with a Standard Bots arm and FerRobotics tooling.", "url": "https://www.youtube.com/watch?v=TioRuoFXyKA", "src": "Standard Bots"}, {"n": 21, "title": "Thor: Largest Reach Robot, Cutting with a 65,000 PSI Waterjet", "dur": "0:54", "blurb": "Standard Bots' longest-reach robot, Thor, cutting with a 65,000 PSI waterjet.", "url": "https://www.youtube.com/watch?v=RHv5kfbujnw", "src": "Standard Bots"}, {"n": 22, "title": "Standard Bots - Sample Use Case Video", "dur": "2:50", "blurb": "A sample of the kind of work a Standard Bots robot takes on.", "url": "https://www.youtube.com/watch?v=VIB9J2TTK4U", "src": "Standard Bots"}, {"n": 23, "title": "CCAC Trains the Future Workforce with America's Industrial Robots", "dur": "2:22", "blurb": "How the Community College of Allegheny County trains students on Standard Bots robots.", "url": "https://www.youtube.com/watch?v=-gx7Wv5v6rQ", "src": "Standard Bots"}, {"n": 24, "title": "Pika's Farm Table Focuses on Quality", "dur": "4:17", "blurb": "Pika's Farm Table uses USA-made robot arms from Standard Bots to grow production without giving up on quality.", "url": "https://www.youtube.com/watch?v=Epv36qkDu2s", "src": "Standard Bots"}, {"n": 25, "title": "How EAM-Mosca Automated Strapping Production with Core & Thor Robots", "dur": "4:11", "blurb": "How EAM-Mosca automated its strapping production with Standard Bots' Core and Thor robots.", "url": "https://www.youtube.com/watch?v=DCYz6Lmrgqg", "src": "Standard Bots"}, {"n": 26, "title": "HomeGrown Lifting Found USA-made Robots to Expand into New Industries", "dur": "2:32", "blurb": "How HomeGrown Lifting used USA-made robots to move into new industries.", "url": "https://www.youtube.com/watch?v=PSiaVtJsVxI", "src": "Standard Bots"}, {"n": 27, "title": "How Shaw Barrels 4X'd Production with the Core Robot", "dur": "4:01", "blurb": "How Shaw Barrels quadrupled production with the Core robot.", "url": "https://www.youtube.com/watch?v=Sr92hypxfco", "src": "Standard Bots"}, {"n": 28, "title": "Ultrafab / Standard Bots - Case Study", "dur": "2:43", "blurb": "A case study on how Ultrafab put Standard Bots robots to work.", "url": "https://www.youtube.com/watch?v=PHdjLmJ5pmU", "src": "Standard Bots"}, {"n": 29, "title": "Testimonial Machine Tending", "dur": "2:07", "blurb": "A customer talks about running machine tending with a Standard Bots robot.", "url": "https://www.youtube.com/watch?v=aSwx8LNUEgY", "src": "Standard Bots"}, {"n": 30, "title": "Standard Bots: America's AI-Native Robots", "dur": "0:59", "blurb": "A one-minute introduction to Standard Bots and its USA-made robot arms.", "url": "https://www.youtube.com/watch?v=ia0korveZfw", "src": "Standard Bots"}, {"n": 31, "title": "Tour Our New 16,000 sq ft Robotics Facility + Live Cobot Demos", "dur": "4:45", "blurb": "A tour of Standard Bots' 16,000 sq ft facility with live robot demos.", "url": "https://www.youtube.com/watch?v=gbOF3d_N0sk", "src": "Standard Bots"}, {"n": 32, "title": "Standard Bots RO1: a robot that learns, adapts, and evolves", "dur": "1:06", "blurb": "A one-minute look at the RO1 robot arm.", "url": "https://www.youtube.com/watch?v=UGEx0l5Fnnc", "src": "Standard Bots"}, {"n": 33, "title": "Standard Bots - RO1 Advanced Affordable 6 Axis Robot", "dur": "1:05", "blurb": "The RO1, an affordable six-axis robot arm, in about a minute.", "url": "https://www.youtube.com/watch?v=uabxxO8NowQ", "src": "Standard Bots"}, {"n": 34, "title": "Robot Preview", "dur": "0:47", "blurb": "A short preview of a Standard Bots robot in action.", "url": "https://www.youtube.com/watch?v=QxbvDUtyqFw", "src": "Standard Bots"}, {"n": 35, "title": "Standard Bots - Welding Examples", "dur": "1:27", "blurb": "A quick reel of welding jobs done with Standard Bots robots.", "url": "https://www.youtube.com/watch?v=z4cJetNfMdY", "src": "Standard Bots"}, {"n": 36, "title": "Automating Deep Hole Drilling: Lights Out Manufacturing with Standard Bots", "dur": "4:00", "blurb": "How a shop runs deep hole drilling lights-out with a Standard Bots robot.", "url": "https://vimeo.com/1155031536", "src": "Standard Bots"}, {"n": 37, "title": "Standard Bots Raises $200M in Series C Fundraise", "dur": "2:21", "blurb": "Standard Bots on its $200M Series C raise and what it means for its robots.", "url": "https://vimeo.com/1199761375", "src": "Standard Bots"}, {"n": 38, "title": "Show Your Robot How It's Done: How Physical AI Automates What Nothing Else Can", "dur": "29:46", "blurb": "Standard Bots' Automate Show talk on teaching robots by showing them the task.", "url": "https://www.youtube.com/watch?v=2xG8qI4ldoU", "src": "Automate Show"}, {"n": 39, "title": "Standard Bots Bottle Packing Application Example", "dur": "0:28", "blurb": "A 30-second clip of a Standard Bots robot packing bottles.", "url": "https://www.youtube.com/shorts/mCsIDsjCnIg", "src": "Brian Kobus, Standard Bots"}, {"n": 40, "title": "RO2 Core and RO3 Thor Robots - Palletizing Demo", "dur": "1:00", "blurb": "The Core and Thor robots palletizing side by side.", "url": "https://www.youtube.com/shorts/MQpwh8MkhdY", "src": "Brian Kobus, Standard Bots"}, {"n": 41, "title": "Standard Bots RO3 Thor Robot Palletizing", "dur": "0:20", "blurb": "Twenty seconds of the Thor robot palletizing.", "url": "https://www.youtube.com/shorts/WO2xHMURimA", "src": "Brian Kobus, Standard Bots"}, {"n": 42, "title": "Standard Bots Welding Solution", "dur": "0:37", "blurb": "A short look at the Standard Bots welding setup.", "url": "https://www.youtube.com/watch?v=yOhX_eXJ_Cg", "src": "Brian Kobus, Standard Bots"}, {"n": 43, "title": "Welding UI Simulation Example Video", "dur": "3:51", "blurb": "How a welding job is set up and simulated in the Standard Bots software.", "url": "https://www.youtube.com/watch?v=KO4X0X67K7Y", "src": "Brian Kobus, Standard Bots"}, {"n": 44, "title": "Inside Standard Bots: The Robotics Company Helping Reshape US Manufacturing", "dur": "8:16", "blurb": "RoboStrategy goes inside Standard Bots and its push to rebuild US manufacturing.", "url": "https://www.youtube.com/watch?v=n3Ey3dSahi4", "src": "RoboStrategy"}, {"n": 45, "title": "Standard Bots - Designing AI-Native Robots with SOLIDWORKS", "dur": "3:25", "blurb": "SOLIDWORKS on how Standard Bots designs its robots.", "url": "https://www.youtube.com/watch?v=lz1_jciNLcs", "src": "SOLIDWORKS"}, {"n": 46, "title": "Robots Are Critical to US Manufacturing, Says Standard Bots CEO", "dur": "4:31", "blurb": "Bloomberg Tech interviews Standard Bots' CEO on robots and US manufacturing.", "url": "https://www.youtube.com/watch?v=hQeJ7ZJT6S8", "src": "Bloomberg Tech"}, {"n": 47, "title": "Standard Bots is 'arming' robots with AI learning", "dur": "3:56", "blurb": "The New York Post's NYNext on how Standard Bots uses AI to teach its robots.", "url": "https://www.youtube.com/watch?v=l_XJqD3R3BI", "src": "New York Post"}, {"n": 48, "title": "Manufacturing Technology Series 2025 - Standard Bots", "dur": "2:50", "blurb": "A Manufacturing Technology Series feature on Standard Bots.", "url": "https://www.youtube.com/watch?v=sZbwEcQVRCY", "src": "Upgrade"}, {"n": 49, "title": "Standard Bots - Powerful robotics platforms (AI Technology)", "dur": "4:50", "blurb": "A short film on the Standard Bots robot platform.", "url": "https://www.youtube.com/watch?v=kKtU2Nsolpg", "src": "Augustus Films"}, {"n": 50, "title": "Standard Bots Cobot Application - Conveyor Tending Demo", "dur": "1:12", "blurb": "A Standard Bots cobot tending a conveyor.", "url": "https://www.youtube.com/watch?v=WxWVB78T764", "src": "TMMI"}, {"n": 51, "title": "Future of U.S. Manufacturing: CEO Evan Beard Testifies on Robotics", "dur": "9:49", "blurb": "Standard Bots CEO Evan Beard testifies to Congress on robotics and US manufacturing.", "url": "https://www.youtube.com/watch?v=YczyegOGT80", "src": "Congress Clips"}, {"n": 52, "title": "Standard Bots CEO Evan Beard on Physical AI and Future of Robotics", "dur": "6:04", "blurb": "Evan Beard talks with A3 about physical AI and where robotics is headed.", "url": "https://www.youtube.com/watch?v=vsu1BMPmLZQ", "src": "A3"}, {"n": 53, "title": "Evan Beard - Using GenAI to Program Robots for the Real World", "dur": "12:16", "blurb": "Evan Beard at MIT on using generative AI to program robots.", "url": "https://www.youtube.com/watch?v=alPxD36YAi0", "src": "MIT"}, {"n": 54, "title": "In Conversation With Standard Bots' Evan Beard: Bringing Manufacturing Back to America", "dur": "1:00:50", "blurb": "A full-hour General Catalyst conversation with Evan Beard on bringing manufacturing home.", "url": "https://www.youtube.com/watch?v=rcf8C36s8xs", "src": "General Catalyst"}, {"n": 55, "title": "Ep 100 | You Need To Be 10x Better (w/ Evan Beard)", "dur": "57:22", "blurb": "An hour-long podcast with Evan Beard on building Standard Bots.", "url": "https://www.youtube.com/watch?v=q_WdHcpYkkE", "src": "22Astronauts"}], GROUPS=[{"key": "pack", "name": "Packing, palletizing & conveyors", "ns": [40, 41, 4, 39, 50], "desc": "Stacking cases on pallets, packing bottles into boxes and tending conveyors, the end-of-line jobs that are hardest to staff.", "links": [["Palletizing on standardbots.com", "https://standardbots.com/palletizing"]]}, {"key": "tend", "name": "Machine tending", "ns": [13, 14, 15, 16, 17, 18, 36, 29], "desc": "Loading and unloading CNC mills, lathes and drills so the machine keeps running through breaks and shift changes.", "links": [["Machine tending on standardbots.com", "https://standardbots.com/machine-tending"]]}, {"key": "weld", "name": "Welding", "ns": [35, 19, 42, 43], "desc": "Robot welding cells, from stitch and weave welds to setting up a weld path on the screen.", "links": [["Welding on standardbots.com", "https://standardbots.com/welding"]]}, {"key": "finish", "name": "Finishing & cutting", "ns": [20, 21], "desc": "Sanding, grinding, deburring and waterjet cutting with the long-reach Thor arm.", "links": []}, {"key": "vision", "name": "Vision & AI", "ns": [8, 9, 10, 11, 12], "desc": "The built-in camera finds parts wherever they sit, so new jobs take minutes to set up instead of new fixtures.", "links": [["AI on standardbots.com", "https://standardbots.com/ai"]]}, {"key": "program", "name": "How easy it is to program", "ns": [1, 2, 3, 5, 6, 7], "desc": "Your own people move the arm by hand, build a routine on a tablet and run it from a simple dashboard. No coding.", "links": [["The software on standardbots.com", "https://standardbots.com/software"]]}, {"key": "stories", "name": "Customer stories", "ns": [24, 27, 25, 26, 28, 23], "desc": "Manufacturers explain what they automated, why, and what it did for production.", "links": []}, {"key": "robots", "name": "The robots & the company", "ns": [30, 32, 33, 34, 22, 31, 37], "desc": "The RO1, Core and Thor arms, the US factory that builds them, and the company behind them.", "links": [["RO1", "https://standardbots.com/ro1"], ["Thor", "https://standardbots.com/thor"], ["standardbots.com", "https://standardbots.com"]]}, {"key": "press", "name": "In the press", "ns": [44, 45, 46, 47, 48, 49], "desc": "Features and interviews from Bloomberg, the New York Post, SOLIDWORKS and others.", "links": []}, {"key": "ceo", "name": "Talks from the CEO", "ns": [51, 52, 38, 53, 54, 55], "desc": "Standard Bots CEO Evan Beard on AI robots and bringing manufacturing back to America. Longer talks.", "links": []}];
+const $q=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const byN=Object.fromEntries(VIDEOS.map(v=>[v.n,v]));let active="all";
+function card(v){const site=/vimeo/.test(v.url)?"Vimeo":"YouTube";
+ return '<a class="vcard" href="'+v.url+'" target="_blank" rel="noopener"><div class="th"><img loading="lazy" alt="" src="t-'+v.n+'.jpg" width="480" height="270"><span class="play"></span><span class="dur">'+v.dur+'</span></div><div class="bd"><div class="t">'+esc(v.title)+'</div><div class="meta"><span class="no">#'+v.n+'</span><span>'+esc(v.src)+' · '+site+'</span></div></div></a>';}
+const mins=Math.round(VIDEOS.reduce((a,v)=>a+v.dur.split(":").map(Number).reduce((x,y)=>x*60+y,0),0)/60);
+$q("#vstats").innerHTML='<span><b>'+VIDEOS.length+'</b>videos</span><span><b>'+GROUPS.length+'</b>kinds of work</span><span><b>'+mins+'</b>minutes of footage</span>';
+function chips(){const box=$q("#chips");box.innerHTML="";[{key:"all",name:"All",ns:VIDEOS.map(v=>v.n)}].concat(GROUPS).forEach(g=>{const b=document.createElement("button");b.type="button";b.className="chip";b.setAttribute("aria-pressed",g.key===active);b.innerHTML=esc(g.name)+'<span class="n">'+g.ns.length+'</span>';b.onclick=()=>{active=g.key;chips();render()};box.appendChild(b);});}
+function render(){const q=$q("#q").value.trim().toLowerCase();let shown=0,html="";
+ GROUPS.forEach(g=>{if(active!=="all"&&active!==g.key)return;
+  const list=g.ns.map(n=>byN[n]).filter(v=>!q||(v.title+" "+v.blurb+" "+v.src).toLowerCase().includes(q)||("#"+v.n)===q);if(!list.length)return;shown+=list.length;
+  html+='<div class="vgroup" id="g-'+g.key+'"><h3>'+esc(g.name)+'<span class="count">'+list.length+' video'+(list.length>1?'s':'')+'</span></h3><p class="d">'+esc(g.desc)+'</p>'
+   +(g.links.length?'<div class="learn">'+g.links.map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+esc(l[0])+' ↗</a>').join("")+'</div>':'')
+   +'<div class="vgrid">'+list.map(card).join("")+'</div></div>';});
+ $q("#groups").innerHTML=html;$q("#empty").hidden=shown>0;}
+$q("#q").addEventListener("input",render);chips();render();
+</script>
+</body>
+</html>
