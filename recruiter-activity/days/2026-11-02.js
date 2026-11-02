@@ -25,10 +25,10 @@ window.STARTS=[
 ["Delmont","Crisp Control Inc","Brian Smith",1,"10/26"],
 ["Delmont","Sun Star II","Donna Nagg",1,"11/04"],
 ["Delmont","Sun Star II","Kaytee Jack",1,"11/03"],
-["Fox Chapel","American Textile Company","Derek Smith",2,"11/04, 11/03"],
+["Fox Chapel","American Textile Company","Derek Smith",2,"11/03, 11/04"],
 ["Fox Chapel","Greater Pittsburgh Food Bank","Sharon Houseman",1,"11/04"],
 ["Fox Chapel","Old World Industries","Greg Madler",1,"11/02"],
-["Fox Chapel","Sampco","Sharon Houseman",2,"11/09"],
+["Fox Chapel","Sampco","Sharon Houseman",3,"11/09"],
 ["New Kensington","Leed's","Andy Draskovic",1,"11/02"],
 ];
 window.SHOW=[
