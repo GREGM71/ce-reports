@@ -27,7 +27,7 @@ window.STARTS=[
 ["Fox Chapel","American Textile Company","Derek Smith",1,"11/09"],
 ["Fox Chapel","Old World Industries","Shauna Whipple",1,"11/03"],
 ["Fox Chapel","Trau & Loevner","Derek Smith",1,"11/09"],
-["New Kensington","Leed's","Andy Draskovic",3,"11/06, 11/11"],
+["New Kensington","Leed's","Andy Draskovic",3,"11/11, 11/06"],
 ];
 window.SHOW=[
 ["Derek Smith","Fox Chapel",6,49,12],
