@@ -17,7 +17,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const n = (x) => Number(x || 0).toLocaleString("en-US");
 const sum = (rows, f) => rows.reduce((t, r) => t + f(r), 0);
 
-// RAW: [person, office, vm, nov, cib, co, il, ob, oth, so, si, first, last, hrs, shrs]
+// RAW: [person, office, vm, nov, cib, co, il, ob, oth, so, si, first, last, hrs, shrs, ib, ic, mc]
 const calls = (r) => r[2] + r[3] + r[4] + r[5];
 // People booked for an interview, each counted once (r[15]); older data files only have r[4].
 const booked = (r) => (r[15] != null ? r[15] : r[4]);
@@ -27,6 +27,9 @@ const totCalls = sum(RAW, calls);
 const totInterviews = sum(RAW, booked);
 const totOnboards = SHOW.length ? sum(SHOW, (r) => r[2]) : sum(RAW, (r) => r[7]);
 const totStarts = sum(STARTS, (r) => r[3]);
+// "Meeting Completed" activities (r[17]); older data files don't have it.
+const mc = (r) => r[17] || 0;
+const totMeetings = sum(RAW, mc);
 
 const bullets = [];
 if (!RAW.length) {
@@ -41,6 +44,8 @@ if (!RAW.length) {
     const next = byIl.slice(1, 3).filter((r) => booked(r) > 0);
     if (next.length) bullets.push(`Next on interviews: ${next.map((r) => `${esc(r[0])} (${n(booked(r))})`).join(" and ")}.`);
   }
+  const byMc = [...RAW].filter((r) => mc(r) > 0).sort((a, b) => mc(b) - mc(a));
+  if (byMc.length) bullets.push(`${n(totMeetings)} meeting${totMeetings === 1 ? "" : "s"} completed: ${byMc.slice(0, 4).map((r) => `${esc(r[0])} (${n(mc(r))})`).join(", ")}${byMc.length > 4 ? ` and ${byMc.length - 4} more` : ""}.`);
   const byCalls = [...RAW].sort((a, b) => calls(b) - calls(a));
   if (calls(byCalls[0]) > 0) bullets.push(`<b>${esc(byCalls[0][0])}</b> made the most calls (${n(calls(byCalls[0]))}).`);
 }
@@ -54,7 +59,7 @@ const iv = sum(SHOW, (r) => r[3]), sh = sum(SHOW, (r) => r[4]);
 if (iv > 0) bullets.push(`7-day interview show rate is <b>${Math.round((sh / iv) * 100)}%</b>: ${n(sh)} of ${n(iv)} scheduled interviews onboarded.`);
 if (META.startingToday) bullets.push(`${n(META.startingToday)} people are scheduled to start work today.`);
 
-const tile = (val, cap, hi) => `<td width="25%" align="center" style="background:${hi ? "#FFF9E3" : "#F4F7FA"};border:1px solid ${hi ? "#F2DF9A" : "#DCE4EC"};border-radius:6px;padding:12px 4px;">
+const tile = (val, cap, hi) => `<td width="20%" align="center" style="background:${hi ? "#FFF9E3" : "#F4F7FA"};border:1px solid ${hi ? "#F2DF9A" : "#DCE4EC"};border-radius:6px;padding:12px 4px;">
 <div style="font-size:24px;font-weight:800;color:#00457C;">${n(val)}</div>
 <div style="font-size:11px;color:#5B6B7B;text-transform:uppercase;letter-spacing:1px;">${cap}</div></td>`;
 
@@ -68,7 +73,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"></head>
 <div style="color:#C9D8E8;font-size:13px;margin-top:4px;">${esc(META.day)} &middot; data through ${esc(META.asof)}</div>
 </td></tr>
 <tr><td style="padding:20px 20px 4px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="8"><tr>
-${tile(totCalls, "Calls")}${tile(totInterviews, "Interviews booked")}${tile(totOnboards, "Onboards")}${tile(totStarts, "Starts booked", true)}
+${tile(totCalls, "Calls")}${tile(totInterviews, "Interviews booked")}${tile(totMeetings, "Meetings completed")}${tile(totOnboards, "Onboards")}${tile(totStarts, "Starts booked", true)}
 </tr></table></td></tr>
 <tr><td style="padding:12px 28px 4px;">
 <div style="font-size:13px;font-weight:700;color:#00457C;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Today in brief</div>
