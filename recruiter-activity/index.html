@@ -13,7 +13,7 @@
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#14212E; --muted:#5B6B7B; --rule:#D9E1EA;
   --navy:#00457C; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#BFD3E6;
-  --c-vm:#7A93AD; --c-nov:#C9D3DD; --c-cib:#00457C; --c-co:#3D7FBF; --c-il:#E0A800; --c-ic:#CDBF9A; --c-ob:#1F9D5B; --c-oth:#A58BC2;
+  --c-vm:#7A93AD; --c-nov:#C9D3DD; --c-cib:#00457C; --c-co:#3D7FBF; --c-il:#E0A800; --c-ic:#CDBF9A; --c-ob:#1F9D5B; --c-mc:#D9822B; --c-oth:#A58BC2;
   --c-so:#3D7FBF; --c-si:#E0A800;
   --heat0:#EEF2F6; --heat-hi:#00457C;
   --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
@@ -23,12 +23,12 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0E1620; --surface:#16212D; --ink:#E6EDF4; --muted:#93A4B5; --rule:#263546;
   --navy:#0A3D66; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#A9C2DA;
-  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ic:#6E6550; --c-ob:#3CC07A; --c-oth:#B79FD4;
+  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ic:#6E6550; --c-ob:#3CC07A; --c-mc:#F0A050; --c-oth:#B79FD4;
   --c-so:#5B9BDB; --c-si:#F2C230; --heat0:#1C2A38; --heat-hi:#6FA8E0; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0E1620; --surface:#16212D; --ink:#E6EDF4; --muted:#93A4B5; --rule:#263546;
   --navy:#0A3D66; --yellow:#FFDF6B; --band-ink:#FFFFFF; --band-sub:#A9C2DA;
-  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ic:#6E6550; --c-ob:#3CC07A; --c-oth:#B79FD4;
+  --c-vm:#7F98B2; --c-nov:#3E4E60; --c-cib:#6FA8E0; --c-co:#3D7FBF; --c-il:#F2C230; --c-ic:#6E6550; --c-ob:#3CC07A; --c-mc:#F0A050; --c-oth:#B79FD4;
   --c-so:#5B9BDB; --c-si:#F2C230; --heat0:#1C2A38; --heat-hi:#6FA8E0; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
@@ -127,7 +127,7 @@ footer{color:var(--muted);font-size:12px}
     </div>
     <div class="legend" id="leg1"></div>
     <div class="rows" id="rows1"></div>
-    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Interview booked" counts each person once, whether it was logged as "Call Completed – Interview Scheduled", "Interview Scheduled" or both. "Interview confirmed" is a confirmation call on an interview booked on an earlier day. Bars are scaled to the busiest person; anyone more than double the next person (usually a bulk action in BOLD) is drawn full width and marked off scale.</p>
+    <p class="note" style="margin-top:12px">Each bar is one person's manual activity in BOLD. "Interview booked" counts each person once, whether it was logged as "Call Completed – Interview Scheduled", "Interview Scheduled" or both. "Interview confirmed" is a confirmation call on an interview booked on an earlier day. "Meeting completed" counts each "Meeting Completed" activity logged on a talent record. Bars are scaled to the busiest person; anyone more than double the next person (usually a bulk action in BOLD) is drawn full width and marked off scale.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-sense">
@@ -170,16 +170,16 @@ footer{color:var(--muted);font-size:12px}
 <script>(function(){var d=(new URLSearchParams(location.search).get("d")||"").trim();var f=/^\d{4}-\d{2}-\d{2}$/.test(d)?"days/"+d+".js":"data.js";document.write('<script src="'+f+'?t='+Date.now()+'"><\/script>')})()</script>
 <script>
 const META=window.META, RAW=window.RAW, STARTS=window.STARTS||[], SHOW=window.SHOW||[];
-const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14],ib:r[15],ic:r[16]}));
-const NEW=D.length&&D[0].ic!=null;D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;if(p.ib==null)p.ib=p.cib;p.ints=p.ib;p.tot=NEW?p.vm+p.nov+p.ib+p.co+p.ic+p.ob+p.oth:p.calls+p.il+p.ob+p.oth;});
-const S1=NEW?[["ib","Interviews booked (each person once)","--c-il",1],["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["co","Connected, other outcome","--c-co"],["ic","Interview confirmed / at client","--c-ic",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]]:[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged / confirmed","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
+const D=RAW.map(r=>({n:r[0],o:r[1],vm:r[2],nov:r[3],cib:r[4],co:r[5],il:r[6],ob:r[7],oth:r[8],so:r[9],si:r[10],f:r[11],l:r[12],h:r[13],sh:r[14],ib:r[15],ic:r[16],mc:r[17]||0}));
+const NEW=D.length&&D[0].ic!=null;D.forEach(p=>{p.calls=p.vm+p.nov+p.cib+p.co;if(p.ib==null)p.ib=p.cib;p.ints=p.ib;p.tot=NEW?p.vm+p.nov+p.ib+p.co+p.ic+p.mc+p.ob+p.oth:p.calls+p.il+p.ob+p.oth;});
+const S1=NEW?[["ib","Interviews booked (each person once)","--c-il",1],["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["co","Connected, other outcome","--c-co"],["ic","Interview confirmed / at client","--c-ic",1],["mc","Meeting completed","--c-mc",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]]:[["vm","Left voicemail","--c-vm"],["nov","No voicemail / bad number","--c-nov",1],["cib","Connected, interview booked","--c-cib"],["co","Connected, other outcome","--c-co"],["il","Interview logged / confirmed","--c-il",1],["ob","Onboard complete","--c-ob"],["oth","Notes, emails, other","--c-oth"]];
 const S2=[["so","Texts sent","--c-so"],["si","Replies received","--c-si",1]];
 const $=id=>document.getElementById(id);
 const sum=k=>D.reduce((a,p)=>a+p[k],0);
 function kpis(){
   const calls=sum("calls"),conn=sum("cib")+sum("co");
   const st=STARTS.reduce((a,r)=>a+r[3],0);
-  const k=[[st,"starts booked today",META.startingToday!=null?`${META.startingToday} began work today`:""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("ib"),"interviews booked","each person counted once"],[SHOW.length?SHOW.reduce((a,r)=>a+r[2],0):sum("ob"),"onboards completed",SHOW.length?`<b>${Math.round(SHOW.reduce((a,r)=>a+r[4],0)/Math.max(1,SHOW.reduce((a,r)=>a+r[3],0))*100)}%</b> 7-day show rate`:""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
+  const k=[[st,"starts booked today",META.startingToday!=null?`${META.startingToday} began work today`:""],[calls,"call attempts logged",`<b>${Math.round(conn/calls*100)}%</b> connected`],[sum("vm"),"voicemails left",`${Math.round(sum("vm")/calls*100)}% of attempts`],[sum("ib"),"interviews booked","each person counted once"],[sum("mc"),"meetings completed",(()=>{const t=[...D].filter(p=>p.mc).sort((a,b)=>b.mc-a.mc);return t.length?`<b>${t[0].n.split(" ")[0]}</b> led with ${t[0].mc}`:""})()],[SHOW.length?SHOW.reduce((a,r)=>a+r[2],0):sum("ob"),"onboards completed",SHOW.length?`<b>${Math.round(SHOW.reduce((a,r)=>a+r[4],0)/Math.max(1,SHOW.reduce((a,r)=>a+r[3],0))*100)}%</b> 7-day show rate`:""],[sum("so").toLocaleString(),"Sense texts sent",`<b>${sum("si")}</b> replies back`]];
   $("kpis").innerHTML=k.map(([v,l,s])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${l}${s?` · ${s}`:""}</div></div>`).join("");
 }
 function legend(el,S){$(el).innerHTML=S.map(s=>`<span><i class="sw" style="background:var(${s[2]})"></i>${s[1]}</span>`).join("");}
