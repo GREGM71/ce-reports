@@ -14,15 +14,15 @@ window.RAW=[
 ["Brittany Lear","Delmont",6,3,1,6,0,1,14,250,29,"6:54","3:29",[1,2,0,1,2,9,8,5,3,0],[15,71,14,4,2,16,20,128,9,0],1,0,0],
 ["Andy Draskovic","New Kensington",1,2,3,2,2,1,4,41,26,"8:33","3:11",[0,2,1,2,7,0,2,1,1,0],[1,9,4,12,9,7,5,17,3,0],3,0,1],
 ["Taylor Rice","COEM: Inhouse",0,0,0,0,1,0,1,9,7,"2:12","2:18",[0,0,0,0,0,0,0,2,0,0],[0,0,0,0,0,0,7,8,1,0],1,0,0],
-["Donna Nagg","Delmont",0,0,0,0,1,0,0,5,1,"8:51","8:51",[0,1,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,5,1,0],1,0,0],
 ["Greg Madler","Delmont",0,0,0,0,0,0,1,85,10,"5:39","5:39",[1,0,0,0,0,0,0,0,0,0],[0,0,7,1,5,2,1,73,6,0],0,0,0],
+["Donna Nagg","Delmont",0,0,0,0,1,0,0,5,1,"8:51","8:51",[0,1,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,5,1,0],1,0,0],
 ["Robert Petrisko","COEM: Inhouse",0,0,0,0,0,0,0,36,2,"","",[0,0,0,0,0,0,0,0,0,0],[21,4,0,0,0,0,13,0,0,0],0,0,0],
 ];
 window.STARTS=[
 ["Delmont","Biscotti Brothers Bakery","Alison Fisher",1,"11/23"],
 ["Delmont","Biscotti Brothers Bakery","Kaytee Jack",1,"11/16"],
 ["Delmont","Dormont Manufacturing Company","Alison Fisher",2,"11/11"],
-["New Kensington","Leed's","Andy Draskovic",4,"11/16, 11/12"],
+["New Kensington","Leed's","Andy Draskovic",4,"11/12, 11/16"],
 ["New Kensington","Leed's","Sam Skeba",2,"11/16, 11/13"],
 ];
 window.SHOW=[
@@ -36,8 +36,8 @@ window.SHOW=[
 ["Andy Draskovic","New Kensington",1,18,6],
 ["Brittany Lear","Delmont",1,0,0],
 ["Brooke Woody","Charleston",0,50,11],
-["Hannah Oteri","Charleston",0,29,11],
 ["Donna Nagg","Delmont",0,29,5],
+["Hannah Oteri","Charleston",0,29,11],
 ["Sam Skeba","New Kensington",0,26,10],
 ["Greg Madler","Delmont",0,2,0],
 ["Robert Petrisko","COEM: Inhouse",0,1,0],
