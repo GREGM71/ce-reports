@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>OWI Site Manager Proposal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>/* Layout: sticky navy chapter bar over seven click-through chapters; each chapter = navy-ink headline band + light work surface with charts. Same family as the Madler Robotics OWI proposal. */
+:root{
+  --bg:#F2F5F9; --surface:#FFFFFF; --ink:#0F1B2A; --muted:#55657A; --rule:#D7DFE9; --track:#E6ECF3;
+  --navy:#00457C; --night:#04213D; --gold:#FFDF6B; --gold-ink:#7A5B00;
+  --red:#C8423B; --orange:#E07A26; --yellow:#D8A21C; --green:#15885A; --blue:#2A78D6; --grey:#9AA6B5;
+  --owi:#C8423B; --pcna:#15885A; --tm:#2A78D6;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#9AAABD; --rule:#22364C; --track:#1A2C40;
+  --gold-ink:#FFDF6B; --red:#F06A62; --orange:#F2994A; --yellow:#F2C94C; --green:#3FC48A; --blue:#5C9CEC; --grey:#7D8EA3;
+  --owi:#F06A62; --pcna:#3FC48A; --tm:#5C9CEC; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08131F; --surface:#0F1E2E; --ink:#E7EEF6; --muted:#9AAABD; --rule:#22364C; --track:#1A2C40;
+  --gold-ink:#FFDF6B; --red:#F06A62; --orange:#F2994A; --yellow:#F2C94C; --green:#3FC48A; --blue:#5C9CEC; --grey:#7D8EA3;
+  --owi:#F06A62; --pcna:#3FC48A; --tm:#5C9CEC; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#020F1F}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.04;margin:0;text-wrap:balance}
+h2{font-size:clamp(32px,4.4vw,50px);font-weight:700}
+h3{font-size:24px;font-weight:700}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.kicker{font:600 14px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink)}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:66ch}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#020F1F;color:#fff;border-bottom:3px solid var(--gold)}
+.nav .wrap{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;font:700 17px var(--f-display);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.brand img{width:34px;height:34px}
+.brand .owi{height:26px;width:auto;margin-left:6px;padding-left:12px;border-left:1px solid rgba(255,255,255,.25)}
+.tabs{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;padding:7px 13px;border-radius:999px;font:600 15px var(--f-body);color:#BFD2E6;text-decoration:none;white-space:nowrap}
+.tabs a:hover{color:#fff}
+.tabs a[aria-current="page"]{background:var(--gold);color:#04213D}
+.tabs a:focus-visible,.btn:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (max-width:900px){.tabs{margin-left:0;width:100%}}
+
+/* chapter header */
+.chap{background:radial-gradient(900px 420px at 100% 0%,#0B5FA5 0%,transparent 60%),var(--night);color:#fff}
+.chap .wrap{padding-block:clamp(36px,5vw,64px) clamp(30px,4vw,48px);display:grid;gap:14px}
+.chap .kicker{color:var(--gold)}
+.chap h2{color:#fff;max-width:24ch}
+.chap .lead{color:#C4D6E8}
+.chap.home .wrap{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;gap:28px}
+@media (max-width:860px){.chap.home .wrap{grid-template-columns:1fr}}
+.chap.home h1{font-size:clamp(44px,6.4vw,82px);font-weight:800;color:#fff}
+.chap.home h1 em{font-style:normal;color:var(--gold)}
+.for{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font:600 13px var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:#9FC0DD}
+.for img{height:44px;width:auto}
+.heroCard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:22px;display:grid;gap:14px}
+.heroCard .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:10px}
+.heroCard .row:last-child{border:0;padding:0}
+.heroCard .k{color:#C4D6E8;font-size:15px}
+.heroCard .v{font:800 34px var(--f-display);font-variant-numeric:tabular-nums}
+.heroCard .v.r{color:#FF8A82}.heroCard .v.g{color:var(--gold)}.heroCard .v.w{color:#fff}
+
+/* body */
+section.view{display:block}
+section.view[hidden]{display:none!important}
+.body .wrap{padding-block:clamp(28px,4vw,48px);display:grid;gap:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:clamp(18px,2.4vw,26px);min-width:0;display:grid;gap:12px;align-content:start}
+.card p{color:var(--muted)}
+.card p b,.card p strong{color:var(--ink)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.two,.three{grid-template-columns:1fr}.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.four{grid-template-columns:1fr}}
+.stat{background:var(--surface);border:1px solid var(--rule);border-top:5px solid var(--navy);border-radius:var(--r);padding:18px;min-width:0}
+.stat.r{border-top-color:var(--red)}.stat.g{border-top-color:var(--green)}.stat.y{border-top-color:var(--gold)}
+.stat .v{font:800 clamp(38px,4.4vw,54px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat.r .v{color:var(--red)}.stat.g .v{color:var(--green)}
+.stat .k{font-weight:700;margin-top:6px}
+.stat .s{color:var(--muted);font-size:14.5px;margin-top:2px}
+.callout{background:var(--surface);border:1px solid var(--rule);border-left:6px solid var(--gold);border-radius:12px;padding:16px 20px;font-size:17px}
+.callout.red{border-left-color:var(--red)}
+.callout b{color:var(--ink)}
+.big-quote{font:700 clamp(24px,2.8vw,34px)/1.2 var(--f-display);border-left:5px solid var(--red);padding-left:18px;max-width:40ch}
+.chart{width:100%;height:auto;display:block}
+.chart .grid{stroke:var(--rule);stroke-width:1}
+.chart .ax{fill:var(--muted);font:13px var(--f-body)}
+.chart .ax.lbl{fill:var(--ink);font-weight:600;font-size:14px}
+.chart .ax.strong{fill:var(--ink);font-weight:700}
+.f-teal{fill:var(--navy)}.f-track{fill:var(--track)}.f-red{fill:var(--red)}.f-orange{fill:var(--orange)}.f-yellow{fill:var(--yellow)}.f-green{fill:var(--green)}.f-blue{fill:var(--blue)}.f-grey{fill:var(--grey)}.f-navy{fill:var(--navy)}
+.f-owi{fill:var(--owi)}.f-pcna{fill:var(--pcna)}.f-tm{fill:var(--tm)}
+.ln-gold{fill:none;stroke:var(--orange);stroke-width:3;stroke-linejoin:round}
+.dot{fill:var(--gold);stroke:var(--ink);stroke-width:1.5}
+.ln{fill:none;stroke-width:3;stroke-linejoin:round}
+.ln.c-owi{stroke:var(--owi)}.ln.c-pcna{stroke:var(--pcna)}.ln.c-tm{stroke:var(--tm)}
+.pt.c-owi{fill:var(--owi)}.pt.c-pcna{fill:var(--pcna)}.pt.c-tm{fill:var(--tm)}
+.chart .c-owi-t{fill:var(--owi)}.chart .c-pcna-t{fill:var(--pcna)}.chart .c-tm-t{fill:var(--tm)}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;min-width:560px}
+th{font:600 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px;border-bottom:2px solid var(--rule)}
+td{padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font:700 12.5px var(--f-body);color:#fff;white-space:nowrap}
+.pill.ce{background:var(--navy)}.pill.owi{background:var(--orange)}.pill.sh{background:var(--yellow);color:#2A1F00}
+.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.timeline>div{padding:18px;border-right:1px solid var(--rule);display:grid;gap:4px;min-width:0}
+.timeline>div:last-child{border-right:0}
+.timeline .when{font:600 13px var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.timeline .what{font:800 40px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.timeline .now{background:rgba(255,223,107,.16)}
+@media (max-width:700px){.timeline{grid-template-columns:1fr}.timeline>div{border-right:0;border-bottom:1px solid var(--rule)}}
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.quotes{grid-template-columns:1fr}}
+.quotes blockquote{margin:0;background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;padding:12px 16px;font-style:italic;color:var(--ink)}
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}}
+.slider{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.slider:last-child{border:0}
+.slider .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.slider label{font-weight:700}
+.slider output{font:800 24px var(--f-display);color:var(--navy);font-variant-numeric:tabular-nums}
+:root[data-theme="dark"] .slider output{color:var(--gold)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .slider output{color:var(--gold)}}
+.slider small{color:var(--muted);font-size:14px}
+input[type=range]{width:100%;accent-color:var(--navy);height:28px}
+.out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.out div{background:var(--bg);border:1px solid var(--rule);border-radius:12px;padding:14px}
+.out .k{font:600 12.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.out .v{font:800 clamp(30px,3.4vw,42px)/1.05 var(--f-display);font-variant-numeric:tabular-nums;margin-top:4px}
+.out .v.g{color:var(--green)}.out .v.r{color:var(--red)}
+.out .wide{grid-column:1/-1;background:var(--navy);border-color:var(--navy)}
+.out .wide .k{color:#C4D6E8}.out .wide .v{color:#fff}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.roles{grid-template-columns:1fr}}
+.role{background:var(--surface);border:1px solid var(--rule);border-top:5px solid var(--navy);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.role.y{border-top-color:var(--gold)}.role.g{border-top-color:var(--green)}
+.role ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:5px;font-size:15.5px}
+.next{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font:700 16px var(--f-body);text-decoration:none;border:1px solid var(--rule);color:var(--ink);background:var(--surface);cursor:pointer}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.src{font-size:14px;color:var(--muted)}
+.src ol{padding-left:18px;display:grid;gap:4px;margin:6px 0 0}
+footer{background:#020F1F;color:#B8CCE0;font-size:14px}
+footer .wrap{padding-block:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+footer img{width:36px;height:36px}
+@media (prefers-reduced-motion:no-preference){section.view:not([hidden]) .body .wrap>*{animation:up .45s ease both}}
+@keyframes up{from{transform:translateY(8px)}to{transform:none}}
+@media (max-width:520px){.brand span{display:none}.brand{white-space:normal}}
+</style>
+
+<nav class="nav" aria-label="Proposal chapters"><div class="wrap">
+  <div class="brand"><img src="ce-seal-white.png" alt="Commercial Employees" width="34" height="34"><span>Commercial Employees</span><img class="owi" src="owi-logo-white.png" alt="Old World Industries" width="72" height="26"></div>
+  <div class="tabs" role="tablist">
+    <a href="#overview">Overview</a><a href="#markup">The markup</a><a href="#ownership">Who owns retention</a><a href="#cost">Cost &amp; savings</a><a href="#proof">Our on-site results</a><a href="#numbers">The numbers</a><a href="#plan">The site manager</a>
+  </div>
+</div></nav>
+
+<main>
+<!-- OVERVIEW -->
+<section class="view" id="v-overview" data-view="overview">
+  <header class="chap home"><div class="wrap">
+    <div style="display:grid;gap:16px;min-width:0">
+      <div class="for"><span>Prepared for</span><img src="owi-logo-white.png" alt="Old World Industries" width="122" height="44"><span>New Kensington · November 2026</span></div>
+      <h1>We find the people. <em>Let's keep them.</em></h1>
+      <p class="lead">OWI pays us less than it did last year, and loses most of the people we deliver after they reach the floor. Every replacement is a cost OWI carries, not us. One on-site manager, paid for out of the markup savings, turns the candidates you already get into people who stay.</p>
+    </div>
+    <div class="heroCard">
+      <div class="row"><span class="k">Saved by the 1.35 markup in 2026</span><span class="v g num">$71,974</span></div>
+      <div class="row"><span class="k">Assignments ended, last 90 days</span><span class="v r num">115</span></div>
+      <div class="row"><span class="k">Ended after reaching OWI's floor</span><span class="v r num">76%</span></div>
+      <div class="row"><span class="k">Site manager, per week</span><span class="v w num">$995</span></div>
+    </div>
+  </div></header>
+  <div class="body"><div class="wrap">
+    <div class="four">
+      <div class="stat g"><div class="v num">$2,250</div><div class="k">Saved every week</div><div class="s">From the move to a 1.35 markup in January</div></div>
+      <div class="stat r"><div class="v num">28%</div><div class="k">Of 90-day starts still working</div><div class="s">36 of 127. It was 44% the quarter before.</div></div>
+      <div class="stat r"><div class="v num">13 of 19</div><div class="k">Leavers named an OWI cause</div><div class="s">Supervision, attendance points, conditions</div></div>
+      <div class="stat y"><div class="v num">~150</div><div class="k">Fewer replacements a year</div><div class="s">If OWI kept people the way our on-site sites do</div></div>
+    </div>
+    <div class="two">
+      <div class="card"><h3>Our job</h3><p>Find, screen and deliver people who show up ready to work. We started <b>127 people at OWI in 90 days</b>, about ten a week, and <b>8 temps became OWI employees</b> this year. We are already at your plant two days a week.</p></div>
+      <div class="card"><h3>Your job, as the host site</h3><p>Keep them once they're through the door: supervision, training, how attendance points are applied, and conditions on the line. <b>Three in four ends happen after the person is on OWI's floor</b>, and 51 of the last 115 were ended under OWI's own rules.</p></div>
+    </div>
+    <div class="callout"><b>The ask.</b> Move us from two days a week to a full-time site manager on your floor, at $995 a week. That is less than half of what OWI already saves each week from the lower markup. The manager recruits on site, runs every onboarding, teaches new associates the rules, and keeps people past the first 30 days.</div>
+    <div class="next"><span></span><a class="btn primary" href="#markup">Start with the markup →</a></div>
+  </div></div>
+</section>
+
+<!-- MARKUP -->
+<section class="view" id="v-markup" data-view="markup" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">The markup</div><h2>OWI pays us less than last year, not more.</h2><p class="lead">In January 2026 the markup dropped from 1.47 to 1.35, the same month workers got a raise. OWI's bill rate barely moved, and the difference has stayed in OWI's pocket every week since.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="timeline">
+      <div><span class="when">Through December 2025</span><span class="what num">1.47</span><span class="s" style="color:var(--muted)">Pay $15.00 an hour</span></div>
+      <div class="now"><span class="when">From January 2026</span><span class="what num">1.35</span><span class="s" style="color:var(--muted)">Pay raised to $16.50 (1st) and $17.10 (2nd)</span></div>
+      <div><span class="when">Below our book</span><span class="what num">1.44</span><span class="s" style="color:var(--muted)">Median markup across all our clients. OWI is under it.</span></div>
+    </div>
+    <div class="card"><h3>What the lower markup saved OWI, month by month</h3>
+      <svg viewBox="0 0 760 260" class="chart" role="img" aria-label="Monthly savings from the 1.35 markup in 2026 and running total"><line x1="54" x2="700" y1="220.0" y2="220.0" class="grid"/><text x="46" y="224.0" class="ax" text-anchor="end">$0k</text><text x="708" y="224.0" class="ax">$0k</text><line x1="54" x2="700" y1="153.3" y2="153.3" class="grid"/><text x="46" y="157.3" class="ax" text-anchor="end">$4k</text><text x="708" y="157.3" class="ax">$26k</text><line x1="54" x2="700" y1="86.7" y2="86.7" class="grid"/><text x="46" y="90.7" class="ax" text-anchor="end">$8k</text><text x="708" y="90.7" class="ax">$53k</text><line x1="54" x2="700" y1="20.0" y2="20.0" class="grid"/><text x="46" y="24.0" class="ax" text-anchor="end">$12k</text><text x="708" y="24.0" class="ax">$80k</text><rect x="65.7" y="172.7" width="35.2" height="47.3" rx="3" class="f-teal"><title>Jan: $2,836 saved</title></rect><text x="83.4" y="238" class="ax" text-anchor="middle">Jan</text><rect x="124.5" y="99.2" width="35.2" height="120.8" rx="3" class="f-teal"><title>Feb: $7,247 saved</title></rect><text x="142.1" y="238" class="ax" text-anchor="middle">Feb</text><rect x="183.2" y="111.9" width="35.2" height="108.1" rx="3" class="f-teal"><title>Mar: $6,485 saved</title></rect><text x="200.8" y="238" class="ax" text-anchor="middle">Mar</text><rect x="241.9" y="125.3" width="35.2" height="94.7" rx="3" class="f-teal"><title>Apr: $5,682 saved</title></rect><text x="259.5" y="238" class="ax" text-anchor="middle">Apr</text><rect x="300.7" y="111.7" width="35.2" height="108.3" rx="3" class="f-teal"><title>May: $6,501 saved</title></rect><text x="318.3" y="238" class="ax" text-anchor="middle">May</text><rect x="359.4" y="66.2" width="35.2" height="153.8" rx="3" class="f-teal"><title>Jun: $9,226 saved</title></rect><text x="377.0" y="238" class="ax" text-anchor="middle">Jun</text><rect x="418.1" y="117.9" width="35.2" height="102.1" rx="3" class="f-teal"><title>Jul: $6,127 saved</title></rect><text x="435.7" y="238" class="ax" text-anchor="middle">Jul</text><rect x="476.8" y="109.6" width="35.2" height="110.4" rx="3" class="f-teal"><title>Aug: $6,624 saved</title></rect><text x="494.5" y="238" class="ax" text-anchor="middle">Aug</text><rect x="535.6" y="48.3" width="35.2" height="171.7" rx="3" class="f-teal"><title>Sep: $10,304 saved</title></rect><text x="553.2" y="238" class="ax" text-anchor="middle">Sep</text><rect x="594.3" y="76.2" width="35.2" height="143.8" rx="3" class="f-teal"><title>Oct: $8,629 saved</title></rect><text x="611.9" y="238" class="ax" text-anchor="middle">Oct</text><rect x="653.0" y="181.4" width="35.2" height="38.6" rx="3" class="f-teal" opacity=".45"><title>Nov*: $2,314 saved</title></rect><text x="670.6" y="238" class="ax" text-anchor="middle">Nov*</text><polyline points="83.4,212.9 142.1,194.8 200.8,178.6 259.5,164.4 318.3,148.1 377.0,125.1 435.7,109.7 494.5,93.2 553.2,67.4 611.9,45.8 670.6,40.1" class="ln-gold"/><circle cx="670.6" cy="40.1" r="5" class="dot"/><text x="660.6" y="28.1" class="ax strong" text-anchor="end">$71,974 saved so far</text></svg>
+      <div class="legend"><span><i style="background:var(--navy)"></i>Saved that month (left scale)</span><span><i style="background:var(--orange)"></i>Running total (right scale)</span><span>*November is 1–4 Nov</span></div>
+    </div>
+    <div class="two">
+      <div class="card"><h3>Per hour, today</h3><div class="scroll"><table style="min-width:0"><thead><tr><th>Shift</th><th class="n">At 1.47</th><th class="n">At 1.35</th><th class="n">Saved / hr</th></tr></thead><tbody>
+        <tr><td>1st · $16.50</td><td class="n">$24.26</td><td class="n">$22.27</td><td class="n" style="color:var(--green);font-weight:700">$1.98</td></tr>
+        <tr><td>2nd · $17.10</td><td class="n">$25.14</td><td class="n">$23.09</td><td class="n" style="color:var(--green);font-weight:700">$2.05</td></tr></tbody></table></div></div>
+      <div class="card"><h3>What that means</h3><p>Turnover has not cost OWI a cent more on our invoice. We bill only hours worked, so a no-show, a day-one walk-off or an empty seat bills <b>$0</b>. The recruiting, screening and onboarding behind 127 starts in 90 days is all inside a markup that went <b>down</b>.</p></div>
+    </div>
+    <div class="next"><a class="btn" href="#overview">← Overview</a><a class="btn primary" href="#ownership">Who owns retention →</a></div>
+  </div></div>
+</section>
+
+<!-- OWNERSHIP -->
+<section class="view" id="v-ownership" data-view="ownership" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">Who owns retention</div><h2>We deliver the people. Most are lost after they reach your floor.</h2><p class="lead">115 assignments ended between 14 August and 12 November. Here is how they ended, when, and what the people who left told us.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="two">
+      <div class="card"><h3>How the ends happened</h3><svg viewBox="0 0 640 146" class="chart" role="img" aria-label="How the 115 ends happened"><text x="220" y="24" class="ax lbl" text-anchor="end">Walked away</text><rect x="230" y="10" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="10" width="320.0" height="20" rx="4" class="f-red"/><text x="558.0" y="25" class="ax strong">54 · 47%</text><text x="220" y="58" class="ax lbl" text-anchor="end">Ended at the site</text><rect x="230" y="44" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="44" width="302.2" height="20" rx="4" class="f-orange"/><text x="540.2" y="59" class="ax strong">51 · 44%</text><text x="220" y="92" class="ax lbl" text-anchor="end">Converted or completed</text><rect x="230" y="78" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="78" width="53.3" height="20" rx="4" class="f-green"/><text x="291.3" y="93" class="ax strong">9 · 8%</text><text x="220" y="126" class="ax lbl" text-anchor="end">Other</text><rect x="230" y="112" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="112" width="5.9" height="20" rx="4" class="f-grey"/><text x="243.9" y="127" class="ax strong">1</text></svg><p>Almost half were not people leaving. They were ended under OWI's attendance-point, performance and conduct rules, at a median of <b>14 days</b>. People who walk away go at a median of 2.5 days.</p></div>
+      <div class="card"><h3>When the ends happened</h3><svg viewBox="0 0 640 146" class="chart" role="img" aria-label="When the 115 ends happened"><text x="220" y="24" class="ax lbl" text-anchor="end">Day 0–1</text><rect x="230" y="10" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="10" width="224.0" height="20" rx="4" class="f-red"/><text x="462.0" y="25" class="ax strong">28 · 24%</text><text x="220" y="58" class="ax lbl" text-anchor="end">Day 2–14</text><rect x="230" y="44" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="44" width="320.0" height="20" rx="4" class="f-orange"/><text x="558.0" y="59" class="ax strong">40 · 35%</text><text x="220" y="92" class="ax lbl" text-anchor="end">Day 15–30</text><rect x="230" y="78" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="78" width="176.0" height="20" rx="4" class="f-yellow"/><text x="414.0" y="93" class="ax strong">22 · 19%</text><text x="220" y="126" class="ax lbl" text-anchor="end">Day 31+</text><rect x="230" y="112" width="320" height="20" rx="4" class="f-track"/><rect x="230" y="112" width="200.0" height="20" rx="4" class="f-blue"/><text x="438.0" y="127" class="ax strong">25 · 22%</text></svg><p>Only <b>28 (24%)</b> happened on day zero or one, the screening and show-up window we own. The other <b>87 (76%)</b> happened after the person started on OWI's floor.</p></div>
+    </div>
+    <div class="card"><h3>Responsibility, by who controls the outcome</h3>
+      <div class="scroll"><table><thead><tr><th>Window</th><th class="n">Ends</th><th>What decides it</th><th>Walked away / ended at site</th><th>Owned by</th></tr></thead><tbody>
+        <tr><td>Day 0–1</td><td class="n">28</td><td>Screening, confirmation, showing up</td><td>26 / 2</td><td><span class="pill ce">Commercial Employees</span></td></tr>
+        <tr><td>Day 2–14</td><td class="n">40</td><td>Onboarding, training, supervisor, how points are explained</td><td>14 / 25</td><td><span class="pill owi">OWI, with our support</span></td></tr>
+        <tr><td>Day 15–30</td><td class="n">22</td><td>Job fit, schedule, point balance</td><td>9 / 12</td><td><span class="pill sh">Shared</span></td></tr>
+        <tr><td>Day 31+</td><td class="n">25</td><td>Conditions, progression, conversion</td><td>5 / 12 (+7 positive)</td><td><span class="pill owi">OWI, with our support</span></td></tr>
+      </tbody></table></div>
+      <p>OWI's own daily attendance emails record the points and the instruction to "end assignment and replace." We act on that instruction. Our records note why an assignment ended, not which organisation decided.</p>
+    </div>
+    <div class="two">
+      <div class="card"><h3>What the people who left told us</h3><svg viewBox="0 0 640 180" class="chart" role="img" aria-label="Who controls the reason each surveyed leaver gave"><text x="240" y="24" class="ax lbl" text-anchor="end">OWI: treatment, supervision</text><rect x="250" y="10" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="10" width="300.0" height="20" rx="4" class="f-red"/><text x="558.0" y="25" class="ax strong">7</text><text x="240" y="58" class="ax lbl" text-anchor="end">OWI: attendance points</text><rect x="250" y="44" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="44" width="171.4" height="20" rx="4" class="f-orange"/><text x="429.4" y="59" class="ax strong">4</text><text x="240" y="92" class="ax lbl" text-anchor="end">OWI: fumes, conditions, job</text><rect x="250" y="78" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="78" width="85.7" height="20" rx="4" class="f-yellow"/><text x="343.7" y="93" class="ax strong">2</text><text x="240" y="126" class="ax lbl" text-anchor="end">Commercial Employees: screening</text><rect x="250" y="112" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="112" width="128.6" height="20" rx="4" class="f-navy"/><text x="386.6" y="127" class="ax strong">3</text><text x="240" y="160" class="ax lbl" text-anchor="end">Personal reasons</text><rect x="250" y="146" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="146" width="128.6" height="20" rx="4" class="f-grey"/><text x="386.6" y="161" class="ax strong">3</text></svg><p>We texted 52 former associates; 23 answered and 19 had worked a shift. <b>13 of 19</b> named a reason OWI controls. Only <b>3</b> named something our screening could have caught.</p></div>
+      <div class="card"><h3>What stands out</h3>
+        <div class="scroll"><table style="min-width:0"><tbody>
+          <tr><td><b>9 of 13</b></td><td>recorded as attendance, performance or conduct told us a different reason: treatment, an unfair let-go, or safety</td></tr>
+          <tr><td><b>4</b></td><td>let go on attendance points said nobody told them their balance, or doctor's notes were refused</td></tr>
+          <tr><td><b>8 of 9</b></td><td>2nd-shift associates had a bad experience, against 6 of 10 on 1st</td></tr>
+          <tr><td><b>13 of 19</b></td><td>would work for us again. These people are not lost.</td></tr>
+          <tr><td><b>0 of 19</b></td><td>named pay as the main reason they left</td></tr>
+        </tbody></table></div></div>
+    </div>
+    <div class="quotes">
+      <blockquote>"They are very disrespectful to temp service workers but they let the people who have been there do anything."</blockquote>
+      <blockquote>"Attendance off of a point based system, but never told me how many points."</blockquote>
+      <blockquote>"I worked on a line by myself and no one ever asked me if I needed a drink or to go to the bathroom."</blockquote>
+      <blockquote>"Better environment, safer, and cleaner. There was antifreeze in the air, getting in my throat and eyes and skin."</blockquote>
+    </div>
+    <div class="callout red"><b>Every one of these is a first-30-days problem a person on the floor can catch:</b> a supervisor conversation, a point balance explained at orientation, a break relief on a solo line, a safety walk on air quality, a check-in on day three and day ten.</div>
+    <div class="next"><a class="btn" href="#markup">← The markup</a><a class="btn primary" href="#cost">What it costs OWI →</a></div>
+  </div></div>
+</section>
+
+<!-- COST -->
+<section class="view" id="v-cost" data-view="cost" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">Cost &amp; savings</div><h2>What churn costs OWI, and how many people a site manager could save.</h2><p class="lead">106 unwanted ends in 90 days. Every one cost OWI supervisor training time, a slow first week, and a short line until the seat was refilled. None of it shows up on one invoice. Move the sliders to your own numbers.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="card calc">
+      <div>
+        <div class="slider"><div class="top"><label for="surv">Starts still working after 90 days</label><output id="survOut">40%</output></div><input type="range" id="surv" min="28" max="55" step="1" value="40"><small>OWI is at 28% today. Our on-site PCNA team keeps 40%.</small></div>
+        <div class="slider"><div class="top"><label for="cost">Cost to OWI of one replacement</label><output id="costOut">$1,000</output></div><input type="range" id="cost" min="250" max="2000" step="50" value="1000"><small>Training time, ramp-up, PPE and paperwork, short lines. We use $500–$1,500.</small></div>
+        <div class="slider"><div class="top"><label>Site manager</label><output>$995/wk</output></div><small>$12,935 a quarter, $51,740 a year</small></div>
+      </div>
+      <div class="out" aria-live="polite">
+        <div><div class="k">Starts needed per quarter</div><div class="v num" id="oStarts">90</div></div>
+        <div><div class="k">Replacements avoided a year</div><div class="v g num" id="oSaved">148</div></div>
+        <div><div class="k">Churn cost avoided a year</div><div class="v g num" id="oValue">$148,000</div></div>
+        <div><div class="k">Site manager a year</div><div class="v r num">$51,740</div></div>
+        <div class="wide"><div class="k">Net return to OWI per year</div><div class="v num" id="oNet">$96,260</div></div>
+      </div>
+    </div>
+    <div class="three">
+      <div class="stat r"><div class="v num">$53k–$159k</div><div class="k">Churn cost per quarter, today</div><div class="s">106 unwanted ends at $500–$1,500 each</div></div>
+      <div class="stat"><div class="v num">9–26</div><div class="k">Ends to prevent to break even</div><div class="s">Out of 106 a quarter, 8% to 24%</div></div>
+      <div class="stat g"><div class="v num">4.1</div><div class="k">Starts per seat per quarter</div><div class="s">127 starts to hold about 31 people. A stable floor needs about one.</div></div>
+    </div>
+    <div class="card"><h3>How the model works</h3><p>Today 127 starts produce 36 people still working after a quarter (28%). To keep the same 36 at a higher keep rate takes fewer starts: at 40%, it takes 90. The difference is replacements OWI no longer has to train, multiplied by what each one costs. OWI's own replacement cost will be more accurate than ours; every figure scales with it.</p></div>
+    <div class="callout"><b>An investment, not a cost.</b> The site manager is paid out of the $2,250 a week OWI already saves. At $1,000 a replacement it pays for itself by keeping one extra person a week. Today OWI loses almost nine a week.</div>
+    <div class="next"><a class="btn" href="#ownership">← Who owns retention</a><a class="btn primary" href="#proof">Our on-site results →</a></div>
+  </div></div>
+</section>
+
+<!-- PROOF -->
+<section class="view" id="v-proof" data-view="proof" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">References</div><h2>Where we're on site, people stay longer and sites grow.</h2><p class="lead">Two Commercial Employees accounts with people on the floor, measured the same way as OWI from our own records.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="card"><h3>Share of 2026 starts still working at day 30</h3><svg viewBox="0 0 640 112" class="chart" role="img" aria-label="Share of 2026 starts still working at day 30"><text x="240" y="24" class="ax lbl" text-anchor="end">PCNA (on-site team)</text><rect x="250" y="10" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="10" width="258.0" height="20" rx="4" class="f-pcna"/><text x="516.0" y="25" class="ax strong">43%</text><text x="240" y="58" class="ax lbl" text-anchor="end">Technimark (on-site lead)</text><rect x="250" y="44" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="44" width="252.0" height="20" rx="4" class="f-tm"/><text x="510.0" y="59" class="ax strong">42%</text><text x="240" y="92" class="ax lbl" text-anchor="end">OWI (branch, 2 days a week)</text><rect x="250" y="78" width="300" height="20" rx="4" class="f-track"/><rect x="250" y="78" width="174.0" height="20" rx="4" class="f-owi"/><text x="432.0" y="93" class="ax strong">29%</text></svg><p>Same method, same year, same kind of production work. Where we have someone on site, about <b>four in ten</b> new starts make it past 30 days. At OWI, managed from the branch, it is under <b>three in ten</b>.</p></div>
+    <div class="two">
+      <div class="card"><h3>PCNA, New Kensington</h3><p><b>On-site team:</b> a site manager and two recruiters dedicated to the account, weekly floor visits for every worker, day-one and day-three check-ins, an attendance report shared with PCNA every two weeks, and a monthly perfect-attendance draw.</p>
+        <div class="four" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div class="stat g"><div class="v num">25 → 107</div><div class="k">Headcount, July to October</div></div>
+          <div class="stat g"><div class="v num">38% → 47%</div><div class="k">Still working at day 30</div><div class="s">Jan–Jul vs Aug–Oct starts</div></div>
+          <div class="stat g"><div class="v num">42</div><div class="k">Converted to PCNA in 2026</div></div>
+          <div class="stat"><div class="v num">325</div><div class="k">Outbound calls a day</div><div class="s">24 interviews booked daily</div></div>
+        </div></div>
+      <div class="card"><h3>Technimark, Latrobe</h3><p><b>On-site lead from the start of the ramp.</b> Technimark brought us in when its national supplier could not keep up. We put someone on site as the build began in April and scaled to as many as 50 associates while keeping the lines staffed.</p>
+        <div class="four" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div class="stat g"><div class="v num">10 → 48</div><div class="k">Headcount, March to August</div></div>
+          <div class="stat g"><div class="v num">43%</div><div class="k">Still working at day 30</div><div class="s">April–September starts</div></div>
+          <div class="stat"><div class="v num">190</div><div class="k">Starts during the ramp</div></div>
+          <div class="stat"><div class="v num">6</div><div class="k">Converted to Technimark</div></div>
+        </div></div>
+    </div>
+    <div class="card"><h3>Headcount at month end, 2026</h3><svg viewBox="0 0 760 280" class="chart" role="img" aria-label="Active headcount at month end, 2026"><line x1="48" x2="640" y1="246.0" y2="246.0" class="grid"/><text x="40" y="250.0" class="ax" text-anchor="end">0</text><line x1="48" x2="640" y1="189.0" y2="189.0" class="grid"/><text x="40" y="193.0" class="ax" text-anchor="end">30</text><line x1="48" x2="640" y1="132.0" y2="132.0" class="grid"/><text x="40" y="136.0" class="ax" text-anchor="end">60</text><line x1="48" x2="640" y1="75.0" y2="75.0" class="grid"/><text x="40" y="79.0" class="ax" text-anchor="end">90</text><line x1="48" x2="640" y1="18.0" y2="18.0" class="grid"/><text x="40" y="22.0" class="ax" text-anchor="end">120</text><text x="48.0" y="266" class="ax" text-anchor="middle">Jan</text><text x="107.2" y="266" class="ax" text-anchor="middle">Feb</text><text x="166.4" y="266" class="ax" text-anchor="middle">Mar</text><text x="225.6" y="266" class="ax" text-anchor="middle">Apr</text><text x="284.8" y="266" class="ax" text-anchor="middle">May</text><text x="344.0" y="266" class="ax" text-anchor="middle">Jun</text><text x="403.2" y="266" class="ax" text-anchor="middle">Jul</text><text x="462.4" y="266" class="ax" text-anchor="middle">Aug</text><text x="521.6" y="266" class="ax" text-anchor="middle">Sep</text><text x="580.8" y="266" class="ax" text-anchor="middle">Oct</text><text x="640.0" y="266" class="ax" text-anchor="middle">Nov</text><polyline points="48.0,133.9 107.2,166.2 166.4,170.0 225.6,160.5 284.8,177.6 344.0,179.5 403.2,198.5 462.4,132.0 521.6,75.0 580.8,42.7 640.0,56.0" class="ln c-pcna"/><circle cx="48.0" cy="133.9" r="3.5" class="pt c-pcna"><title>PCNA, Jan: 59</title></circle><circle cx="107.2" cy="166.2" r="3.5" class="pt c-pcna"><title>PCNA, Feb: 42</title></circle><circle cx="166.4" cy="170.0" r="3.5" class="pt c-pcna"><title>PCNA, Mar: 40</title></circle><circle cx="225.6" cy="160.5" r="3.5" class="pt c-pcna"><title>PCNA, Apr: 45</title></circle><circle cx="284.8" cy="177.6" r="3.5" class="pt c-pcna"><title>PCNA, May: 36</title></circle><circle cx="344.0" cy="179.5" r="3.5" class="pt c-pcna"><title>PCNA, Jun: 35</title></circle><circle cx="403.2" cy="198.5" r="3.5" class="pt c-pcna"><title>PCNA, Jul: 25</title></circle><circle cx="462.4" cy="132.0" r="3.5" class="pt c-pcna"><title>PCNA, Aug: 60</title></circle><circle cx="521.6" cy="75.0" r="3.5" class="pt c-pcna"><title>PCNA, Sep: 90</title></circle><circle cx="580.8" cy="42.7" r="3.5" class="pt c-pcna"><title>PCNA, Oct: 107</title></circle><circle cx="640.0" cy="56.0" r="3.5" class="pt c-pcna"><title>PCNA, Nov: 100</title></circle><text x="650.0" y="60.0" class="ax strong c-pcna-t">PCNA</text><polyline points="48.0,244.1 107.2,240.3 166.4,227.0 225.6,209.9 284.8,194.7 344.0,187.1 403.2,166.2 462.4,154.8 521.6,164.3 580.8,202.3 640.0,198.5" class="ln c-tm"/><circle cx="48.0" cy="244.1" r="3.5" class="pt c-tm"><title>Technimark, Jan: 1</title></circle><circle cx="107.2" cy="240.3" r="3.5" class="pt c-tm"><title>Technimark, Feb: 3</title></circle><circle cx="166.4" cy="227.0" r="3.5" class="pt c-tm"><title>Technimark, Mar: 10</title></circle><circle cx="225.6" cy="209.9" r="3.5" class="pt c-tm"><title>Technimark, Apr: 19</title></circle><circle cx="284.8" cy="194.7" r="3.5" class="pt c-tm"><title>Technimark, May: 27</title></circle><circle cx="344.0" cy="187.1" r="3.5" class="pt c-tm"><title>Technimark, Jun: 31</title></circle><circle cx="403.2" cy="166.2" r="3.5" class="pt c-tm"><title>Technimark, Jul: 42</title></circle><circle cx="462.4" cy="154.8" r="3.5" class="pt c-tm"><title>Technimark, Aug: 48</title></circle><circle cx="521.6" cy="164.3" r="3.5" class="pt c-tm"><title>Technimark, Sep: 43</title></circle><circle cx="580.8" cy="202.3" r="3.5" class="pt c-tm"><title>Technimark, Oct: 23</title></circle><circle cx="640.0" cy="198.5" r="3.5" class="pt c-tm"><title>Technimark, Nov: 25</title></circle><text x="650.0" y="202.5" class="ax strong c-tm-t">Technimark</text><polyline points="48.0,228.9 107.2,223.2 166.4,213.7 225.6,206.1 284.8,196.6 344.0,206.1 403.2,206.1 462.4,200.4 521.6,192.8 580.8,187.1 640.0,175.7" class="ln c-owi"/><circle cx="48.0" cy="228.9" r="3.5" class="pt c-owi"><title>OWI, Jan: 9</title></circle><circle cx="107.2" cy="223.2" r="3.5" class="pt c-owi"><title>OWI, Feb: 12</title></circle><circle cx="166.4" cy="213.7" r="3.5" class="pt c-owi"><title>OWI, Mar: 17</title></circle><circle cx="225.6" cy="206.1" r="3.5" class="pt c-owi"><title>OWI, Apr: 21</title></circle><circle cx="284.8" cy="196.6" r="3.5" class="pt c-owi"><title>OWI, May: 26</title></circle><circle cx="344.0" cy="206.1" r="3.5" class="pt c-owi"><title>OWI, Jun: 21</title></circle><circle cx="403.2" cy="206.1" r="3.5" class="pt c-owi"><title>OWI, Jul: 21</title></circle><circle cx="462.4" cy="200.4" r="3.5" class="pt c-owi"><title>OWI, Aug: 24</title></circle><circle cx="521.6" cy="192.8" r="3.5" class="pt c-owi"><title>OWI, Sep: 28</title></circle><circle cx="580.8" cy="187.1" r="3.5" class="pt c-owi"><title>OWI, Oct: 31</title></circle><circle cx="640.0" cy="175.7" r="3.5" class="pt c-owi"><title>OWI, Nov: 37</title></circle><text x="650.0" y="179.7" class="ax strong c-owi-t">OWI</text></svg><div class="legend"><span><i style="background:var(--pcna)"></i>PCNA</span><span><i style="background:var(--tm)"></i>Technimark</span><span><i style="background:var(--owi)"></i>OWI</span></div><p>Growth on this chart is headcount, not retention; the day-30 chart below compares how well each site keeps its starts.</p></div>
+        <div class="card"><h3>Temps who became client employees in 2026</h3><svg viewBox="0 0 640 112" class="chart" role="img" aria-label="Temps converted to the client or placed direct in 2026"><text x="140" y="24" class="ax lbl" text-anchor="end">PCNA</text><rect x="150" y="10" width="400" height="20" rx="4" class="f-track"/><rect x="150" y="10" width="400.0" height="20" rx="4" class="f-pcna"/><text x="558.0" y="25" class="ax strong">42</text><text x="140" y="58" class="ax lbl" text-anchor="end">OWI</text><rect x="150" y="44" width="400" height="20" rx="4" class="f-track"/><rect x="150" y="44" width="76.2" height="20" rx="4" class="f-owi"/><text x="234.2" y="59" class="ax strong">8</text><text x="140" y="92" class="ax lbl" text-anchor="end">Technimark</text><rect x="150" y="78" width="400" height="20" rx="4" class="f-track"/><rect x="150" y="78" width="57.1" height="20" rx="4" class="f-tm"/><text x="215.1" y="93" class="ax strong">6</text></svg><p>People who stay long enough become employees. That is the outcome every client wants, and the one a site manager makes more likely.</p></div>
+    <div class="next"><a class="btn" href="#cost">← Cost &amp; savings</a><a class="btn primary" href="#numbers">How sure are we? →</a></div>
+  </div></div>
+</section>
+
+<!-- NUMBERS -->
+<section class="view" id="v-numbers" data-view="numbers" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">The numbers</div><h2>Nineteen answers is a small sample. Here is how confident we can be.</h2><p class="lead">For each finding: the share we saw, the range the true share most likely sits in (95%), and the probability it is above or below a threshold. Uniform prior, nothing assumed.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="card"><div class="scroll"><table><thead><tr><th>Finding</th><th class="n">Observed</th><th class="n">95% range</th><th class="n">Probability</th><th>In plain English</th></tr></thead><tbody>
+      <tr><td>Leaving over site-controlled causes</td><td class="n">13/19 · 68%</td><td class="n">46–85%</td><td class="n">94% it's over half</td><td>Most leavers are very likely leaving over things at the site</td></tr>
+      <tr><td>Leaving over something fixable</td><td class="n">14/19 · 74%</td><td class="n">51–88%</td><td class="n">98% it's over half</td><td>Nearly certain most turnover is preventable</td></tr>
+      <tr><td>Leaving over screening (ours)</td><td class="n">3/19 · 16%</td><td class="n">6–38%</td><td class="n">78% it's under a quarter</td><td>Our side is the smaller share</td></tr>
+      <tr><td>Our records and their story disagree</td><td class="n">9/13 · 69%</td><td class="n">42–87%</td><td class="n">91% it's over half</td><td>End codes alone hide the real reason</td></tr>
+      <tr><td>2nd shift worse than 1st</td><td class="n">89% vs 60%</td><td class="n">—</td><td class="n">91% 2nd is worse</td><td>Likely; our records agree: 9 of 14 walk-offs</td></tr>
+      <tr><td>Two-week survival fell (Aug–mid Sep vs late Sep–Oct)</td><td class="n">50% → 44%</td><td class="n">—</td><td class="n">75% it truly fell</td><td>It's not getting better on its own</td></tr>
+    </tbody></table></div></div>
+    <div class="callout"><b>What the numbers support, and what they don't.</b> They support that most turnover at OWI is preventable and happens after people are on site. They don't support splitting blame by a percentage, and we don't. They also can't prove a site manager will fix it, which is why we propose a 90-day pilot measured against these exact numbers.</div>
+    <div class="card src"><h3>Where responsibility sits, in the research</h3><p>No credible study splits temp-worker retention into a percentage between agency and host. The research divides it by control, and leans toward the host site.</p>
+      <ol><li>Client support predicts commitment to both the client and the agency, not the reverse (Coyle-Shapiro &amp; Morrow, <i>Journal of Vocational Behavior</i>, 2006; 104 temporary workers).</li>
+      <li>Commitment to the client is what predicts on-the-job effort (Liden et al., <i>Journal of Organizational Behavior</i>, 2003).</li>
+      <li>Agency and host are joint employers; the host provides job-specific training, supervision and a safe workplace (OSHA &amp; NIOSH, <i>Protecting Temporary Workers</i>).</li>
+      <li>The frontline manager accounts for about 70% of the variance in team engagement (Gallup; correlational).</li>
+      <li>Hourly workers stay for schedule fit, respect and training (Employbridge, survey of 15,770 hourly workers).</li></ol></div>
+    <div class="next"><a class="btn" href="#proof">← Our on-site results</a><a class="btn primary" href="#plan">The site manager →</a></div>
+  </div></div>
+</section>
+
+<!-- PLAN -->
+<section class="view" id="v-plan" data-view="plan" hidden>
+  <header class="chap"><div class="wrap"><div class="kicker">The proposal</div><h2>From two days a week to every shift.</h2><p class="lead">We're already at OWI two days a week. A full-time site manager does three jobs at once: recruits on site, keeps the people you have, and teaches every new associate how OWI works.</p></div></header>
+  <div class="body"><div class="wrap">
+    <div class="roles">
+      <div class="role"><h3>Recruiting</h3><ul><li>On-site interviews and plant tours, so candidates see the job first</li><li>Works the rehire list: 13 of 19 leavers would come back</li><li>Keeps a ready bench to fill call-offs the same shift</li><li>Spots temps worth converting to OWI</li></ul></div>
+      <div class="role y"><h3>Retention</h3><ul><li>Confirms every start the night before, meets them at the door</li><li>Day-three and day-ten check-ins, where most people leave</li><li>Calls every no-show within 15 minutes of shift start</li><li>One partner for every supervisor, on both shifts</li><li>Exit and stay interviews, a real reason for every end</li></ul></div>
+      <div class="role g"><h3>Educating workers</h3><ul><li>Explains OWI's point policy at orientation and shares balances weekly</li><li>Warns before the last point, not after</li><li>Honest job previews: pace, heat, fumes, physical work</li><li>Safety walks and PPE checks with OWI safety</li></ul></div>
+    </div>
+    <div class="card"><h3>A 90-day pilot, measured against today</h3><div class="scroll"><table><thead><tr><th>Measure</th><th class="n">Last 90 days</th><th class="n">90-day goal</th></tr></thead><tbody>
+      <tr><td>First-day no-shows</td><td class="n">19</td><td class="n">Cut in half</td></tr>
+      <tr><td>Ends inside the first week</td><td class="n">46%</td><td class="n">Under 30%</td></tr>
+      <tr><td>Starts still working after the quarter</td><td class="n">28%</td><td class="n">40%, our PCNA level</td></tr>
+      <tr><td>2nd-shift walk-offs</td><td class="n">9 of 14</td><td class="n">In line with 1st shift</td></tr>
+      <tr><td>Ends with a real reason recorded</td><td class="n">Survey of 19, once</td><td class="n">Every end, weekly</td></tr>
+      <tr><td>Open seats filled same or next shift</td><td class="n">Not tracked</td><td class="n">Tracked daily</td></tr>
+    </tbody></table></div><p>At day 90 we review the scorecard together. If the numbers haven't moved, we revisit the arrangement.</p></div>
+    <div class="three">
+      <div class="stat g"><div class="v num">$2,250</div><div class="k">Weekly markup savings</div></div>
+      <div class="stat r"><div class="v num">−$995</div><div class="k">Site manager</div></div>
+      <div class="stat y"><div class="v num">$1,255</div><div class="k">Still in OWI's pocket weekly</div><div class="s">$65,255 a year, before any avoided replacement</div></div>
+    </div>
+    <div class="callout"><b>Asking for more recruiting refills the same leak faster.</b> A site manager closes it. You're not paying us more; you're putting part of what you already save toward keeping the people we already deliver.</div>
+    <div class="card src"><h3>Sources and method</h3><p>OWI, PCNA and Technimark figures come from Commercial Employees' Bold (Avionté) records, read 12 November 2026; assignments entered by mistake are excluded. "Walked away" = no-show, walk-off or any quit. "Ended at the site" = attendance, performance, attitude, policy, drug-free policy, language or misconduct. "Still working at day 30" counts each month's starts still on assignment 30 days later. Exit survey: 52 former OWI associates texted 4 and 10 November 2026, 23 responses, 19 worked a shift; not anonymous. Replacement cost is an estimate for discussion. Markup savings use actual gross wages and billing by pay date, 1 January to 4 November 2026. Book median markup is across all active Commercial Employees accounts; no other client's rates are shown.</p></div>
+    <div class="next"><a class="btn" href="#numbers">← The numbers</a><a class="btn primary" href="#overview">Back to the start</a></div>
+  </div></div>
+</section>
+</main>
+<footer><div class="wrap"><img src="ce-seal-white.png" alt="" width="36" height="36"><span>Commercial Employees · Prepared for Old World Industries, New Kensington · November 2026</span></div></footer>
+
+<script>
+(function(){
+  const views=[...document.querySelectorAll('section.view')], tabs=[...document.querySelectorAll('.tabs a')];
+  const names=views.map(v=>v.dataset.view);
+  function show(){
+    let n=(location.hash||'#overview').slice(1); if(!names.includes(n)) n='overview';
+    views.forEach(v=>v.hidden=v.dataset.view!==n);
+    tabs.forEach(t=>t.getAttribute('href')==='#'+n?t.setAttribute('aria-current','page'):t.removeAttribute('aria-current'));
+    window.scrollTo({top:0});
+  }
+  addEventListener('hashchange',show); show();
+  const $=id=>document.getElementById(id), usd=n=>'$'+Math.round(n).toLocaleString('en-US');
+  const KEPT=36, NOW=127, MGR=51740;
+  function calc(){
+    const s=+$('surv').value/100, c=+$('cost').value;
+    const starts=Math.round(KEPT/s), saved=Math.max(0,(NOW-starts)*4), val=saved*c;
+    $('survOut').textContent=Math.round(s*100)+'%'; $('costOut').textContent=usd(c);
+    $('oStarts').textContent=starts; $('oSaved').textContent=saved; $('oValue').textContent=usd(val);
+    $('oNet').textContent=(val-MGR<0?'−':'')+usd(Math.abs(val-MGR));
+  }
+  $('surv').addEventListener('input',calc); $('cost').addEventListener('input',calc); calc();
+})();
+</script>
+
+</body></html>
