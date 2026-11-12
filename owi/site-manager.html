@@ -3,6 +3,7 @@
 <title>OWI Site Manager Proposal</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="robots" content="noindex,nofollow">
+<meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>/* Layout: sticky navy chapter bar over seven click-through chapters; each chapter = navy-ink headline band + light work surface with charts. Same family as the Madler Robotics OWI proposal. */
@@ -158,6 +159,7 @@ footer img{width:36px;height:36px}
 @media (prefers-reduced-motion:no-preference){section.view:not([hidden]) .body .wrap>*{animation:up .45s ease both}}
 @keyframes up{from{transform:translateY(8px)}to{transform:none}}
 @media (max-width:520px){.brand span{display:none}.brand{white-space:normal}}
+.src a{color:var(--blue);text-underline-offset:2px}.src a:hover{color:var(--navy)}
 </style>
 
 <nav class="nav" aria-label="Proposal chapters"><div class="wrap">
@@ -258,6 +260,17 @@ footer img{width:36px;height:36px}
       <blockquote>"Better environment, safer, and cleaner. There was antifreeze in the air, getting in my throat and eyes and skin."</blockquote>
     </div>
     <div class="callout red"><b>Every one of these is a first-30-days problem a person on the floor can catch:</b> a supervisor conversation, a point balance explained at orientation, a break relief on a solo line, a safety walk on air quality, a check-in on day three and day ten.</div>
+    <div class="card src" id="research"><h3>Where responsibility sits, in the research</h3><p>No published study puts a percentage on how much of temp-worker retention belongs to the agency and how much to the host. What the research does is divide it by who controls what, and that points to the host site.</p>
+      <ol><li>Support from the client company is linked to temp workers' commitment to the client <i>and</i> to their agency. <a href="https://experts.mcmaster.ca/display/publication205983" target="_blank" rel="noopener">Connelly, Gallagher &amp; Gilley, <i>Journal of Vocational Behavior</i>, 2007</a>; building on <a href="https://researchonline.lse.ac.uk/id/eprint/825" target="_blank" rel="noopener">Coyle-Shapiro &amp; Morrow, 2006</a>.</li>
+      <li>Contingent workers commit separately to the agency and to the client company, and how the client treats them shapes their commitment to the client. <a href="https://doi.org/10.1002/job.208" target="_blank" rel="noopener">Liden, Wayne, Kraimer &amp; Sparrowe, <i>Journal of Organizational Behavior</i>, 2003</a>.</li>
+      <li>"The staffing agency and the staffing agency's client (the host employer) are joint employers of temporary workers." The host provides site-specific training and day-to-day supervision. <a href="https://www.osha.gov/Publications/OSHA3735.pdf" target="_blank" rel="noopener">OSHA &amp; NIOSH, <i>Protecting Temporary Workers</i></a>.</li>
+      <li>Managers account for at least 70% of the variance in employee engagement scores. <a href="https://www.gallup.com/workplace/236570/managers-account-variance-employee-engagement.aspx" target="_blank" rel="noopener">Gallup</a>.</li>
+      <li>Hourly manufacturing and logistics workers rank "treat me with respect" as the top thing that keeps them loyal, ahead of training and schedule. <a href="https://www.employbridge.com/wp-content/uploads/2023/07/VAW-DataReport-2023-Employbridge-comp.pdf" target="_blank" rel="noopener">Employbridge, <i>Voice of the American Workforce</i> 2023, 29,000+ hourly workers</a>.</li></ol></div>
+    <div class="card src"><h3>Where these numbers come from</h3><ol>
+      <li><b>Assignment ends, reasons and timing:</b> Commercial Employees' Bold (Avionté) records for OWI, assignments ended 14 August to 12 November 2026, read 12 November 2026.</li>
+      <li><b>What the people who left told us:</b> our exit survey, texted to 52 former OWI associates on 4 and 10 November 2026. 23 replied, 19 had worked a shift. OWI received the full results by email on 10 November ("OWI exit survey results, ahead of Wednesday's 2:00 PM follow-up").</li>
+      <li><b>"End assignment and replace":</b> the wording in OWI's own daily attendance emails to Commercial Employees.</li>
+      <li><b>Quotes:</b> verbatim survey answers, shown without names.</li></ol></div>
     <div class="next"><a class="btn" href="#markup">← The markup</a><a class="btn primary" href="#cost">What it costs OWI →</a></div>
   </div></div>
 </section>
@@ -320,7 +333,7 @@ footer img{width:36px;height:36px}
 
 <!-- NUMBERS -->
 <section class="view" id="v-numbers" data-view="numbers" hidden>
-  <header class="chap"><div class="wrap"><div class="kicker">The numbers</div><h2>The survey and our records point the same way.</h2><p class="lead">For each finding: the share we saw, the range the true share most likely sits in (95%), and the probability it is above or below a threshold. Even on a small sample, the pattern holds.</p></div></header>
+  <header class="chap"><div class="wrap"><div class="kicker">The numbers</div><h2>The survey and our records point the same way.</h2><p class="lead">For each finding: the share we saw, where the share would most likely land if we had heard from every leaver (95% range), and the probability it is above or below a threshold.</p></div></header>
   <div class="body"><div class="wrap">
     <div class="card"><div class="scroll"><table><thead><tr><th>Finding</th><th class="n">Observed</th><th class="n">95% range</th><th class="n">Probability</th><th>In plain English</th></tr></thead><tbody>
       <tr><td>Leaving over site-controlled causes</td><td class="n">13/19 · 68%</td><td class="n">46–85%</td><td class="n">94% it's over half</td><td>Most leavers are very likely leaving over things at the site</td></tr>
@@ -330,13 +343,10 @@ footer img{width:36px;height:36px}
       <tr><td>2nd shift worse than 1st</td><td class="n">89% vs 60%</td><td class="n">—</td><td class="n">91% 2nd is worse</td><td>Likely; our records agree: 9 of 14 walk-offs</td></tr>
       <tr><td>Two-week survival fell (Aug–mid Sep vs late Sep–Oct)</td><td class="n">50% → 44%</td><td class="n">—</td><td class="n">75% it truly fell</td><td>It's not getting better on its own</td></tr>
     </tbody></table></div></div>
+    <div class="card" id="sample"><h3>Can 19 answers speak for everyone who left?</h3>
+      <p>Yes, within limits. This is the same math political polls use. We can't say exactly <b>68%</b> of all leavers would name an OWI-controlled reason. We <i>can</i> say that if we had reached every one of them, the share would most likely land between <b>46% and 85%</b>, and there is a <b>94%</b> chance it would be more than half. The ranges in the table above already do this step.</p>
+      <p>The math assumes the people who answered are like the people who didn't. Someone with a grievance may be more likely to reply, so we don't rest the case on the survey alone. Our Bold records cover <b>all 115</b> assignment ends, not a sample: <b>76%</b> came after the person had started on OWI's floor. Two independent sources, one of them complete, point the same way.</p></div>
     <div class="callout"><b>What 30 years in staffing tells us.</b> The numbers show most turnover at OWI is preventable and happens after people reach the floor. That is exactly where a site manager works. Someone who greets every start on both shifts, talks with people throughout the day, gets a read on who is struggling, and has the time to hire, tour, onboard and explain the rules properly makes a dramatic difference to retention. We've seen it at PCNA and at Technimark, and we've seen it across three decades of placing people.</div>
-    <div class="card src"><h3>Where responsibility sits, in the research</h3><p>No credible study splits temp-worker retention into a percentage between agency and host. The research divides it by control, and leans toward the host site.</p>
-      <ol><li>Client support predicts commitment to both the client and the agency, not the reverse (Coyle-Shapiro &amp; Morrow, <i>Journal of Vocational Behavior</i>, 2006; 104 temporary workers).</li>
-      <li>Commitment to the client is what predicts on-the-job effort (Liden et al., <i>Journal of Organizational Behavior</i>, 2003).</li>
-      <li>Agency and host are joint employers; the host provides job-specific training, supervision and a safe workplace (OSHA &amp; NIOSH, <i>Protecting Temporary Workers</i>).</li>
-      <li>The frontline manager accounts for about 70% of the variance in team engagement (Gallup; correlational).</li>
-      <li>Hourly workers stay for schedule fit, respect and training (Employbridge, survey of 15,770 hourly workers).</li></ol></div>
     <div class="next"><a class="btn" href="#proof">← Our on-site results</a><a class="btn primary" href="#plan">The site manager →</a></div>
   </div></div>
 </section>
