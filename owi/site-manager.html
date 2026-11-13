@@ -305,6 +305,18 @@ footer img{width:36px;height:36px}
 
 .flow5{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr}
 @media(max-width:860px){.flow5{grid-template-columns:1fr}.flow5 i{transform:rotate(90deg);justify-self:center}}
+
+.sc{border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin:8px 0 8px;background:var(--bg)}
+.sch{background:#0B3A6B;color:#fff;padding:14px 18px}.scb{font:800 clamp(18px,2.4vw,24px) var(--f-display);letter-spacing:.02em}.scs{font-size:14px;color:#C9D6EA;margin-top:2px}
+.sct{background:#0B3A6B;display:flex;flex-wrap:wrap;gap:4px 16px;padding:0 18px 12px;font:700 12px var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:#C9D6EA}
+.sct b{color:#FFDF6B;border-bottom:3px solid #FFDF6B;padding-bottom:3px}
+.scg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:var(--surface)}
+@media(max-width:760px){.scg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.scg>div{padding:12px 16px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.scg i{display:block;font:700 11.5px var(--f-display);letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.scg b{display:block;font:800 30px var(--f-display);color:var(--ink,#0B1F3A)}.scg em{font-style:normal;font-size:13px;color:var(--muted)}
+.scn{padding:12px 18px;font-size:14.5px;display:flex;gap:12px;align-items:baseline;border-left:5px solid #FFDF6B;margin:12px 16px;background:var(--surface)}
+.scn b{font-family:var(--f-display);white-space:nowrap}.scn span{color:var(--muted)}
 </style>
 
 <nav class="nav" aria-label="Proposal chapters"><div class="wrap">
@@ -549,6 +561,20 @@ footer img{width:36px;height:36px}
       <div><p><b>Time to do onboarding right.</b> Plant tours, a proper orientation, the attendance rules explained, PPE and the safety walk, instead of a rushed handoff.</p></div>
       <div><p><b>Walks the floor every day.</b> The same floor visits that cover every worker at PCNA, so nobody goes a week without being checked on.</p></div>
     </div></div>
+    <div class="card"><h3>Technology: a custom site board and client portal, built for OWI</h3>
+      <div class="sc" role="img" aria-label="Preview of the OWI site control board">
+        <div class="sch"><div class="scb">OWI (Old World Industries) Site Control</div><div class="scs">Branch manager Shauna Whipple. 36 on assignment. Payroll week 11/2 to 11/8.</div></div>
+        <div class="sct"><b>Site control</b><span>Candidates &amp; interviews</span><span>Tenzo &amp; ZipRecruiter</span><span>Open orders</span><span>Starts &amp; ends</span><span>Recruiting desk</span><span>Activity log</span><span>Client comms</span><span>Onsite tours</span><span>Hours</span><span>Roster</span><span>Client requirements</span><span>Points</span></div>
+        <div class="scg"><div><i>On assignment</i><b>36</b><em>+5 vs last week</em></div><div><i>Hours we worked</i><b>1,397</b><em>+148 vs 1,249</em></div><div><i>Starts this week</i><b>13</b><em>from the contractor report</em></div><div><i>Ends this week</i><b>8</b><em>net +5</em></div><div><i>Interviews a day</i><b>4.3</b><em>set per day, desk average</em></div></div>
+        <div class="scn"><b>Needs you now</b><span>Starts &amp; ends: 3 people ended inside their first week. Day-one and day-three check-ins catch most of these.</span></div>
+      </div>
+      <p class="fine">A preview of the OWI site control board, payroll week 11/2 to 11/8. The proposal adds the weekly points text, direct-hire progress and a client portal on top of it.</p>
+      <div class="roles">
+        <div class="role"><h3>Weekly points text</h3><ul><li>Every associate gets a text once a week with their attendance point balance</li><li>A reminder of what the points are and how they work</li><li>No one finds out about their points after the last one</li></ul></div>
+        <div class="role y"><h3>Custom site control</h3><ul><li>Recruiting efforts currently underway</li><li>Open direct-hire orders</li><li>Interviews held, and who is next</li><li>The bench available right now</li><li>Work in progress on skilled direct-hire positions</li></ul></div>
+        <div class="role g"><h3>Client portal and custom requests</h3><ul><li>A portal built for OWI, with the site control and weekly scorecard in one place</li><li>Any custom report or view OWI asks for, built to order</li></ul></div>
+      </div>
+      <p class="fine">OWI sees what we are doing on the floor and in recruiting, without waiting for a call or an email.</p></div>
     <div class="card"><h3>The 90-day pilot: where we start, where we aim</h3><div class="pilot"><div class="pm"><div class="pmt">Starts still working after 90 days<em>Up to our PCNA level</em></div><div class="pmr"><span class="pml">Last 90 days</span><div class="pmtrack"><div class="pmbar bad" style="width:28%"></div></div><b class="num">28%</b></div><div class="pmr"><span class="pml">90-day goal</span><div class="pmtrack"><div class="pmbar good" style="width:40%"></div></div><b class="num">40%</b></div></div><div class="pm"><div class="pmt">Ends inside the first week<em>Down by a third</em></div><div class="pmr"><span class="pml">Last 90 days</span><div class="pmtrack"><div class="pmbar bad" style="width:46%"></div></div><b class="num">46%</b></div><div class="pmr"><span class="pml">90-day goal</span><div class="pmtrack"><div class="pmbar good" style="width:30%"></div></div><b class="num">under 30%</b></div></div><div class="pm"><div class="pmt">First-day no-shows<em>Cut in half</em></div><div class="pmr"><span class="pml">Last 90 days</span><div class="pmtrack"><div class="pmbar bad" style="width:100%"></div></div><b class="num">19</b></div><div class="pmr"><span class="pml">90-day goal</span><div class="pmtrack"><div class="pmbar good" style="width:53%"></div></div><b class="num">about 10</b></div></div></div><p class="fine">OWI gets the scorecard every week, and we review it together at day 90. Every end also gets a real reason recorded, and open seats are tracked daily.</p>
       <div class="bottom"><div class="bl">Bottom line</div><div class="bv"><span class="num">7 to 24</span> more people converted to full-time OWI employees every year, on the seats OWI has today</div><div class="bs">16 to 33 conversions a year against 9 today, as retention moves toward our PCNA level.</div></div></div>
     <div class="card"><h3>A day on the floor: everyone is checked on, every day</h3>
@@ -560,13 +586,6 @@ footer img{width:36px;height:36px}
         <div class="fl g"><b>5</b><span>Every week: point balances shared, scorecard to OWI, bench topped up</span></div>
       </div>
       <p class="fine">Today OWI gets this two days a week. The site manager makes it every shift, every day.</p></div>
-    <div class="card"><h3>Technology: a custom site board and client portal, built for OWI</h3>
-      <div class="roles">
-        <div class="role"><h3>Weekly points text</h3><ul><li>Every associate gets a text once a week with their attendance point balance</li><li>A reminder of what the points are and how they work</li><li>No one finds out about their points after the last one</li></ul></div>
-        <div class="role y"><h3>Custom site control</h3><ul><li>Recruiting efforts currently underway</li><li>Open direct-hire orders</li><li>Interviews held, and who is next</li><li>The bench available right now</li><li>Work in progress on skilled direct-hire positions</li></ul></div>
-        <div class="role g"><h3>Client portal and custom requests</h3><ul><li>A portal built for OWI, with the site control and weekly scorecard in one place</li><li>Any custom report or view OWI asks for, built to order</li></ul></div>
-      </div>
-      <p class="fine">OWI sees what we are doing on the floor and in recruiting, without waiting for a call or an email.</p></div>
     <div class="card src"><h3>Sources and method</h3><p>OWI, PCNA and Technimark figures come from Commercial Employees' Bold (Avionté) records, read 12 November 2026; assignments entered by mistake are excluded. "Walked away" = no-show, walk-off or any quit. "Ended at the site" = attendance, performance, attitude, policy, drug-free policy, language or misconduct. "Still working at day 30" counts each month's starts still on assignment 30 days later. Exit survey: 52 former OWI associates texted 4 and 10 November 2026, 23 responses, 19 worked a shift; not anonymous. Conversion counts are from Bold plus 16 PCNA conversions in progress this week and 7 Technimark conversions confirmed outside Bold, as of 12 November 2026. Replacement cost is an estimate for discussion. Markup savings use actual gross wages and billing by pay date, 1 January to 4 November 2026. Book median markup is across all active Commercial Employees accounts; no other client's rates are shown.</p></div>
     <div class="next"><a class="btn" href="#numbers">← The numbers</a><a class="btn primary" href="#overview">Back to the start</a></div>
   </div></div>
