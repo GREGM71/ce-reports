@@ -1,22 +1,22 @@
 // Recruiter Activity Board data. Replaced each weekday by the automatic refresh.
-window.META={day:"Fri Nov 13",date:"Nov 13 2026",asof:"4:31 PM",sysSent:14,sysReplies:4,startingToday:4};
+window.META={day:"Fri Nov 13",date:"Nov 13 2026",asof:"5:24 PM",sysSent:14,sysReplies:4,startingToday:4};
 window.RAW=[
 ["Sam Skeba","New Kensington",39,13,4,11,6,0,15,118,12,"8:22","3:47",[0,2,9,19,12,23,13,10,1,0],[1,1,7,97,15,3,4,2,0,0],6,0,1],
 ["Ross Madler","Charleston",26,15,15,6,16,2,5,509,66,"7:55","4:07",[5,44,17,9,1,5,0,2,0,2],[7,45,449,21,5,10,29,7,0,2],16,8,0],
-["Brooke Woody","Charleston",9,8,8,8,11,1,36,39,9,"8:10","4:08",[0,12,7,7,13,5,8,7,15,7],[1,1,1,2,6,0,4,5,18,10],10,1,0],
+["Brooke Woody","Charleston",9,8,8,8,11,1,39,39,10,"8:10","4:49",[0,12,7,7,13,5,8,7,15,10],[1,1,1,2,6,0,4,5,18,11],10,1,0],
 ["Kaytee Jack","Delmont",14,9,8,12,7,1,13,87,84,"7:09","4:10",[1,10,8,6,13,11,6,3,6,2],[33,19,24,10,20,17,22,10,15,1],8,1,2],
-["Derek Smith","Fox Chapel",17,3,6,10,12,3,12,68,10,"8:23","4:26",[0,11,8,1,4,17,4,7,6,5],[1,2,50,1,4,5,3,8,2,2],8,5,0],
+["Derek Smith","Fox Chapel",17,3,6,10,12,3,12,68,11,"8:23","4:26",[0,11,8,1,4,17,4,7,6,5],[1,2,50,1,4,5,3,8,2,3],8,5,0],
 ["Donna Hecht","Delmont",16,6,9,16,11,2,2,19,3,"8:16","4:14",[0,6,13,13,5,6,5,5,7,3],[3,2,2,7,1,0,2,1,4,0],9,2,1],
 ["Sharon Houseman","Fox Chapel",14,5,11,10,15,2,1,49,3,"8:18","4:02",[0,4,16,6,6,12,3,3,7,1],[0,2,15,10,11,6,0,1,5,2],15,0,0],
-["Andy Draskovic","New Kensington",21,5,3,18,3,2,5,43,26,"9:26","4:14",[0,0,3,6,3,13,8,2,17,5],[7,11,2,11,2,12,4,14,4,2],3,0,0],
+["Andy Draskovic","New Kensington",21,5,3,18,3,2,6,43,26,"9:26","4:47",[0,0,3,6,3,13,8,2,17,6],[7,11,2,11,2,12,4,14,4,2],3,0,0],
 ["Hannah Oteri","Charleston",27,7,6,11,5,0,0,16,18,"8:15","4:06",[0,5,6,23,4,4,6,7,0,1],[1,0,2,1,9,8,0,10,1,2],6,0,0],
 ["Donna Nagg","Delmont",11,5,5,8,5,5,14,18,3,"8:28","4:02",[0,3,11,8,9,2,5,5,10,1],[0,1,5,6,7,1,0,0,1,0],5,0,1],
 ["Shauna Whipple","Wilkinsburg",1,0,3,6,3,0,3,2,0,"8:44","3:12",[0,2,3,0,2,0,2,5,2,0],[0,0,0,0,1,0,0,1,0,0],3,1,0],
 ["Stephen Nelson","Delmont",0,0,0,2,0,2,4,0,0,"9:18","3:11",[0,0,1,0,1,1,4,0,1,0],[0,0,0,0,0,0,0,0,0,0],0,0,0],
 ["Nicole Lykens","COEM: Executive Inhouse",0,0,0,0,0,0,6,0,0,"8:24","4:31",[0,1,0,0,0,4,0,0,0,1],[0,0,0,0,0,0,0,0,0,0],0,0,0],
-["Brittany Lear","Delmont",0,0,0,0,0,0,3,37,4,"6:47","3:26",[1,0,0,0,0,0,0,0,2,0],[0,0,0,34,0,2,1,1,2,1],0,0,0],
-["Robert Petrisko","COEM: Inhouse",0,0,0,0,0,0,0,13,0,"","",[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,13,0,0,0],0,0,0],
+["Brittany Lear","Delmont",0,0,0,0,0,0,3,37,5,"6:47","3:26",[1,0,0,0,0,0,0,0,2,0],[0,0,0,34,0,2,1,1,2,2],0,0,0],
 ["Taylor Rice","COEM: Inhouse",0,0,0,0,0,0,0,10,3,"","",[0,0,0,0,0,0,0,0,0,0],[0,0,3,1,0,6,0,0,0,3],0,0,0],
+["Robert Petrisko","COEM: Inhouse",0,0,0,0,0,0,0,13,0,"","",[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,13,0,0,0],0,0,0],
 ];
 window.STARTS=[
 ["Charleston","Marmon Ride Control","Ross Madler",2,"11/16"],
@@ -29,7 +29,7 @@ window.STARTS=[
 ["Delmont","Technimark, Inc","Brittany Lear",1,"11/16"],
 ["Delmont","Vision Profile Extrusions C/O Energi","Brittany Lear",1,"11/16"],
 ["Fox Chapel","American Textile Company","Derek Smith",1,"11/16"],
-["Fox Chapel","American Textile Company","Sharon Houseman",2,"11/18, 11/15"],
+["Fox Chapel","American Textile Company","Sharon Houseman",2,"11/15, 11/18"],
 ["Fox Chapel","Old World Industries","Shauna Whipple",2,"11/13"],
 ["Fox Chapel","Sampco","Derek Smith",1,"11/16"],
 ["Fox Chapel","Trau & Loevner","Sharon Houseman",1,"11/16"],
